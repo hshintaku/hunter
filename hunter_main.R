@@ -36,3 +36,17 @@ source('/home/watson/public/shintaku/HUNTER/hunter_Seurat_adt_data_io.R')
 source("/home/watson/public/shintaku/HUNTER/hunter_Seurat_subset_analysis.R")
 source("/home/watson/public/shintaku/HUNTER/hunter_Seurat_subset_scatter.R")
 
+
+
+#VlnPlot(pbmc, features = c("pg-GAPDH", "pg-S100A2"), slot = "counts", log = TRUE)
+#FeaturePlot(pbmc, features = c("hs-MT-ND4", "pg-GAPDH"))
+
+
+# Ligand/Receptor analysis using SingleCellSignalR
+#signal = cell_signaling(data=data,genes=all.genes,cluster=cluster)
+
+# Visualization
+#visualize(signal)
+#intra = intra_network("S1PR1",data,all.genes,cluster,"cluster 1",signal = signal)
+
+

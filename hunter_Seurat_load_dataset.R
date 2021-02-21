@@ -24,17 +24,3 @@ head(x = FetchData(object = pbmc, vars = c('ident')),n=1000)
 pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 200)
 
-
-
-#VlnPlot(pbmc, features = c("pg-GAPDH", "pg-S100A2"), slot = "counts", log = TRUE)
-#FeaturePlot(pbmc, features = c("hs-MT-ND4", "pg-GAPDH"))
-
-
-# Ligand/Receptor analysis using SingleCellSignalR
-#signal = cell_signaling(data=data,genes=all.genes,cluster=cluster)
-
-# Visualization
-#visualize(signal)
-#intra = intra_network("S1PR1",data,all.genes,cluster,"cluster 1",signal = signal)
-
-
