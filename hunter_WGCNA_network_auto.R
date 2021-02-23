@@ -20,7 +20,7 @@
 # Any error here may be ignored but you may want to update WGCNA if you see one.
 # Caution: skip this line if you run RStudio or other third-party R environments. 
 # See note above.
-enableWGCNAThreads()
+#enableWGCNAThreads()
 # Load the data saved in the first part
 #lnames = load(file = "FemaleLiver-01-dataInput.RData");
 #The variable lnames contains the names of loaded variables.

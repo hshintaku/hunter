@@ -55,7 +55,7 @@ textMatrix =  paste(signif(moduleTraitCor, 2), "\n(",
 dim(textMatrix) = dim(moduleTraitCor)
 par(mar = c(6, 8.5, 3, 3));
 # Display the correlation values within a heatmap plot
-labeledHeatmap(Matrix = moduleTraitCor,
+p1 <- labeledHeatmap(Matrix = moduleTraitCor,
                xLabels = names(datTraits),
                yLabels = names(MEs),
                ySymbols = names(MEs),
@@ -105,7 +105,7 @@ module = "pink"
 column = match(module, modNames);
 moduleGenes = moduleColors==module;
 
-sizeGrWindow(7, 7);
+#sizeGrWindow(7, 7);
 par(mfrow = c(1,1));
 verboseScatterplot(abs(geneModuleMembership[moduleGenes, column]),
                    abs(geneTraitSignificance[moduleGenes, 1]),

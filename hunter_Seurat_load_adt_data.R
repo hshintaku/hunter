@@ -3,7 +3,7 @@ load.adt <- function (indexfiles,batch) {
   colnames(adt.xlsx)<- c("Events","FSC","SSC","Venus","APC","mCherry")
   
   # create normalized GFP
-  adt.xlsx$normGFP <- (adt.xlsx$Venus/adt.xlsx$mCherry)*1e2
+  adt.xlsx$normGFP <- (adt.xlsx$Venus/adt.xlsx$mCherry)*1e3
   
   
   wellid <- rownames(adt.xlsx)
@@ -20,7 +20,7 @@ load.adt <- function (indexfiles,batch) {
   return(adt.xlsx)
 }
 
-#load FACS index data
+#load FACS index data file name is 8 char long.
 batch <- unique(substr(files$name,1,8))
 indexfiles <- file.path(indexdir,paste0(batch,".xlsx"))
 
@@ -30,8 +30,14 @@ adt.xlsx <- mapply(load.adt,indexfiles,batch)
 adt.csv <- do.call("cbind",adt.xlsx)
 
 # adding adt data
-seladt.csv <- adt.csv[,cellids]
-pbmc.adt <-as.sparse(seladt.csv)
+seladt.csv <- adt.csv[,cellids] # extract cells detected in RNA-seq
+pbmc.adt <-as.sparse(seladt.csv) # convert the format to sparse matrix
+
 pbmc[["ADT"]] <- CreateAssayObject(counts=pbmc.adt)
-pbmc <- NormalizeData(pbmc,assay="ADT",normalization.method = "CLR")
+
+#pbmc <- NormalizeData(pbmc,assay="ADT",normalization.method = "LogNormalize",scale.factor = 1e5)
+pbmc <- NormalizeData(pbmc,assay="ADT",normalization.method = "LogNormalize",margin=1)
+#NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
+
 pbmc <- ScaleData(pbmc,assay="ADT")
+

@@ -35,9 +35,9 @@ nSamples = nrow(datExpr)
 
 # Calculate topological overlap anew: this could be done more efficiently by saving the TOM
 # calculated during module detection, but let us do it again here.
-dissTOM = 1-TOMsimilarityFromExpr(datExpr, power = 6);
+dissTOM = 1-TOMsimilarityFromExpr(datExpr, power = 4);
 # Transform dissTOM with a power to make moderately strong connections more visible in the heatmap
-plotTOM = dissTOM^7;
+plotTOM = dissTOM^4;
 # Set diagonal to NA for a nicer plot
 diag(plotTOM) = NA;
 # Call the plot function
@@ -64,7 +64,7 @@ selectColors = moduleColors[select];
 sizeGrWindow(9,9)
 # Taking the dissimilarity to a power, say 10, makes the plot more informative by effectively changing 
 # the color palette; setting the diagonal to NA also improves the clarity of the plot
-plotDiss = selectTOM^7;
+plotDiss = selectTOM^4;
 diag(plotDiss) = NA;
 TOMplot(plotDiss, selectTree, selectColors, main = "Network heatmap plot, selected genes")
 

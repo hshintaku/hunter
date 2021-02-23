@@ -43,3 +43,4 @@ p6 <- FeatureScatter(object=AML,feature2='SSC',feature1='CS2nGFPT2AH2BmCherG01')
 
 
 grid.arrange(p1, p2, p3, p4,p5,p6, nrow = 2)
+

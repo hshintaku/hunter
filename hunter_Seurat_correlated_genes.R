@@ -4,40 +4,41 @@
 # "GO.db", "preprocessCore", "impute"
 #BiocManager::install("WGCNA")
 library(WGCNA)
-library(Seurat)
+#library(Seurat)
 library(VennDiagram)
 
 options(stringsAsFactors = FALSE)
 datExpr <- data.frame(t(GetAssayData(object=AML[["RNA"]], slot="scale.data")))
 dim(datExpr)
 
-sampleTree = hclust(dist(dataExpr), method = "average")
+sampleTree = hclust(dist(datExpr), method = "average")
 plot(sampleTree, main = "Sample clustering to detect outliers", sub="", xlab="", cex.lab = 1.5,
      cex.axis = 1.5, cex.main = 2)
 
 
-traitData <- t(GetAssayData(object=AML[["ADT"]], slot="scale.data"))
-dim(traitData)
+traitData <- t(GetAssayData(object=AML[["ADT"]]))
+
+
+datTraits <- data.frame(traitData[,c(2:7)])
+dim(datTraits)
 
 sampleTree2 = hclust(dist(datExpr), method = "average")
-traitColors = numbers2colors(traitData, signed = FALSE)
+traitColors = numbers2colors(datTraits, signed = FALSE)
 plotDendroAndColors(sampleTree2, traitColors,
                     groupLabels = names(traitColors),
                     main = "Sample dendrogram and trait heatmap")
 
-datTraits <- data.frame(traitData[,c(2:7)])
 #rownames(datTraits) <- rownames(traitData)
 
-source("/home/watson/public/shintaku/HUNTER/hunter_Seurat_WGCNA_network_auto.R")
+source("/home/watson/public/shintaku/HUNTER/hunter_WGCNA_network_auto.R")
+source("/home/watson/public/shintaku/HUNTER/hunter_WGCNA_relateModsToExt.R")
 
-source("/home/watson/public/shintaku/HUNTER/hunter_Seurat_WGCNA_relateModsToExt.R")
-
-corr_module_normGFP <- names(datExpr)[moduleColors=="red"]
-acorr_module_normGFP <- names(datExpr)[moduleColors=="pink"]
+corr_module_normGFP <- names(datExpr)[moduleColors=="purple"]
+acorr_module_normGFP <- names(datExpr)[moduleColors=="black"]
 normGFP_module <- c(corr_module_normGFP,acorr_module_normGFP)
 
 corr_moudle_mCherry <- names(datExpr)[moduleColors=="yellow"]
-acorr_module_mCherry <- names(datExpr)[moduleColors=="greenyellow"]
+acorr_module_mCherry <- names(datExpr)[moduleColors=="green"]
 mCherry_module <- c(corr_moudle_mCherry,acorr_module_mCherry)
 
 PC_1_gene <- PCASigGenes(object=AML,pcs.use=1,pval.cut=0.1)
@@ -65,11 +66,10 @@ rownames(corr_order) <- genes[order_index]
 corr_order <- na.omit(corr_order)
 write.csv(corr_order, file.path(wdir,'correlated_genes.csv'))
 
-acorr_gene <- head(corr_order,100)
-corr_gene <- tail(corr_order,100)
+acorr_gene <- head(corr_order,20)
+corr_gene <- tail(corr_order,20)
 
 gene_list <- list(normGFP=normGFP_module,acorr=rownames(acorr_gene),corr=rownames(corr_gene))
 
 venn.diagram(gene_list,filename = file.path(wdir,"gene.jpg"), fill=c(1,2,3), alpha=0.4, lty=3)
 
-GOenr = GOenrichmentAnalysis(moduleColors, colnames(datExpr), organism = "mouse", nBestP = 10)

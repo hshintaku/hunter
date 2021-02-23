@@ -10,10 +10,12 @@ median(tenx$nFeature_RNA)
 # Identify the 10 most highly variable genes
 top10 <- head(VariableFeatures(pbmc), 40)
 # plot variable features with labels
-plot1 <-VariableFeaturePlot(pbmc)
-plot1 <- LabelPoints(plot = plot1, points = top10, repel = TRUE)
-plot2 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
-grid.arrange(plot2,plot1, nrow = 1)
+plot1 <- VariableFeaturePlot(pbmc)
+plot1 <- LabelPoints(plot = plot1, points = top10)
+plot1
+plot2 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA" )
+plot2
+#grid.arrange(plot2,plot1, nrow = 1)
 
 
 # running PCA npcs in the RunPCA function must be less than the number of samples
@@ -26,9 +28,9 @@ pbmc <- RunPCA(pbmc, npcs=10, features = VariableFeatures(object = pbmc))
 print(pbmc[["pca"]], dims = 1:2, nfeatures = 50)
 
 # plot plates/dishes/gates/pools/rtid
-p1<-DimPlot(pbmc, reduction = "pca",group.by = "plates")
-p2<-DimPlot(pbmc, reduction = "pca",group.by = "dish")
-p3 <-DimPlot(pbmc, reduction = "pca",group.by = "gate")
+p1 <- DimPlot(pbmc, reduction = "pca",group.by = "plates")
+p2 <- DimPlot(pbmc, reduction = "pca",group.by = "dish")
+p3 <- DimPlot(pbmc, reduction = "pca",group.by = "gate")
 p1+p2+p3
 
 DimPlot(pbmc, reduction = "pca",group.by = "pool")
