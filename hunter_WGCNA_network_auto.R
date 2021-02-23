@@ -64,14 +64,14 @@ text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col="red")
 #=====================================================================================
 
 cor <- WGCNA::cor # patch for namespace confliction see https://www.biostars.org/p/305714/
-net = blockwiseModules(datExpr, power = 4,
+net = blockwiseModules(datExpr, power = 3,
                        TOMType = "unsigned", minModuleSize = 30,
                        reassignThreshold = 0, mergeCutHeight = 0.25,
                        numericLabels = TRUE, pamRespectsDendro = FALSE,
                        saveTOMs = TRUE,
                        saveTOMFileBase = "femaleMouseTOM", 
                        verbose = 3)
-
+table(net$colors)
 cor<-stats::cor # patch for namespace confliction see https://www.biostars.org/p/305714/
 #=====================================================================================
 #

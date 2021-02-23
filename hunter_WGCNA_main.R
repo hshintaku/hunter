@@ -4,7 +4,6 @@
 # "GO.db", "preprocessCore", "impute"
 #BiocManager::install("WGCNA")
 library(WGCNA)
-library(VennDiagram)
 
 options(stringsAsFactors = FALSE)
 datExpr <- data.frame(t(GetAssayData(object=AML[["RNA"]], slot="scale.data")))
@@ -38,17 +37,4 @@ source("/home/watson/public/shintaku/HUNTER/hunter_WGCNA_relateModsToExt.R")
 source("/home/watson/public/shintaku/HUNTER/hunter_WGCNA_network_visualize.R")
 
 
-corr_module_normGFP <- names(datExpr)[moduleColors=="purple"]
-acorr_module_normGFP <- names(datExpr)[moduleColors=="black"]
-normGFP_module <- c(corr_module_normGFP,acorr_module_normGFP)
-
-corr_moudle_mCherry <- names(datExpr)[moduleColors=="yellow"]
-acorr_module_mCherry <- names(datExpr)[moduleColors=="green"]
-mCherry_module <- c(corr_moudle_mCherry,acorr_module_mCherry)
-
-PC_1_gene <- PCASigGenes(object=AML,pcs.use=1,pval.cut=0.1)
-PC_2_gene <- PCASigGenes(object=AML,pcs.use=2,pval.cut=0.1)
-
-gene_list<- list(normGFP=corr_module_normGFP, mCherry=mCherry_module,PC_1=PC_1_gene, PC_2=PC_2_gene)
-venn.diagram(gene_list,filename = file.path(wdir,"gene.jpg"), fill=c(2,3,4,5), alpha=0.4, lty=3)
 
