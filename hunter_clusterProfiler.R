@@ -1,12 +1,13 @@
 #
 # GOenrichmentAnalysis (experimental)
 library("org.Mm.eg.db")
+library(clusterProfiler)
 #
 ensmusg <- data.frame(unlist(as.list(org.Mm.egENSEMBL2EG)))
-#
-#
+# entrez annotation
 ms_ref$entrez_annotation <- ensmusg[ms_ref$ensembl_gene_id,]
-
+#
+#
 datExpr_names <- data.frame(names(datExpr)) # list gene short names
 datExpr_ref <- ms_ref[match(datExpr_names$names.datExpr.,ms_ref$gene_short_name),] # create reference from ms_ref regardless of entrez annotation
 datExp_annot_index <- data.frame(which(!is.na(datExpr_ref$entrez_annotation))) #
@@ -20,14 +21,14 @@ allLLIDs <- ms_ref_subset$entrez_annotation
 GOenr <- GOenrichmentAnalysis(moduleColors_subset,allLLIDs, organism = "mouse", ontologies = c("BP", "CC", "MF"), nBestP = 10)
 tab <- GOenr$bestPTerms[[4]]$enrichment
 
-module_genes <- names(datExpr_subset)[moduleColors_subset=="yellow"]
-write.csv(module_genes,file.path(wdir,"module_genes_yellow.csv"))
+module_genes <- names(datExpr_subset)[moduleColors_subset=="brown"]
+write.csv(module_genes,file.path(wdir,"module_genes_brown.csv"))
 #
 # https://bioc.ism.ac.jp/packages/3.3/bioc/vignettes/clusterProfiler/inst/doc/clusterProfiler.html
 #
-library(clusterProfiler)
-
-gene_module_go <- allLLIDs[moduleColors_subset=="yellow"]
+# clusterProfiler
+# 
+gene_module_go <- allLLIDs[moduleColors_subset=="brown"]
 ego_result <- enrichGO(gene          = gene_module_go,
                        OrgDb         = org.Mm.eg.db,
                        ont           = "CC",
@@ -38,10 +39,10 @@ ego_result <- enrichGO(gene          = gene_module_go,
 head(as.data.frame(ego_result))
 ego_result.simple<-simplify(ego_result)
 head(as.data.frame(ego_result.simple))
-barplot(ego_result.simple, drop=TRUE, showCategory=12)
-clusterProfiler::dotplot(ego_result.simple)
+barplot(ego_result, drop=TRUE, showCategory=12)
+clusterProfiler::dotplot(ego_result)
 #clusterProfiler::emapplot(ego_result.simple)
-clusterProfiler::cnetplot(ego_result.simple, categorySize="pvalue", foldChange=allLLIDs)
+clusterProfiler::cnetplot(ego_result, categorySize="pvalue", foldChange=allLLIDs)
 goplot(ego_result.simple)
 #
 # gse

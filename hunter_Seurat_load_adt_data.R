@@ -3,7 +3,7 @@ load.adt <- function (indexfiles,batch) {
   colnames(adt.xlsx)<- c("Events","FSC","SSC","Venus","APC","mCherry")
   
   # create normalized GFP
-  adt.xlsx$normGFP <- (adt.xlsx$Venus/adt.xlsx$mCherry)*1e3
+  adt.xlsx$normGFP <- (adt.xlsx$Venus/adt.xlsx$mCherry)
   
   
   wellid <- rownames(adt.xlsx)
@@ -36,7 +36,7 @@ pbmc.adt <-as.sparse(seladt.csv) # convert the format to sparse matrix
 pbmc[["ADT"]] <- CreateAssayObject(counts=pbmc.adt)
 
 #pbmc <- NormalizeData(pbmc,assay="ADT",normalization.method = "LogNormalize",scale.factor = 1e5)
-pbmc <- NormalizeData(pbmc,assay="ADT",normalization.method = "LogNormalize",margin=1)
+pbmc <- NormalizeData(pbmc,assay="ADT",normalization.method = "LogNormalize",margin=2,scale.factor = 1e5)
 #NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
 
 pbmc <- ScaleData(pbmc,assay="ADT")

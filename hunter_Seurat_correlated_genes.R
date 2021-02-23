@@ -4,17 +4,17 @@
 # correlation at gene level
 #
 #
-library('corrr')
-fulldatExpr <- cbind(datExpr,datTraits)
-x <- correlate(fulldatExpr)
-
+#library('corrr')
+#fulldatExpr <- cbind(datExpr,datTraits)
+#x <- correlate(fulldatExpr)
+x <- cor(datExpr,datTraits)
 corr_row <- data.frame(x[,"normGFP"])
 genes <- colnames(fulldatExpr)
 order_index <- order(corr_row)
 corr_order <- data.frame(corr_row[order_index,])
 rownames(corr_order) <- genes[order_index]
 corr_order <- na.omit(corr_order)
-write.csv(corr_order, file.path(wdir,'correlated_genes.csv'))
+write.csv(corr_order, file.path(wdir,'correlated_genes_with_normGFP.csv'))
 
 acorr_gene <- head(corr_order,20)
 corr_gene <- tail(corr_order,20)
