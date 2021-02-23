@@ -39,7 +39,7 @@ powers = c(c(1:10), seq(from = 12, to=40, by=2))
 # Call the network topology analysis function
 sft = pickSoftThreshold(datExpr, powerVector = powers, verbose = 5)
 # Plot the results:
-sizeGrWindow(9, 5)
+#sizeGrWindow(9, 5)
 par(mfrow = c(1,2));
 cex1 = 0.9;
 # Scale-free topology fit index as a function of the soft-thresholding power
@@ -57,13 +57,13 @@ plot(sft$fitIndices[,1], sft$fitIndices[,5],
 text(sft$fitIndices[,1], sft$fitIndices[,5], labels=powers, cex=cex1,col="red")
 
 
-        #=====================================================================================
+#=====================================================================================
 #
 #  Code chunk 3
 #
 #=====================================================================================
 
-
+cor <- WGCNA::cor # patch for namespace confliction see https://www.biostars.org/p/305714/
 net = blockwiseModules(datExpr, power = 4,
                        TOMType = "unsigned", minModuleSize = 30,
                        reassignThreshold = 0, mergeCutHeight = 0.25,
@@ -72,7 +72,7 @@ net = blockwiseModules(datExpr, power = 4,
                        saveTOMFileBase = "femaleMouseTOM", 
                        verbose = 3)
 
-
+cor<-stats::cor # patch for namespace confliction see https://www.biostars.org/p/305714/
 #=====================================================================================
 #
 #  Code chunk 4
@@ -81,7 +81,7 @@ net = blockwiseModules(datExpr, power = 4,
 
 
 # open a graphics window
-sizeGrWindow(12, 9)
+#sizeGrWindow(12, 9)
 # Convert labels to colors for plotting
 mergedColors = labels2colors(net$colors)
 # Plot the dendrogram and the module colors underneath
