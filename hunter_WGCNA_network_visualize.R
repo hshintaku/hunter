@@ -90,20 +90,3 @@ plotEigengeneNetworks(MET, "", marDendro = c(0,4,1,2), marHeatmap = c(3,4,1,2), 
                       = 90)
 
 
-#=====================================================================================
-#
-#  Code chunk 5
-#
-#=====================================================================================
-
-
-# Plot the dendrogram
-sizeGrWindow(6,6);
-par(cex = 1.0)
-plotEigengeneNetworks(MET, "Eigengene dendrogram", marDendro = c(0,4,2,0),
-                      plotHeatmaps = FALSE)
-# Plot the heatmap matrix (note: this plot will overwrite the dendrogram plot)
-par(cex = 1.0)
-plotEigengeneNetworks(MET, "Eigengene adjacency heatmap", marHeatmap = c(3,4,2,2),
-                      plotDendrograms = FALSE, xLabelsAngle = 90)
-
