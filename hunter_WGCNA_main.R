@@ -6,7 +6,7 @@
 library(WGCNA)
 
 options(stringsAsFactors = FALSE)
-datExpr <- data.frame(t(GetAssayData(object=AML[["RNA"]], slot="scale.data")))
+datExpr <- data.frame(t(GetAssayData(object=AML[["RNA"]])))
 dim(datExpr)
 
 sampleTree = hclust(dist(datExpr), method = "average")
@@ -28,13 +28,13 @@ plotDendroAndColors(sampleTree2, traitColors,
 
 #
 # search gene network modules
-source("/home/watson/public/shintaku/HUNTER/hunter_WGCNA_network_auto.R")
+source(file.path(rdir,"hunter_WGCNA_network_auto.R"))
 #
 # trait vs gene network modules
-source("/home/watson/public/shintaku/HUNTER/hunter_WGCNA_relateModsToExt.R")
+source(file.path(rdir,"hunter_WGCNA_relateModsToExt.R"))
 #
 # visualize the hierarchy of modules
-source("/home/watson/public/shintaku/HUNTER/hunter_WGCNA_network_visualize.R")
+source(file.path(rdir,"hunter_WGCNA_network_visualize.R"))
 
 
 

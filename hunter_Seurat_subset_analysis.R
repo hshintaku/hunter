@@ -15,8 +15,8 @@ print(AML[["pca"]], dims = 1:2, nfeatures = 50)
 DimHeatmap(AML, dims = 1:10, cells = 500, balanced = TRUE)
 
 AML <- JackStraw(AML, num.replicate = 10)
-AML <- ScoreJackStraw(AML, dims = 0:2)
-JackStrawPlot(AML, dims = 0:2)
+AML <- ScoreJackStraw(AML, dims = 0:5)
+JackStrawPlot(AML, dims = 0:5)
 ElbowPlot(AML)
 
 AML <- FindNeighbors(AML, dims = 1:5)

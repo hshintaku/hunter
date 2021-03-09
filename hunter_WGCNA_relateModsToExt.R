@@ -101,7 +101,7 @@ names(GSPvalue) = paste("p.GS.", names(normGFP), sep="");
 #=====================================================================================
 
 
-module = "purple"
+module = "pink"
 column = match(module, modNames);
 moduleGenes = moduleColors==module;
 

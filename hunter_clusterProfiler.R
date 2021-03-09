@@ -21,14 +21,14 @@ allLLIDs <- ms_ref_subset$entrez_annotation
 GOenr <- GOenrichmentAnalysis(moduleColors_subset,allLLIDs, organism = "mouse", ontologies = c("BP", "CC", "MF"), nBestP = 10)
 tab <- GOenr$bestPTerms[[4]]$enrichment
 
-module_genes <- names(datExpr_subset)[moduleColors_subset=="brown"]
-write.csv(module_genes,file.path(wdir,"module_genes_brown.csv"))
+module_genes <- names(datExpr_subset)[moduleColors_subset=="pink"]
+write.csv(module_genes,file.path(wdir,"module_genes_pink.csv"))
 #
 # https://bioc.ism.ac.jp/packages/3.3/bioc/vignettes/clusterProfiler/inst/doc/clusterProfiler.html
 #
 # clusterProfiler
 # 
-gene_module_go <- allLLIDs[moduleColors_subset=="brown"]
+gene_module_go <- allLLIDs[moduleColors_subset=="pink"]
 ego_result <- enrichGO(gene          = gene_module_go,
                        OrgDb         = org.Mm.eg.db,
                        ont           = "CC",
@@ -39,7 +39,7 @@ ego_result <- enrichGO(gene          = gene_module_go,
 head(as.data.frame(ego_result))
 ego_result.simple<-simplify(ego_result)
 head(as.data.frame(ego_result.simple))
-barplot(ego_result, drop=TRUE, showCategory=12)
+barplot(ego_result, drop=TRUE, showCategory=30)
 clusterProfiler::dotplot(ego_result)
 #clusterProfiler::emapplot(ego_result.simple)
 clusterProfiler::cnetplot(ego_result, categorySize="pvalue", foldChange=allLLIDs)
