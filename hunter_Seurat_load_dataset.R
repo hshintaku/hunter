@@ -1,7 +1,5 @@
-library(dplyr)
-library(Seurat)
+
 #library(patchwork)
-#library(SingleCellSignalR)
 
 # Load the PBMC dataset
 #wdir <- "/home/watson/sanger/shintaku/HUNTER/"

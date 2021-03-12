@@ -7,12 +7,16 @@ library(tidyverse)
 library(R.utils) 
 library(Matrix)
 library(openxlsx)
-# decode the single cell data from whitelist of UMI-tools output
-datadir <- "/home/watson/sanger/shintaku/20210216HiSeqX002/"
-wdir <- "/home/watson/public/shintaku/HUNTER/"
-rdir <- "/home/watson/sanger/shintaku/HUNTER/"
+library(dplyr)
+library(Seurat)
+library(SingleCellSignalR)
 
-barcode <- read.table(file.path(rdir,"RTbarcodes.txt"))
+# decode the single cell data from whitelist of UMI-tools output
+datadir <- "/home/samba/sanger/shintaku/20210216HiSeqX002/"
+wdir <- "/home/samba/public/shintaku/SPLiT/"
+rdir <- "/home/samba/public/shintaku/hunter"
+
+barcode <- read.table(file.path("/home/samba/sanger/shintaku/HUNTER/RTbarcodes.txt"))
 # load functions for barcode decoding
 source(file.path(rdir,"whitelist_encode.R"))
 # laod whitelist and check the batch effect
@@ -22,7 +26,7 @@ source(file.path(rdir,'hunter_preprocess_whitelist.R'))
 source(file.path(rdir,'hunter_preprocess_data.R'))
 
 # save count data with 10x format
-source(file.path(rdir, 'hunter_preprocess_save_10x_format.R.R'))
+source(file.path(rdir, 'hunter_preprocess_save_10x_format.R'))
 
 # load data from 10x formatted files
 source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
