@@ -8,10 +8,13 @@ for (icnt in 1:nrow(files)){
   #icnt=1
   myData <- read.table(file.path(datadir,"count",files[icnt,]), header = TRUE)
   white<-subset(allencoded,allencoded$batch==str_sub(files[icnt,],1,10))
-  encoded <- whitelist.umi_tools.encode(myData$cell,barcode$V1)
-  myData$cell <- paste0(str_sub(files[icnt,],1,10),"-",encoded$index)
+  data.frame(substr(whitelist$represent, 1,8))
+  encoded1 <- whitelist.umi_tools.encode(substr(myData$cell,1,8),barcode$V1)
+  encoded2 <- whitelist.umi_tools.encode(substr(myData$cell,9,16),barcode$V1)
+  encoded3 <- whitelist.umi_tools.encode(substr(myData$cell,17,24),barcode$V1)
+  myData$cell <- paste0(str_sub(files[icnt,],1,10),"-",encoded1$index,"-",encoded2$index,"-",encoded3$index)
   
-  myData <- myData[encoded$value<1,]
+  myData <- myData[encoded1$value<1,]
   
   if (icnt>1){
     allData <- rbind(allData,myData)
@@ -22,10 +25,3 @@ for (icnt in 1:nrow(files)){
 }
 rm(myData)
 
-# download reference data from ensembl with biomaRt
-source(file.path(rdir,'hunter_biomart_ref.R'))
-missing_ref <- subset(gene_list,!(gene %in% ms_ref$ensembl_gene_id))
-adding_ref <- data.frame(cbind(missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene))
-colnames(adding_ref) <- colnames(ms_ref)
-rownames(adding_ref) <- adding_ref$ensembl_gene_id
-ms_ref <- rbind(adding_ref,ms_ref)

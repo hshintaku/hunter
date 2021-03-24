@@ -1,8 +1,6 @@
 
 # load reference data from biomaRt with filtering the gene_ids
 # source('/home/samba/storage0/shintaku/HUNTER/hunter_biomart_ref.R')
-allData$gene <- str_replace(str_replace(allData$gene,"mm10___",""),"GRCh38_","")
-gene_list <- data.frame(str_replace(allData$gene,"_intron",""))
 #ms_ref <- func.biomart.ref(ms_mart,gene_list,"mgi_symbol")
 #ms_ref_intron <- func.ref.intron(ms_ref)
 #all_ref <- rbind(ms_ref,ms_ref_intron)

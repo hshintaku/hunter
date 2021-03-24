@@ -8,8 +8,8 @@ library(Seurat)
 pbmc.data <- Read10X(data.dir = wdir)
 
 
-# Initialize the Seurat object with the raw (non-normalized data).
-pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 600, min.features = 1000)
+    # Initialize the Seurat object with the raw (non-normalized data).
+    pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 600, min.features = 1000)
 
 cellids <- colnames(pbmc)
 pbmc[['plates']] <- substr(cellids,1,3)

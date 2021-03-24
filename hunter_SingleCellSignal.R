@@ -17,28 +17,31 @@ library(SingleCellSignalR)
 #scdata <- scdata-min(min(scdata))
 # Data clustering
 #all.genes <- rownames(pbmc)
-pbmc <- NormalizeData(pbmc,scale.factor = 10000)
-pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 2000)
+#pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 600, min.features = 1000)
+#pbmc <- NormalizeData(pbmc,scale.factor = 10000)
+#pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 2000)
 
-pbmc <- ScaleData(pbmc, features = all.genes)
-pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
-pbmc <- FindNeighbors(pbmc, dims = 1:10)
-pbmc <- FindClusters(pbmc, resolution = 0.1)
-
-cluster = as.numeric(Idents(pbmc))
 scdata = data.frame(pbmc[["RNA"]]@data)
+all.genes <- data.frame(row.names(scdata))
 
-all.genes <- row.names(scdata)
+#pbmc <- ScaleData(pbmc, features = all.genes)
+
+#pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
+#pbmc <- FindNeighbors(pbmc, dims = 1:10)
+#pbmc <- FindClusters(pbmc, resolution = 0.1)
+
+
 clust <- clustering(data=scdata, n.cluster=4, n=10,method="simlr",write=TRUE,pdf=FALSE)
 
-signal = cell_signaling(data=scdata,genes=all.genes,cluster=clust$cluster,species ="mus musculus",
-                        logFC=log2(1.0001),s.score=0.0001,int.type = "paracrine",write=TRUE)
+cluster = as.numeric(Idents(pbmc))
+
+signal = cell_signaling(data=scdata,genes=all.genes,cluster=cluster,species ="mus musculus",write=FALSE)
 
 
 #clust.analysis <- cluster_analysis(data=scdata,genes=rownames(scdata),cluster=clust$cluster,write=FALSE)
 
 
-signal <- cell_signaling(data = data, genes = all.genes, 
+signal <- cell_signaling(data = scdata, genes = all.genes, 
                          cluster = cluster, species ="mus musculus",write = FALSE,
                          logFC=log2(1.0001),s.score=0.001)
 
