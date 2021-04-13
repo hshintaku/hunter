@@ -18,6 +18,8 @@ wdir <- "/home/samba/storage0/shintaku/20210324MiSeq016_Kaneko/"
 rdir <- "/home/samba/storage0/shintaku/github/hunter"
 
 barcode <- read.table(file.path("/home/samba/storage0/shintaku/github/hunter/RTbarcodes.txt"))
+
+
 # load functions for barcode decoding
 source(file.path(rdir,"whitelist_encode.R"))
 # laod whitelist and check the batch effect
@@ -25,6 +27,9 @@ source(file.path(rdir,'hunter_preprocess_whitelist.R'))
 
 # preprocess the count data and load reference
 source(file.path(rdir,'hunter_preprocess_data.R'))
+
+# download reference data from ensembl with biomaRt
+source(file.path(rdir,'hunter_biomart_ref.R'))
 
 # save count data with 10x format
 source(file.path(rdir, 'hunter_preprocess_save_10x_format.R'))

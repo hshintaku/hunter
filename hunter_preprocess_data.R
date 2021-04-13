@@ -22,10 +22,4 @@ for (icnt in 1:nrow(files)){
 }
 rm(myData)
 
-# download reference data from ensembl with biomaRt
-source(file.path(rdir,'hunter_biomart_ref.R'))
-missing_ref <- subset(gene_list,!(gene %in% ms_ref$ensembl_gene_id))
-adding_ref <- data.frame(cbind(missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene))
-colnames(adding_ref) <- colnames(ms_ref)
-rownames(adding_ref) <- adding_ref$ensembl_gene_id
-ms_ref <- rbind(adding_ref,ms_ref)
+

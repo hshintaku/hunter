@@ -17,7 +17,7 @@ write.table(barcodes,file=paste0(wdir,"barcodes.tsv"), row.names=FALSE, col.name
 gzip(paste0(wdir,'barcodes.tsv'),overwrite=TRUE)
 
 # create features.tsv.gz
-features <- data.frame(cbind(ms_ref$ensembl_gene_id,ms_ref$gene_short_name,"Gene Expression"))
+features <- data.frame(cbind(all_ref$ensembl_gene_id,all_ref$gene_short_name,"Gene Expression"))
 colnames(features) <- c("ensembl_gene_id","gene_name","assay_type")
 features <- data.frame(features[order(features$ensembl_gene_id),])
 rownames(features) <- features$ensembl_gene_id
