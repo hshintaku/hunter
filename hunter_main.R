@@ -10,13 +10,14 @@ library(openxlsx)
 library(dplyr)
 library(Seurat)
 library(SingleCellSignalR)
+library('seqinr')
 
 # decode the single cell data from whitelist of UMI-tools output
-datadir <- "/home/samba/sanger/shintaku/20210216HiSeqX002/"
-wdir <- "/home/samba/public/shintaku/SPLiT/"
-rdir <- "/home/samba/public/shintaku/hunter"
+datadir <- "/home/samba/storage0/Kaneko/20210324_Miseq016_2/20210324_Miseq016Ana/"
+wdir <- "/home/samba/storage0/shintaku/20210324MiSeq016_Kaneko/"
+rdir <- "/home/samba/storage0/shintaku/github/hunter"
 
-barcode <- read.table(file.path("/home/samba/sanger/shintaku/HUNTER/RTbarcodes.txt"))
+barcode <- read.table(file.path("/home/samba/storage0/shintaku/github/hunter/RTbarcodes.txt"))
 # load functions for barcode decoding
 source(file.path(rdir,"whitelist_encode.R"))
 # laod whitelist and check the batch effect
