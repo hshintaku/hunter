@@ -7,14 +7,14 @@ pbmc.data <- Read10X(data.dir = wdir)
 
 
 # Initialize the Seurat object with the raw (non-normalized data).
-pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 600, min.features = 1000)
+pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 3, min.features = 100)
 
 cellids <- colnames(pbmc)
-pbmc[['plates']] <- substr(cellids,1,3)
-pbmc[['dish']] <- substr(cellids,4,6)
-pbmc[['gate']] <- substr(cellids,7,8)
-pbmc[['pool']] <- substr(cellids,10,10)
-pbmc[['rtid']] <- substr(cellids,12,13)
+pbmc[['cell']] <- substr(cellids,1,3)
+pbmc[['exp']] <- substr(cellids,4,5)
+pbmc[['batch']] <- substr(cellids,6,7)
+#pbmc[['pool']] <- substr(cellids,10,10)
+#pbmc[['rtid']] <- substr(cellids,12,13)
 
 
 head(x = FetchData(object = pbmc, vars = c('ident')),n=1000)

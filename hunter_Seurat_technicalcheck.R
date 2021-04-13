@@ -28,13 +28,13 @@ pbmc <- RunPCA(pbmc, npcs=10, features = VariableFeatures(object = pbmc))
 print(pbmc[["pca"]], dims = 1:2, nfeatures = 50)
 
 # plot plates/dishes/gates/pools/rtid
-p1 <- DimPlot(pbmc, reduction = "pca",group.by = "plates")
-p2 <- DimPlot(pbmc, reduction = "pca",group.by = "dish")
-p3 <- DimPlot(pbmc, reduction = "pca",group.by = "gate")
+p1 <- DimPlot(pbmc, reduction = "pca",group.by = "cell")
+p2 <- DimPlot(pbmc, reduction = "pca",group.by = "exp")
+p3 <- DimPlot(pbmc, reduction = "pca",group.by = "batch")
 p1+p2+p3
 
-DimPlot(pbmc, reduction = "pca",group.by = "pool")
-DimPlot(pbmc, reduction = "pca",group.by = "rtid")
+#DimPlot(pbmc, reduction = "pca",group.by = "pool")
+#DimPlot(pbmc, reduction = "pca",group.by = "rtid")
 
 # gene expression scatter
 pca_topcells <- TopCells(object = pbmc[['pca']], balanced = FALSE)
