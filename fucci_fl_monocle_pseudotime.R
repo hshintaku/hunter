@@ -1,5 +1,6 @@
 
 # compute pseudotime to summarize the cell cycle progression
+fucci_fl_monocle_pseudotime <- function(merge_fl_data){
 library(monocle)
 cell_metadata_fl <- new("AnnotatedDataFrame", data = merge_fl_data[,c(1,6,7)])
 gene_annotation_fl <- data.frame(c("R","G"))
@@ -20,5 +21,6 @@ ordering_genes <- subset(disp_table, mean_expression >= 0.1)
 fucci <- setOrderingFilter(fucci, ordering_genes)
 fucci <- reduceDimension(fucci)
 fucci <- orderCells(fucci)
-plot_cell_trajectory(fucci, color_by = "gate")
-plot_genes_in_pseudotime(fucci, color_by = "time")
+#plot_genes_in_pseudotime(fucci,color_cells_by = 'gate')
+return(fucci)
+}

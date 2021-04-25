@@ -1,4 +1,4 @@
-fucci_fcs_io <- function (fcs_dir){
+fucci_fcs_io <- function (fcs_dir,exp){
   fcs_file <- list.files(fcs_dir,pattern=".fcs$")
   gate_file <- list.files(fcs_dir,pattern=".fcs_gates.xml")
   
@@ -13,9 +13,9 @@ fucci_fcs_io <- function (fcs_dir){
   parameters<- ls(flowEnv)
   ctl_fcsdata <- data.frame(fcs@exprs)
   colnames(ctl_fcsdata) <- c("time","ImageNumber","ObjectNumber","R","G")
-  ctl_fcsdata$exp <- "CTL"
+  ctl_fcsdata$exp <- exp
   ctl_fcsdata$gate <- 0
-  
+  filter <- flowCore::filter
   for (icnt in 1:3){
     result = filter(fcs, flowEnv[[parameters[icnt+1]]])
     summary(result)
@@ -23,5 +23,6 @@ fucci_fcs_io <- function (fcs_dir){
     #g1_data <- fcs@exprs[g1_index,]
     ctl_fcsdata[g1_index,]$gate <- icnt
   }
+  filter <- dplyr::filter
   return(ctl_fcsdata)
 } 
