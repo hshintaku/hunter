@@ -21,7 +21,7 @@ p1 <- ggplot(ctl_fcsdata,aes(x=G,y=R,color=time))+geom_point()+
   scale_y_log10(limits=c(10,1000))+scale_x_log10(limits=c(10,1000))
 ggplot(ctl_fcsdata,aes(x=factor(time),y=R,color=gate))+geom_violin()
 
-merge_fl_data <- ctl_fcsdata
+merge_fl_data <- rbind(ctl_fcsdata,epl_fcsdata)
 
 source('./fucci_fl_monocle_pseudotime.R')
 
@@ -45,9 +45,9 @@ gridExtra::grid.arrange(p1,p2,  nrow = 2)
 #
 # scatter plot
 #
-cellcycle_prog_mean_sd <- merge_fl_data %>% group_by(time) %>% summarize(mean = mean(pseudotime), sd = sd(pseudotime))
+cellcycle_prog_mean_sd <- merge_fl_data %>% group_by(time,exp) %>% summarize(mean = mean(pseudotime), sd = sd(pseudotime))
 
-ggplot(cellcycle_prog_mean_sd,aes(x=time,y=mean))+geom_point(size=3)+geom_line()+
+ggplot(cellcycle_prog_mean_sd,aes(x=time,y=mean,color=exp))+geom_point(size=3)+geom_line()+
   ylab("Cell cycle progression")+ylim(c(-1,4))+
   geom_errorbar(aes(ymax = (mean + sd), ymin = (mean - sd)), width=2,
                 position=position_dodge(0))
