@@ -1,7 +1,7 @@
 library(biomaRt)
-func.biomart.ref <- function(hs_mart, gene_list,symbol){
+func.biomart.ref <- function(hs_mart, filter_item, gene_list,symbol){
   reference=getBM(attributes=c("ensembl_gene_id","description",symbol,"gene_biotype","chromosome_name"),
-               filters="ensembl_gene_id",values=gene_list,mart=hs_mart)
+               filters=filter_item,values=gene_list,mart=hs_mart)
   
   colnames(reference) <- c("ensembl_gene_id","description","gene_short_name","gene_biotype","chromosome_name")
   reference <- reference[!duplicated(reference$ensembl_gene_id),]
@@ -18,25 +18,6 @@ hs_ref_intron$ensembl_gene_id <- paste0(hs_ref$ensembl_gene_id,"_intron")
 rownames(hs_ref_intron)<- hs_ref_intron$ensembl_gene_id
 return(hs_ref_intron)
 }
-
-
-hs_mart <- useMart(biomart="ensembl", dataset="hsapiens_gene_ensembl")
-ms_mart <- useMart(biomart="ensembl", dataset="mmusculus_gene_ensembl")
-#pig_mart <- useMart(biomart="ensembl", dataset="sscrofa_gene_ensembl")
-
-
-gene_list <- unique(data.frame(str_replace(allData$gene,"_intron","")))
-colnames(gene_list) <- "gene"
-
-hs_ref <- unique(func.biomart.ref(hs_mart,gene_list,"hgnc_symbol"))
-ms_ref <- unique(func.biomart.ref(ms_mart,gene_list,"mgi_symbol"))
-all_ref <- rbind(hs_ref,ms_ref)
-
-missing_ref <- subset(gene_list,!(gene %in% all_ref$ensembl_gene_id))
-adding_ref <- data.frame(cbind(missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene))
-colnames(adding_ref) <- colnames(all_ref)
-rownames(adding_ref) <- adding_ref$ensembl_gene_id
-all_ref <- rbind(adding_ref,all_ref)
 
 #pig_ref <- func.biomart.ref(pig_mart,gene_list,"hgnc_symbol")
 

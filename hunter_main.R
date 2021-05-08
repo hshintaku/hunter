@@ -10,7 +10,7 @@ library(openxlsx)
 library(dplyr)
 library(Seurat)
 library(SingleCellSignalR)
-library('seqinr')
+library(seqinr)
 
 # decode the single cell data from whitelist of UMI-tools output
 datadir <- "/home/samba/storage0/Kaneko/20210324_Miseq016_2/20210324_Miseq016Ana/"
@@ -29,6 +29,17 @@ source(file.path(rdir,'hunter_preprocess_whitelist.R'))
 source(file.path(rdir,'hunter_preprocess_data.R'))
 
 # download reference data from ensembl with biomaRt
+hs_mart <- useMart(biomart="ensembl", dataset="hsapiens_gene_ensembl")
+ms_mart <- useMart(biomart="ensembl", dataset="mmusculus_gene_ensembl")
+#pig_mart <- useMart(biomart="ensembl", dataset="sscrofa_gene_ensembl")
+hs_ref <- unique(func.biomart.ref(hs_mart,"ensembl_gene_id",gene_list,"hgnc_symbol"))
+ms_ref <- unique(func.biomart.ref(ms_mart,"ensembl_gene_id",gene_list,"mgi_symbol"))
+all_ref <- rbind(hs_ref,ms_ref)
+missing_ref <- subset(gene_list,!(gene %in% all_ref$ensembl_gene_id))
+adding_ref <- data.frame(cbind(missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene))
+colnames(adding_ref) <- colnames(all_ref)
+rownames(adding_ref) <- adding_ref$ensembl_gene_id
+all_ref <- rbind(adding_ref,all_ref)
 source(file.path(rdir,'hunter_biomart_ref.R'))
 
 # save count data with 10x format
