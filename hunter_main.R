@@ -10,14 +10,14 @@ library(openxlsx)
 library(dplyr)
 library(Seurat)
 library(SingleCellSignalR)
-library('seqinr')
+library(seqinr)
 
 # decode the single cell data from whitelist of UMI-tools output
-datadir <- "/home/samba/storage0/Kaneko/20210324_Miseq016_2/20210324_Miseq016Ana/"
-wdir <- "/home/samba/storage0/shintaku/20210324MiSeq016_Kaneko/"
+datadir <- "/home/samba/storage0/shintaku/20210216HiSeqX002/"
+wdir <- "/home/samba/storage0/shintaku/HUNTER/"
 rdir <- "/home/samba/storage0/shintaku/github/hunter"
 
-barcode <- read.table(file.path("/home/samba/storage0/shintaku/github/hunter/RTbarcodes.txt"))
+barcode <- read.table(file.path("/home/samba/storage0/shintaku/HUNTER/RTbarcodes.txt"))
 # load functions for barcode decoding
 source(file.path(rdir,"whitelist_encode.R"))
 # laod whitelist and check the batch effect
@@ -26,17 +26,29 @@ source(file.path(rdir,'hunter_preprocess_whitelist.R'))
 # preprocess the count data and load reference
 source(file.path(rdir,'hunter_preprocess_data.R'))
 
+# download reference data from ensembl with biomaRt
+gene_list <- unique(data.frame(str_replace(allData$gene,"_intron","")))
+colnames(gene_list) <- "gene"
+source(file.path(rdir,'hunter_biomart_ref.R'))
+
+
 # save count data with 10x format
 source(file.path(rdir, 'hunter_preprocess_save_10x_format.R'))
 
+
+#
+# you can restart from here
 # load data from 10x formatted files
 source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
+gene_list <- data.frame(rownames(pbmc))
+colnames(gene_list) <- "gene"
+source(file.path(rdir,'hunter_biomart_ref.R'))
 
 # technical check, pca and umap clustering for cell typing
 source(file.path(rdir,'hunter_Seurat_technicalcheck.R'))
 
 # load FCS data
-indexdir =paste0(rdir,"index/")
+indexdir =paste0(wdir,"index/")
 source(file.path(rdir,'hunter_Seurat_load_adt_data.R'))
 
 # subset analysis: clustering subset and checking the mCherry expression

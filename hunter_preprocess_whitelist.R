@@ -25,7 +25,7 @@ for (icnt in 1:nrow(filelist_whitelist)){
 
 
 allencoded$GC <- as.numeric(lapply(lapply(as.character(allencoded$first_barcode),s2c),GC))
-p0 <- ggplot(allencoded,aes(x=GC,y=count))+ geom_point()+ scale_y_log10()
+p0 <- ggplot(allencoded,aes(x=factor(GC),y=count))+ geom_violin()+ scale_y_log10()+geom_boxplot()
 p1 <- ggplot(allencoded, aes(x = first_index, y = count, color=first_barcode))+geom_violin()
 p2 <- ggplot(allencoded, aes(x = batch, y = count, color=batch))+geom_violin()+theme(axis.text.x = element_text(angle = 90, hjust = 1))
 

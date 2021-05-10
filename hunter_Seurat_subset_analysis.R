@@ -13,6 +13,10 @@ grid.arrange(plot2,plot1, nrow = 1)
 AML <- RunPCA(AML, npcs=10, features = VariableFeatures(object = AML))
 print(AML[["pca"]], dims = 1:2, nfeatures = 50)
 DimHeatmap(AML, dims = 1:10, cells = 500, balanced = TRUE)
+p1 <- DimPlot(AML, reduction = "pca",group.by = "plates")
+p2 <- DimPlot(AML, reduction = "pca",group.by = "dish")
+p3 <- DimPlot(AML, reduction = "pca",group.by = "gate")
+p1+p2+p3
 
 AML <- JackStraw(AML, num.replicate = 10)
 AML <- ScoreJackStraw(AML, dims = 0:5)
@@ -23,9 +27,9 @@ AML <- FindNeighbors(AML, dims = 1:5)
 AML <- FindClusters(AML, resolution = 0.1)
 AML <- RunUMAP(AML, dims = 1:5)
 
-p1 <- DimPlot(AML, reduction = "pca",group.by = "dish")
-p2 <- DimPlot(AML, reduction = "umap",group.by = "dish")
-p1+p2
+# p1 <- DimPlot(AML, reduction = "pca",group.by = "dish")
+# p2 <- DimPlot(AML, reduction = "umap",group.by = "dish")
+# p1+p2
 
 
 

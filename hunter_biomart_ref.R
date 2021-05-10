@@ -23,12 +23,14 @@ rownames(hs_ref_intron)<- hs_ref_intron$ensembl_gene_id
 return(hs_ref_intron)
 }
 
-gene_list <- unique(data.frame(str_replace(allData$gene,"_intron","")))
-colnames(gene_list) <- "gene"
 
 #hs_ref <- func.biomart.ref(hs_mart,gene_list,"hgnc_symbol")
 ms_ref <- unique(func.biomart.ref(ms_mart,gene_list,"mgi_symbol"))
-
+missing_ref <- subset(gene_list,!(gene %in% ms_ref$ensembl_gene_id))
+adding_ref <- data.frame(cbind(missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene))
+colnames(adding_ref) <- colnames(ms_ref)
+rownames(adding_ref) <- adding_ref$ensembl_gene_id
+ms_ref <- rbind(adding_ref,ms_ref)
 
 #pig_ref <- func.biomart.ref(pig_mart,gene_list,"hgnc_symbol")
 
