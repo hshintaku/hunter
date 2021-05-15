@@ -14,7 +14,7 @@ library(seqinr)
 
 # decode the single cell data from whitelist of UMI-tools output
 datadir <- "/home/samba/storage0/shintaku/20210216HiSeqX002/"
-wdir <- "/home/samba/storage0/shintaku/HUNTER/"
+wdir <- "/home/samba/storage0/shintaku/20210216HiSeqX002/"
 rdir <- "/home/samba/storage0/shintaku/github/hunter"
 
 barcode <- read.table(file.path("/home/samba/storage0/shintaku/HUNTER/RTbarcodes.txt"))

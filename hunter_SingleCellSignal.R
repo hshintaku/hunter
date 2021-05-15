@@ -6,6 +6,8 @@
 
 # Ligand/Receptor analysis using SingleCellSignalR
 #signal = cell_signaling(data=data,genes=all.genes,cluster=cluster)
+# user guide
+# https://rdrr.io/bioc/SingleCellSignalR/f/vignettes/UsersGuide.Rmd
 
 # Visualization
 #visualize(signal)
@@ -25,34 +27,26 @@ pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
 pbmc <- FindNeighbors(pbmc, dims = 1:10)
 pbmc <- FindClusters(pbmc, resolution = 0.1)
 
-cluster = as.numeric(Idents(pbmc))
-scdata = data.frame(pbmc[["RNA"]]@data)
+
+vitro1 <- subset(x=pbmc, subset=dish =="d01")
+vitro2 <- subset(x=pbmc, subset=dish =="d02")
+vitro3 <- subset(x=pbmc, subset=dish =="d03")
+vitro4 <- subset(x=pbmc, subset=dish =="d04")
+vitro <- merge(vitro1, y = vitro2, add.cell.ids = c("d01", "d02"), project = "vitro")
+vitro <- merge(vitro, y = vitro3, add.cell.ids = c("d12", "d03"), project = "vitro")
+vitro <- merge(vitro, y = vitro4, add.cell.ids = c("d23", "d04"), project = "vitro")
+
+
+cluster = as.numeric(Idents(vitro))
+scdata = data.frame(vitro[["RNA"]]@data)
 
 all.genes <- row.names(scdata)
-clust <- clustering(data=scdata, n.cluster=4, n=10,method="simlr",write=TRUE,pdf=FALSE)
+clust <- clustering(data=scdata, n.cluster=3, n=10,method="simlr",write=TRUE,pdf=FALSE)
 
 signal = cell_signaling(data=scdata,genes=all.genes,cluster=clust$cluster,species ="mus musculus",
-                        logFC=log2(1.0001),s.score=0.0001,int.type = "paracrine",write=TRUE)
+                        logFC=log2(1.0),s.score=0.5,int.type = "paracrine",write=TRUE,c.names=c("AMLaffected","E0771","AML"))
 
+inter.net <- inter_network(data = scdata, signal = signal, genes = all.genes, cluster = clust$cluster, write = FALSE)
+visualize_interactions(signal = signal)
 
-#clust.analysis <- cluster_analysis(data=scdata,genes=rownames(scdata),cluster=clust$cluster,write=FALSE)
-
-
-signal <- cell_signaling(data = data, genes = all.genes, 
-                         cluster = cluster, species ="mus musculus",write = FALSE,
-                         logFC=log2(1.0001),s.score=0.001)
-
-
-sc_names <- data.frame(rownames(scdata)) # list gene short names
-scnames_ref <- ms_ref[match(sc_names$rownames.scdata.,ms_ref$gene_short_name),] # create reference from ms_ref regardless of entrez annotation
-
-  
-#sc_annot_index <- data.frame(which(!is.na(datExpr_ref$entrez_annotation))) #
-#ms_ref_subset <- datExpr_ref[which(!is.na(datExpr_ref$entrez_annotation)),]#ms_ref[which(!is.na(ms_ref$entrez_annotation)),]
-
-
-t_sne <- data.frame(clust$`t-SNE`)
-t_sne$dish <- pbmc[['dish']]
-colnames(t_sne) <- c("tsne1","tsne2","dish")
-ggplot(t_sne,aes(x=tsne1,y=tsne2,shape=dish))+geom_point()
 

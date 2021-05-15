@@ -35,7 +35,7 @@ AML <- RunUMAP(AML, dims = 1:5)
 
 
 
-FeatureScatter(object=AML,feature1="SSC",feature2="normGFP")
+FeatureScatter(object=AML,feature1="Venus",feature2="normGFP")
 
 p1 <- FeatureScatter(object=AML,feature2='Venus',feature1='CS2nGFPT2AH2BmCherG01')
 p2 <- FeatureScatter(object=AML,feature2='mCherry',feature1='CS2nGFPT2AH2BmCherG01')

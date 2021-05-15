@@ -3,7 +3,7 @@
 
 # Load the PBMC dataset
 #wdir <- "/home/watson/sanger/shintaku/HUNTER/"
-pbmc.data <- Read10X(data.dir = wdir)
+pbmc.data <- Read10X(data.dir = datadir)
 
 
 # Initialize the Seurat object with the raw (non-normalized data).
