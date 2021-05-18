@@ -1,7 +1,7 @@
 # list of genes are obtained from https://www.nature.com/articles/nbt.4231#Sec32
 # Paired-cell sequencing enables spatial gene expression mapping of liver endothelial cells Nat Biotech 2018
 #
-landmark_genes_cv <- data.frame(read.csv('/home/samba/pihome/2021/Shintaku/genes_cv.csv',header = F))
+landmark_genes_cv <- read.csv('/home/samba/pihome/2021/Shintaku/genes_cv.csv',header = F)
 landmark_genes_pn <- read.csv('/home/samba/pihome/2021/Shintaku/genes_pn.csv',header = F)
 #
 #
