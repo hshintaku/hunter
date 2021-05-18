@@ -32,9 +32,10 @@ vitro1 <- subset(x=pbmc, subset=dish =="d01")
 vitro2 <- subset(x=pbmc, subset=dish =="d02")
 vitro3 <- subset(x=pbmc, subset=dish =="d03")
 vitro4 <- subset(x=pbmc, subset=dish =="d04")
-vitro <- merge(vitro1, y = vitro2, add.cell.ids = c("d01", "d02"), project = "vitro")
-vitro <- merge(vitro, y = vitro3, add.cell.ids = c("d12", "d03"), project = "vitro")
-vitro <- merge(vitro, y = vitro4, add.cell.ids = c("d23", "d04"), project = "vitro")
+vitro <- merge(vitro1, y = vitro2, project = "vitro")
+vitro <- merge(vitro, y = vitro3, project = "vitro")
+vitro <- merge(vitro, y = vitro4, project = "vitro")
+rm(vitro1,vitro2,vitro3,vitro4)
 
 
 cluster = as.numeric(Idents(vitro))
@@ -49,4 +50,11 @@ signal = cell_signaling(data=scdata,genes=all.genes,cluster=clust$cluster,specie
 inter.net <- inter_network(data = scdata, signal = signal, genes = all.genes, cluster = clust$cluster, write = FALSE)
 visualize_interactions(signal = signal)
 
+vitro_result <- vitro[["dish"]]
+vitro_result$cluster <- clust$cluster
+vitro_result$tsne1 <- clust$`t-SNE`[,1]
+vitro_result$tsne2 <- clust$`t-SNE`[,2]
+vitro_result$normGFP <- vitro[["ADT"]]@data["Venus",]
+vitro_result$HUNTER <- vitro[["RNA"]]@data["CS2nGFPT2AH2BmCherG01",]
 
+ggplot(data=vitro_result,aes(x=tsne1,y=tsne2,color=dish))+geom_point()

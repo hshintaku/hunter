@@ -1,5 +1,6 @@
 #
 # GOenrichmentAnalysis (experimental)
+BiocManager::install("org.Mm.eg.db")
 library("org.Mm.eg.db")
 library(clusterProfiler)
 #
@@ -8,14 +9,18 @@ ensmusg <- data.frame(unlist(as.list(org.Mm.egENSEMBL2EG)))
 ms_ref$entrez_annotation <- ensmusg[ms_ref$ensembl_gene_id,]
 #
 #
+datExpr <- data.frame(t(GetAssayData(object=vitro[["RNA"]])))
+
+
 datExpr_names <- data.frame(names(datExpr)) # list gene short names
 datExpr_ref <- ms_ref[match(datExpr_names$names.datExpr.,ms_ref$gene_short_name),] # create reference from ms_ref regardless of entrez annotation
 datExp_annot_index <- data.frame(which(!is.na(datExpr_ref$entrez_annotation))) #
 
 ms_ref_subset <- datExpr_ref[which(!is.na(datExpr_ref$entrez_annotation)),]#ms_ref[which(!is.na(ms_ref$entrez_annotation)),]
-
 datExpr_subset <- datExpr[,unlist(datExp_annot_index)]
+
 moduleColors_subset <- moduleColors[unlist(datExp_annot_index)]
+
 allLLIDs <- ms_ref_subset$entrez_annotation
 
 GOenr <- GOenrichmentAnalysis(moduleColors_subset,allLLIDs, organism = "mouse", ontologies = c("BP", "CC", "MF"), nBestP = 10)

@@ -11,6 +11,7 @@ library(dplyr)
 library(Seurat)
 library(SingleCellSignalR)
 library(seqinr)
+library(stringr)
 
 # decode the single cell data from whitelist of UMI-tools output
 datadir <- "/home/samba/storage0/shintaku/20210216HiSeqX002/"
@@ -25,24 +26,45 @@ source(file.path(rdir,'hunter_preprocess_whitelist.R'))
 
 # preprocess the count data and load reference
 source(file.path(rdir,'hunter_preprocess_data.R'))
-
+#
 # download reference data from ensembl with biomaRt
 gene_list <- unique(data.frame(str_replace(allData$gene,"_intron","")))
 colnames(gene_list) <- "gene"
 source(file.path(rdir,'hunter_biomart_ref.R'))
-
-
+#hs_ref <- func.biomart.ref(hs_mart,gene_list,"hgnc_symbol")
+filter="ensembl_gene_id"
+symbol="mgi_symbol"
+ms_ref <- unique(func.biomart.ref(ms_mart,gene_list,filter,symbol))
+missing_ref <- subset(gene_list,!(gene %in% ms_ref$ensembl_gene_id))
+adding_ref <- data.frame(cbind(missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene))
+colnames(adding_ref) <- colnames(ms_ref)
+rownames(adding_ref) <- adding_ref$ensembl_gene_id
+ms_ref <- rbind(adding_ref,ms_ref)
 # save count data with 10x format
 source(file.path(rdir, 'hunter_preprocess_save_10x_format.R'))
+
+
+
 
 
 #
 # you can restart from here
 # load data from 10x formatted files
 source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
+#
+# create reference table with gene_short_name
+source(file.path(rdir,'hunter_biomart_ref.R'))
 gene_list <- data.frame(rownames(pbmc))
 colnames(gene_list) <- "gene"
-source(file.path(rdir,'hunter_biomart_ref.R'))
+#hs_ref <- func.biomart.ref(hs_mart,gene_list,"hgnc_symbol")
+filter="mgi_symbol"
+symbol="mgi_symbol"
+ms_ref <- unique(func.biomart.ref(ms_mart,gene_list,filter,symbol))
+missing_ref <- subset(gene_list,!(gene %in% ms_ref$gene_short_name))
+adding_ref <- data.frame(cbind(missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene))
+colnames(adding_ref) <- colnames(ms_ref)
+rownames(adding_ref) <- adding_ref$ensembl_gene_id
+ms_ref <- rbind(adding_ref,ms_ref)
 
 # technical check, pca and umap clustering for cell typing
 source(file.path(rdir,'hunter_Seurat_technicalcheck.R'))
@@ -56,7 +78,7 @@ source(file.path(rdir,"hunter_Seurat_subset_analysis.R"))
 source(file.path(rdir, "hunter_Seurat_subset_scatter.R"))
 
 # WGCNA for gene network module
-source(file.path(rdir,"hunter_WGCNA_main.R"))
+#source(file.path(rdir,"hunter_WGCNA_main.R"))
 
 #clusterProfiler for GO analysis
 source(file.path(rdir,"hunter_clusterProfiler.R"))
