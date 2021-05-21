@@ -13,6 +13,7 @@ library(Seurat)
 library(SingleCellSignalR)
 library(seqinr)
 library(stringr)
+library(VennDiagram)
 
 # decode the single cell data from whitelist of UMI-tools output
 datadir <- "/home/samba/storage0/Shiomi/20210427MiSeq017Ana"
@@ -58,48 +59,24 @@ source(file.path(rdir,'hunter_Seurat_load_adt_data.R'))
 # load cite-seq-count=FLD data
 #
 source(file.path(rdir,'hunter_Seurat_load_fld_data.R'))
-#
-# 
-#
-source(file.path(rdir,"shiomi_Seurat_cellcycle_dependence.R"))
-
-
-
-
-
-
-# subset analysis: clustering subset and checking the mCherry expression
-source(file.path(rdir,"hunter_Seurat_subset_analysis.R"))
-source(file.path(rdir, "hunter_Seurat_subset_scatter.R"))
-
-# WGCNA for gene network module
-#source(file.path(rdir,"hunter_WGCNA_main.R"))
-
-#clusterProfiler for GO analysis
+# first overview
+# analyze data with PCA and UMAP
+# find clusters and marker genes
+source(file.path(rdir,"shiomi_Seurat_technicalcheck.R"))
+# analyze GO term of enriched genes in the marker genes
 source(file.path(rdir,"hunter_clusterProfiler.R"))
 
-#SingleCellSignale.R
-source(file.path(rdir,"hunter_SingleCellSignal.R"))
-
-library(VennDiagram)
-
-corr_module_normGFP <- names(datExpr)[moduleColors=="purple"]
-acorr_module_normGFP <- names(datExpr)[moduleColors=="black"]
-normGFP_module <- c(corr_module_normGFP,acorr_module_normGFP)
-
-corr_moudle_mCherry <- names(datExpr)[moduleColors=="yellow"]
-acorr_module_mCherry <- names(datExpr)[moduleColors=="green"]
-mCherry_module <- c(corr_moudle_mCherry,acorr_module_mCherry)
-
-PC_1_gene <- PCASigGenes(object=AML,pcs.use=1,pval.cut=0.1)
-PC_2_gene <- PCASigGenes(object=AML,pcs.use=2,pval.cut=0.1)
-
-gene_list<- list(normGFP=corr_module_normGFP, mCherry=mCherry_module,PC_1=PC_1_gene, PC_2=PC_2_gene)
-venn.diagram(gene_list,filename = file.path(wdir,"gene.jpg"), fill=c(2,3,4,5), alpha=0.4, lty=3)
+# check cell cycle dependence 
+source(file.path(rdir,"shiomi_Seurat_cellcycle_dependence.R"))
+# find marker genes
+source(file.path(rdir,"shiomi_Seurat_Markergenes.R"))
+#
+source(file.path(rdir,"shiomi_Seurat_monocle_pseudotime.R"))
 
 
-#VlnPlot(pbmc, features = c("pg-GAPDH", "pg-S100A2"), slot = "counts", log = TRUE)
-#FeaturePlot(pbmc, features = c("hs-MT-ND4", "pg-GAPDH"))
+
+
+
 
 
 
