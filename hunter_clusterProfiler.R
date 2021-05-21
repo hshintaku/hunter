@@ -1,41 +1,28 @@
+
 #
 # GOenrichmentAnalysis (experimental)
-BiocManager::install("org.Mm.eg.db")
-library("org.Mm.eg.db")
+#BiocManager::install("org.Mm.eg.db")
+#library("org.Mm.eg.db")
+#BiocManager::install("org.Hs.eg.db")
+library("org.Hs.eg.db")
 library(clusterProfiler)
 #
-ensmusg <- data.frame(unlist(as.list(org.Mm.egENSEMBL2EG)))
+ensmusg <- data.frame(unlist(as.list(org.Hs.egENSEMBL2EG)))
 # entrez annotation
 ms_ref$entrez_annotation <- ensmusg[ms_ref$ensembl_gene_id,]
-#
-#
-datExpr <- data.frame(t(GetAssayData(object=vitro[["RNA"]])))
 
 
-datExpr_names <- data.frame(names(datExpr)) # list gene short names
-datExpr_ref <- ms_ref[match(datExpr_names$names.datExpr.,ms_ref$gene_short_name),] # create reference from ms_ref regardless of entrez annotation
-datExp_annot_index <- data.frame(which(!is.na(datExpr_ref$entrez_annotation))) #
-
-ms_ref_subset <- datExpr_ref[which(!is.na(datExpr_ref$entrez_annotation)),]#ms_ref[which(!is.na(ms_ref$entrez_annotation)),]
-datExpr_subset <- datExpr[,unlist(datExp_annot_index)]
-
-moduleColors_subset <- moduleColors[unlist(datExp_annot_index)]
-
-allLLIDs <- ms_ref_subset$entrez_annotation
-
-GOenr <- GOenrichmentAnalysis(moduleColors_subset,allLLIDs, organism = "mouse", ontologies = c("BP", "CC", "MF"), nBestP = 10)
-tab <- GOenr$bestPTerms[[4]]$enrichment
-
-module_genes <- names(datExpr_subset)[moduleColors_subset=="pink"]
-write.csv(module_genes,file.path(wdir,"module_genes_pink.csv"))
+perturbed_gene_HEA.entrez_annotation <- ms_ref_subset[ms_ref_subset$gene_short_name %in% rownames(perturbed_gene_HEA),]
+perturbed_gene_RG.entrez_annotation <- ms_ref_subset[ms_ref_subset$gene_short_name %in% rownames(perturbed_gene_RG),]
 #
 # https://bioc.ism.ac.jp/packages/3.3/bioc/vignettes/clusterProfiler/inst/doc/clusterProfiler.html
 #
 # clusterProfiler
 # 
-gene_module_go <- allLLIDs[moduleColors_subset=="pink"]
-ego_result <- enrichGO(gene          = gene_module_go,
-                       OrgDb         = org.Mm.eg.db,
+#gene_module_go <- allLLIDs[moduleColors_subset=="pink"]
+
+ego_result <- enrichGO(gene          = perturbed_gene_RG.entrez_annotation$entrez_annotation, 
+                       OrgDb         = org.Hs.eg.db,
                        ont           = "CC",
                          pAdjustMethod = "BH",
                        pvalueCutoff  = 0.05,
@@ -45,9 +32,14 @@ head(as.data.frame(ego_result))
 ego_result.simple<-simplify(ego_result)
 head(as.data.frame(ego_result.simple))
 barplot(ego_result, drop=TRUE, showCategory=30)
-clusterProfiler::dotplot(ego_result)
+#https://www.rdocumentation.org/packages/clusterProfiler/versions/3.0.4/topics/compareCluster
+perturbed_gene_list <- list(RG=perturbed_gene_RG.entrez_annotation$entrez_annotation,HEA=perturbed_gene_HEA.entrez_annotation$entrez_annotation)
+xx <- compareCluster(perturbed_gene_list, fun="groupGO",
+                     OrgDb         = org.Hs.eg.db)
+summary(xx)
+#clusterProfiler::dotplot(ego_result)
 #clusterProfiler::emapplot(ego_result.simple)
-clusterProfiler::cnetplot(ego_result, categorySize="pvalue", foldChange=allLLIDs)
+#clusterProfiler::cnetplot(ego_result, categorySize="pvalue")
 goplot(ego_result.simple)
 #
 # gse

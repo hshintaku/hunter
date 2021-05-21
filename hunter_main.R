@@ -4,7 +4,8 @@ library(dplyr)
 library(tidyr)
 library(ggplot2)
 library(tidyverse)
-library(R.utils) 
+library(R.utils)
+library(RCurl)
 library(Matrix)
 library(openxlsx)
 library(dplyr)
@@ -20,33 +21,8 @@ rdir <- "/home/samba/storage0/shintaku/github/hunter"
 
 barcode <- read.table(file.path("/home/samba/storage0/shintaku/github/hunter/cell_id_list.txt"))
 barcode$GC <- as.numeric(lapply(lapply(as.character(barcode$V1),s2c),GC))
-# load functions for barcode decoding
-source(file.path(rdir,"whitelist_encode.R"))
-# laod whitelist and check the batch effect
-source(file.path(rdir,'hunter_preprocess_whitelist.R'))
 
-# preprocess the count data and load reference
-source(file.path(rdir,'hunter_preprocess_data.R'))
-#
-# download reference data from ensembl with biomaRt
-gene_list <- unique(data.frame(str_replace(allData$gene,"_intron","")))
-colnames(gene_list) <- "gene"
-source(file.path(rdir,'hunter_biomart_ref.R'))
-#hs_ref <- func.biomart.ref(hs_mart,gene_list,"hgnc_symbol")
-filter="ensembl_gene_id"
-#symbol="mgi_symbol"
-symbol="hgnc_symbol"
-hs_mart <- useMart(biomart="ensembl", dataset="hsapiens_gene_ensembl")
-#ms_mart <- useMart(biomart="ensembl", dataset="mmusculus_gene_ensembl")
-#pig_mart <- useMart(biomart="ensembl", dataset="sscrofa_gene_ensembl")
-ms_ref <- unique(func.biomart.ref(hs_mart,gene_list,filter,symbol))
-missing_ref <- subset(gene_list,!(gene %in% ms_ref$ensembl_gene_id))
-adding_ref <- data.frame(cbind(missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene))
-colnames(adding_ref) <- colnames(ms_ref)
-rownames(adding_ref) <- adding_ref$ensembl_gene_id
-ms_ref <- rbind(adding_ref,ms_ref)
-# save count data with 10x format
-source(file.path(rdir, 'hunter_preprocess_save_10x_format.R'))
+source(file.path(rdir,"hunter_first_data_process.R"))
 
 #
 # you can restart from here
@@ -68,8 +44,6 @@ source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
 # ms_ref <- rbind(adding_ref,ms_ref)
 
 
-
-
 # technical check, pca and umap clustering for cell typing
 source(file.path(rdir,'hunter_Seurat_technicalcheck.R'))
 
@@ -81,9 +55,15 @@ channel <- c("Events","FSC","SSC","Venus","mCherry")
 
 source(file.path(rdir,'hunter_Seurat_load_adt_data.R'))
 #
-# load cite-seq-count data
+# load cite-seq-count=FLD data
 #
 source(file.path(rdir,'hunter_Seurat_load_fld_data.R'))
+#
+# 
+#
+source(file.path(rdir,"shiomi_Seurat_cellcycle_dependence.R"))
+
+
 
 
 

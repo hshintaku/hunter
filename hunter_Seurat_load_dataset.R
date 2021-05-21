@@ -11,7 +11,7 @@ pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 1
 
 cellids <- colnames(pbmc)
 pbmc[['plates']] <- substr(cellids,1,3)
-pbmc[['dish']] <- substr(cellids,4,6)
+pbmc[['cell']] <- substr(cellids,4,6)
 pbmc[['gate']] <- substr(cellids,7,8)
 pbmc[['pool']] <- substr(cellids,10,10)
 pbmc[['rtid']] <- substr(cellids,12,13)
