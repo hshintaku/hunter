@@ -24,7 +24,7 @@ barcode <- read.table(file.path("/home/samba/storage0/shintaku/github/hunter/cel
 barcode$GC <- as.numeric(lapply(lapply(as.character(barcode$V1),s2c),GC))
 
 source(file.path(rdir,"hunter_first_data_process.R"))
-
+#
 #
 # you can restart from here
 # load data from 10x formatted files
@@ -58,6 +58,9 @@ source(file.path(rdir,'hunter_Seurat_load_adt_data.R'))
 #
 # load cite-seq-count=FLD data
 #
+# preprocess FLD data
+source(file.path(rdir,"shiomi_preprocess_FLD_data.R"))
+source(file.path(rdir,"shiomi_fld_external_control_analysis.R"))
 source(file.path(rdir,'hunter_Seurat_load_fld_data.R'))
 # first overview
 # analyze data with PCA and UMAP
@@ -70,9 +73,8 @@ source(file.path(rdir,"hunter_clusterProfiler.R"))
 source(file.path(rdir,"shiomi_Seurat_cellcycle_dependence.R"))
 # find marker genes
 source(file.path(rdir,"shiomi_Seurat_Markergenes.R"))
-#
+# compute pseudotime and order cells along the gene expression
 source(file.path(rdir,"shiomi_Seurat_monocle_pseudotime.R"))
-
 
 
 
