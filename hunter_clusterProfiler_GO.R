@@ -14,6 +14,8 @@ ms_ref$entrez_annotation <- ensmusg[ms_ref$ensembl_gene_id,]
 
 perturbed_gene_HEA.entrez_annotation <- ms_ref_subset[ms_ref_subset$gene_short_name %in% rownames(perturbed_gene_HEA),]
 perturbed_gene_RG.entrez_annotation <- ms_ref_subset[ms_ref_subset$gene_short_name %in% rownames(perturbed_gene_RG),]
+perturbed_gene_elp.entrez_annotation <- ms_ref_subset[ms_ref_subset$gene_short_name %in% rownames(perturbed_gene_elp),]
+
 #
 # https://bioc.ism.ac.jp/packages/3.3/bioc/vignettes/clusterProfiler/inst/doc/clusterProfiler.html
 #
@@ -21,7 +23,7 @@ perturbed_gene_RG.entrez_annotation <- ms_ref_subset[ms_ref_subset$gene_short_na
 # 
 #gene_module_go <- allLLIDs[moduleColors_subset=="pink"]
 
-ego_result <- enrichGO(gene          = perturbed_gene_RG.entrez_annotation$entrez_annotation, 
+ego_result <- enrichGO(gene          = perturbed_gene_elp.entrez_annotation$entrez_annotation, 
                        OrgDb         = org.Hs.eg.db,
                        ont           = "CC",
                          pAdjustMethod = "BH",
@@ -39,17 +41,6 @@ xx <- compareCluster(perturbed_gene_list, fun="groupGO",
 summary(xx)
 #clusterProfiler::dotplot(ego_result)
 #clusterProfiler::emapplot(ego_result.simple)
-#clusterProfiler::cnetplot(ego_result, categorySize="pvalue")
+#clusterProfiler::cnetplot(ego_result, categoryS ize="pvalue")
 goplot(ego_result.simple)
-#
-# gse
-# 
-gse_result<- gseGO(geneList     = gene_module_go,
-                   OrgDb        = org.Mm.eg.db,
-                   ont          = "BP",
-                     nPerm        = 1000,
-                   minGSSize    = 120,
-                   pvalueCutoff = 0.05,
-                   verbose      = FALSE)
-head(as.data.frame(gse_result))
-ridgeplot(gse_result,showCategory = 8)
+

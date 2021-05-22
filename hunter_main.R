@@ -76,7 +76,13 @@ source(file.path(rdir,"shiomi_Seurat_Markergenes.R"))
 # compute pseudotime and order cells along the gene expression
 source(file.path(rdir,"shiomi_Seurat_monocle_pseudotime.R"))
 
-
+#
+# http://yulab-smu.top/clusterProfiler-book/index.html
+#
+# GO analysis
+source(file.path(rdir,"hunter_clusterProfiler_GO.R"))
+# pathway analysis
+source(file.path(ridir,"hunter_clusterProfiler_GSEA.R"))
 
 
 

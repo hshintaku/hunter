@@ -1,10 +1,10 @@
 #
 # 5Aza cells/RG cells
 #
-pbmc.markers <- FindMarkers(pbmc,logfc.threshold = 0.4,ident.1=colnames(subset(pbmc,subset=gate=="RG")))
-perturbed_gene_RG <- subset(pbmc.markers, p_val_adj<0.01)
-pbmc.markers <- FindMarkers(pbmc,logfc.threshold = 0.4,ident.1=colnames(subset(pbmc,subset=cell=="HEA")))
-perturbed_gene_HEA <- subset(pbmc.markers, p_val_adj<0.01)
+RG.markers <- FindMarkers(pbmc,logfc.threshold = 0.1,ident.1=colnames(subset(pbmc,subset=gate=="RG")))
+perturbed_gene_RG <- subset(RG.markers, p_val_adj<0.2)
+Aza.markers <- FindMarkers(pbmc,logfc.threshold = 0.1,ident.1=colnames(subset(pbmc,subset=cell=="HEA")))
+perturbed_gene_HEA <- subset(Aza.markers, p_val_adj<0.2)
 
 perturbed_gene <- list(RG=rownames(perturbed_gene_RG),HEA=rownames(perturbed_gene_HEA))
 p0 <- venn.diagram(perturbed_gene,filename =NULL, fill=c(2,3), alpha=0.4, lty=3)
@@ -27,7 +27,7 @@ pheatmap(perturbed_expression,
 #
 cntl_HeLa <- subset(x=pbmc,subset=dish!=c("HEA") )
 elp.markers <- FindMarkers(cntl_HeLa,logfc.threshold = 0.4,ident.1=colnames(subset(cntl_HeLa,subset=gate=="RG")))
-perturbed_gene_elp <- subset(elp.markers, p_val_adj<0.01)
+perturbed_gene_elp <- subset(elp.markers, p_val_adj<0.05)
 perturbed_gene_elp
 write.csv(RG_marker_regardless_of_5Aza,"/home/samba/pihome/2021/Shintaku/Shiomi/RG_marker_regardless_of_5Aza_out_of_15genes.csv")
 
