@@ -16,10 +16,12 @@ gene_list <- function(perturbed_gene_HEA,ms_ref){
   gene_list_log2fc <- gene_list_log2fc[order(gene_list_log2fc,decreasing = T)]
   return(gene_list_log2fc)
 }
-gene_list_log2fc <- gene_list(elp.markers,ms_ref)
+gene_list_log2fc <- gene_list(Aza.markers,ms_ref)
 #
+# try BP: biological process, CC: cellular component, or MF: molecular function
 gse_result<- gseGO(geneList     = gene_list_log2fc,
                    OrgDb        = org.Hs.eg.db,
+                   ont          = "CC",
                    nPerm        = 100,
                    minGSSize    = 12,
                    pvalueCutoff = 0.4,
