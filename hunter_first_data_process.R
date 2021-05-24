@@ -1,15 +1,15 @@
 # load functions for barcode decoding
-source(file.path(rdir,"whitelist_encode.R"))
+source(file.path(rdir,"util/whitelist_encode.R"))
 # laod whitelist and check the batch effect
-source(file.path(rdir,'hunter_preprocess_whitelist.R'))
+source(file.path(rdir,'preprocess/preprocess_whitelist.R'))
 
 # preprocess the count data and load reference
-source(file.path(rdir,'hunter_preprocess_data.R'))
+source(file.path(rdir,'preprocess/preprocess_RNAseq_data.R'))
 #
 # download reference data from ensembl with biomaRt
 gene_list <- unique(data.frame(str_replace(allData$gene,"_intron","")))
 colnames(gene_list) <- "gene"
-source(file.path(rdir,'hunter_biomart_ref.R'))
+source(file.path(rdir,'util/hunter_biomart_ref.R'))
 #hs_ref <- func.biomart.ref(hs_mart,gene_list,"hgnc_symbol")
 filter="ensembl_gene_id"
 #symbol="mgi_symbol"
@@ -24,5 +24,5 @@ colnames(adding_ref) <- colnames(ms_ref)
 rownames(adding_ref) <- adding_ref$ensembl_gene_id
 ms_ref <- rbind(adding_ref,ms_ref)
 # save count data with 10x format
-source(file.path(rdir, 'hunter_preprocess_save_10x_format.R'))
+source(file.path(rdir, 'preprocess/preprocess_save_10x_format.R'))
 

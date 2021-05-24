@@ -17,10 +17,11 @@ library(VennDiagram)
 
 # decode the single cell data from whitelist of UMI-tools output
 datadir <- "/home/samba/storage0/Shiomi/20210427MiSeq017Ana"
+#wdir <- "/home/samba/storage0/shintaku/20210323MiSeq015Ana10X/"
 wdir <- "/home/samba/storage0/shintaku/20210427MiSeq017/"
 rdir <- "/home/samba/storage0/shintaku/github/hunter"
 
-barcode <- read.table(file.path("/home/samba/storage0/shintaku/github/hunter/cell_id_list.txt"))
+barcode <- read.table(file.path(rdir,"cell_id_list.txt"))
 barcode$GC <- as.numeric(lapply(lapply(as.character(barcode$V1),s2c),GC))
 
 source(file.path(rdir,"hunter_first_data_process.R"))
@@ -29,6 +30,8 @@ source(file.path(rdir,"hunter_first_data_process.R"))
 # you can restart from here
 # load data from 10x formatted files
 source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
+pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
+pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 200)
 #
 # create reference table with gene_short_name
 # source(file.path(rdir,'hunter_biomart_ref.R'))
@@ -46,7 +49,7 @@ source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
 
 
 # technical check, pca and umap clustering for cell typing
-source(file.path(rdir,'hunter_Seurat_technicalcheck.R'))
+source(file.path(rdir,'shiomi_Seurat_technicalcheck.R'))
 
 # load FCS data
 #indexdir =paste0(wdir,"index/")
@@ -59,20 +62,18 @@ source(file.path(rdir,'hunter_Seurat_load_adt_data.R'))
 # load cite-seq-count=FLD data
 #
 # preprocess FLD data
-source(file.path(rdir,"shiomi_preprocess_FLD_data.R"))
+source(file.path(rdir,"preprocess/preprocess_FLD_data.R"))
 source(file.path(rdir,"shiomi_fld_external_control_analysis.R"))
 source(file.path(rdir,'hunter_Seurat_load_fld_data.R'))
 # first overview
 # analyze data with PCA and UMAP
 # find clusters and marker genes
 source(file.path(rdir,"shiomi_Seurat_technicalcheck.R"))
-# analyze GO term of enriched genes in the marker genes
-source(file.path(rdir,"hunter_clusterProfiler.R"))
 
 # check cell cycle dependence 
 source(file.path(rdir,"shiomi_Seurat_cellcycle_dependence.R"))
 # find marker genes
-source(file.path(rdir,"shiomi_Seurat_Markergenes.R"))
+source(file.path(rdir,"shiomi_Seurat_Marker.genes.R"))
 # compute pseudotime and order cells along the gene expression
 source(file.path(rdir,"shiomi_Seurat_monocle_pseudotime.R"))
 

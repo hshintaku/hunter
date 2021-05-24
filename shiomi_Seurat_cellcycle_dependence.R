@@ -1,4 +1,4 @@
-source(file.path(rdir,"fucci_cellcycle_genes.R"))
+source(file.path(rdir,"util/fucci_cellcycle_genes.R"))
 sub_ref <- ms_ref %>%
   dplyr::filter(gene_short_name %in% rownames(pbmc))
 genes <- fucci_cellcycle_genes(sub_ref)
