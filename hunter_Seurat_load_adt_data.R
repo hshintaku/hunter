@@ -1,6 +1,7 @@
-load.adt <- function (indexfiles,batch) {
-  adt.xlsx <- read.xlsx(indexfiles[1],sheet=1, rows=16:111,cols=1:7,colNames = FALSE,rowNames = TRUE)
-  colnames(adt.xlsx)<- c("Events","FSC","SSC","Venus","APC","mCherry")
+load.adt <- function (indexfiles,batch,channel) {
+  rowend <- length(channel)+1
+  adt.xlsx <- read.xlsx(indexfiles[1],sheet=1, rows=16:111,cols=1:rowend,colNames = FALSE,rowNames = TRUE)
+  colnames(adt.xlsx)<- channel#c("Events","FSC","SSC","Venus","APC","mCherry")
   
   # create normalized GFP
   adt.xlsx$normGFP <- (adt.xlsx$Venus/adt.xlsx$mCherry)
@@ -23,21 +24,19 @@ load.adt <- function (indexfiles,batch) {
 #load FACS index data file name is 8 char long.
 batch <- unique(substr(files$name,1,8))
 indexfiles <- file.path(indexdir,paste0(batch,".xlsx"))
-
-#indexlist <- rbind(indexfiles,batch)
-
-adt.xlsx <- mapply(load.adt,indexfiles,batch)
+channels <- rep(list(channel),length(indexfiles))
+adt.xlsx <- mapply(load.adt,indexfiles,batch,channels)
 adt.csv <- do.call("cbind",adt.xlsx)
 
 # adding adt data
 seladt.csv <- adt.csv[,cellids] # extract cells detected in RNA-seq
+seladt.csv[is.na(seladt.csv)] <- 0
 pbmc.adt <-as.sparse(seladt.csv) # convert the format to sparse matrix
-
 pbmc[["ADT"]] <- CreateAssayObject(counts=pbmc.adt)
 
 #pbmc <- NormalizeData(pbmc,assay="ADT",normalization.method = "LogNormalize",scale.factor = 1e5)
-pbmc <- NormalizeData(pbmc,assay="ADT",normalization.method = "LogNormalize",margin=2,scale.factor = 1e5)
+#pbmc <- NormalizeData(pbmc,assay="ADT",normalization.method = "LogNormalize",margin=2,scale.factor = 1e5)
 #NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
 
-pbmc <- ScaleData(pbmc,assay="ADT")
+#pbmc <- ScaleData(pbmc,assay="ADT")
 

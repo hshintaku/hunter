@@ -1,7 +1,4 @@
 library(biomaRt)
-#hs_mart <- useMart(biomart="ensembl", dataset="hsapiens_gene_ensembl")
-ms_mart <- useMart(biomart="ensembl", dataset="mmusculus_gene_ensembl")
-#pig_mart <- useMart(biomart="ensembl", dataset="sscrofa_gene_ensembl")
 
 func.biomart.ref <- function(hs_mart, gene_list,filter,symbol){
   reference=getBM(attributes=c("ensembl_gene_id","description",symbol,"gene_biotype","chromosome_name"),
