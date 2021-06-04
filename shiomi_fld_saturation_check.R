@@ -37,7 +37,7 @@ umi_exp$condition <- "experiment"
 # create merged data for comparison
 #
 merge_umi <- rbind(umi_data,umi_exp)
-ggplot(merge_umi,aes(x=read,umi,color=condition))+geom_point()+scale_x_log10(limits=c(1e-3,1))
+ggplot(merge_umi,aes(x=read,umi,color=condition))+geom_point()+scale_x_log10(limits=c(1e-2,1))
 
 rm(umi_div,umi_count,umi_labels,umi_dup,umi_count_fraction,Read_count,UMI_count)
 rm(umi_data,exp_data)

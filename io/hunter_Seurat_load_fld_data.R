@@ -8,8 +8,10 @@ colnames(FLDmapALL) <- c("romin","FLD004","FLD010","FLD070","FLD500","FLDcon","U
 rownames(FLDmapALL) <- toupper(rownames(FLDmapALL))
 
 # adding FLD data
-seladt.FLD.csv <- t(FLDmapALL[cellids,]) # extract cells detected in RNA-seq
-pbmc.adt.FLD <-as.sparse(seladt.FLD.csv) # convert the format to sparse matrix
+seladt.FLD.csv <- FLDmapALL[cellids,] # extract cells detected in RNA-seq
+rownames(seladt.FLD.csv) <- cellids
+seladt.FLD.csv[is.na(seladt.FLD.csv$romin),]<-0
+pbmc.adt.FLD <-as.sparse(t(seladt.FLD.csv)) # convert the format to sparse matrix
 pbmc[["FLD"]] <- CreateAssayObject(counts=pbmc.adt.FLD)
 
 #pbmc <- NormalizeData(pbmc,assay="ADT",normalization.method = "CLR",margin=2)
