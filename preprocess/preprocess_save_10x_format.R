@@ -36,4 +36,5 @@ gene_matrix_mtx <- Matrix(data.matrix(gene_matrix_mtx), sparse = TRUE)    # Than
 writeMM(gene_matrix_mtx,paste0(wdir,'matrix.mtx'))
 gzip(paste0(wdir,'matrix.mtx'),overwrite=TRUE)
 
+rm(allData,gene_list,gene_matrix,gene_matrix_mtx,barcodes,features,features_sel)
 

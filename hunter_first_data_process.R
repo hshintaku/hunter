@@ -24,5 +24,6 @@ colnames(adding_ref) <- colnames(ms_ref)
 rownames(adding_ref) <- adding_ref$ensembl_gene_id
 ms_ref <- rbind(adding_ref,ms_ref)
 # save count data with 10x format
+rm(missing_ref,adding_ref)
 source(file.path(rdir, 'preprocess/preprocess_save_10x_format.R'))
 

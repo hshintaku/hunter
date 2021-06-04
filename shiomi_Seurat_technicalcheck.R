@@ -91,6 +91,6 @@ pbmc.markers %>% group_by(cluster) %>% top_n(n = 5)
 #VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"), ncol = 2,group.by = "gate")
 #VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"), ncol = 2,group.by = "cell")
 
-
+rm(p1,p2,p3,plot1,plot2,count_summary,count_summary_mean,pca_topcells,top10,all.genes,tenx)
 
 

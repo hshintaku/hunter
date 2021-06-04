@@ -29,7 +29,7 @@ source(file.path(rdir,"hunter_first_data_process.R"))
 #
 # you can restart from here
 # load data from 10x formatted files
-source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
+source(file.path(rdir,"/io/hunter_Seurat_load_dataset.R"))
 pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 200)
 #
@@ -57,18 +57,18 @@ indexdir <- "/home/samba/storage0/Shiomi/hunterindex"
 channel <- c("Events","FSC","SSC","Venus","mCherry")
 #c("Events","FSC","SSC","Venus","APC","mCherry")
 
-source(file.path(rdir,'hunter_Seurat_load_adt_data.R'))
+source(file.path(rdir,'/io/hunter_Seurat_load_adt_data.R'))
 #
 # load cite-seq-count=FLD data
 #
 # preprocess FLD data
 source(file.path(rdir,"preprocess/preprocess_FLD_data.R"))
+source(file.path(rdir,'io/hunter_Seurat_load_fld_data.R'))
 source(file.path(rdir,"shiomi_fld_external_control_analysis.R"))
-source(file.path(rdir,'hunter_Seurat_load_fld_data.R'))
 # first overview
 # analyze data with PCA and UMAP
 # find clusters and marker genes
-source(file.path(rdir,"shiomi_Seurat_technicalcheck.R"))
+#source(file.path(rdir,"shiomi_Seurat_technicalcheck.R"))
 
 # check cell cycle dependence 
 source(file.path(rdir,"shiomi_Seurat_cellcycle_dependence.R"))

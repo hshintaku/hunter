@@ -3,7 +3,7 @@ library(stringr)
 library(dplyr)
 
 #source(file.path(rdir,"shiomi_preprocess_FLD_data.R"))
-FLDmapALL <- load.fld(datadir,barcode)
+FLDmapALL <- load.fld(datadir,"umi_count",barcode)
 colnames(FLDmapALL) <- c("romin","FLD004","FLD010","FLD070","FLD500","FLDcon","Unmapped","GC")
 rownames(FLDmapALL) <- toupper(rownames(FLDmapALL))
 
@@ -26,5 +26,5 @@ colnames(FLDcomb) <- c("FLD004","FLD010","FLD070","FLD500","Venus")
 
 cor(FLDcomb, method="spearman")
 
-
+rm(seladt.FLD.csv,pbmc.adt.FLD,FLDcomb)
 

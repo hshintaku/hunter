@@ -18,5 +18,5 @@ pbmc[['rtid']] <- substr(cellids,12,13)
 
 dim(pbmc)
 #head(x = FetchData(object = pbmc, vars = c('ident')),n=1000)
-
+rm(pbmc.data)
 

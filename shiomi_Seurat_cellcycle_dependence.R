@@ -13,3 +13,4 @@ p1 <- FeatureScatter(pbmc,feature1 = "G2M.Score",feature2 = "Venus",group.by = "
 p2 <- FeatureScatter(pbmc,feature1 = "S.Score",feature2 = "Venus",group.by = "cell")+scale_y_log10()
 p1+p2
 FeatureScatter(pbmc,feature1 = "S.Score",feature2 = "G2M.Score",group.by = "gate")
+rm(p1,p2,sub_ref,genes,cell_cycle_markers)

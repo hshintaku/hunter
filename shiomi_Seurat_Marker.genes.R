@@ -23,18 +23,18 @@ pheatmap(perturbed_expression,
 #
 # control cells
 #
-cntl_HeLa <- subset(x=pbmc,subset=dish!=c("HEA") )
+cntl_HeLa <- subset(x=pbmc,subset=cell!=c("HEA") )
 elp.markers <- FindMarkers(cntl_HeLa,logfc.threshold = 0.1,ident.1=colnames(subset(cntl_HeLa,subset=gate=="RG")))
 perturbed_gene_elp <- subset(elp.markers, p_val_adj<0.05)
 perturbed_gene_elp
-write.csv(RG_marker_regardless_of_5Aza,"/home/samba/pihome/2021/Shintaku/Shiomi/RG_marker_regardless_of_5Aza_out_of_15genes.csv")
-
+#
 
 #
 # intersection of 5Aza and RG HeLa
 #
 RG_marker_regardless_of_5Aza <-intersect(shared_genes_RG_HEA$gene_short_name,rownames(perturbed_gene_elp))
 RG_marker_regardless_of_5Aza <-ms_ref[ms_ref$gene_short_name %in% RG_marker_regardless_of_5Aza,]
+write.csv(RG_marker_regardless_of_5Aza,"/home/samba/pihome/2021/Shintaku/Shiomi/RG_marker_regardless_of_5Aza_out_of_15genes.csv")
 
 perturbed_expression <- pbmc[["RNA"]]@data[RG_marker_regardless_of_5Aza$gene_short_name,]
 pheatmap(perturbed_expression,

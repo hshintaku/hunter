@@ -22,6 +22,8 @@ load.adt <- function (indexfiles,batch,channel) {
 }
 
 #load FACS index data file name is 8 char long.
+files <- data.frame(list.files(file.path(datadir,"count"),pattern="counts.tsv.gz"))
+colnames(files)<-"name"
 batch <- unique(substr(files$name,1,8))
 indexfiles <- file.path(indexdir,paste0(batch,".xlsx"))
 channels <- rep(list(channel),length(indexfiles))
@@ -40,3 +42,4 @@ pbmc[["ADT"]] <- CreateAssayObject(counts=pbmc.adt)
 
 #pbmc <- ScaleData(pbmc,assay="ADT")
 
+rm(batch,indexfiles,channels,adt.xlsx,adt.csv,seladt.csv,pbmc.adt,channel)

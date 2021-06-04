@@ -30,4 +30,4 @@ p1 <- ggplot(allencoded, aes(x = first_index, y = count, color=first_barcode))+g
 p2 <- ggplot(allencoded, aes(x = batch, y = count, color=batch))+geom_violin()+theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 grid.arrange(p0,p1, p2, nrow = 3)
-
+rm(correct_encoded,encoded,p0,p1,p2)

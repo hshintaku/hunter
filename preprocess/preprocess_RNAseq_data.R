@@ -20,4 +20,4 @@ for (icnt in 1:nrow(files)){
     allData <- myData
   }
 }
-rm(myData)
+rm(myData,white,encoded)

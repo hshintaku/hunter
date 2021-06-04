@@ -1,9 +1,9 @@
-load.fld <- function(datadir,barcode){
+load.fld <- function(datadir,count_type,barcode){
   sampleID <- list.dirs(path=file.path(datadir,"CITE-seq"), full.names = FALSE, recursive = FALSE)
   FLDmapALL <- matrix(nrow=8, ncol=0)
   for (i in 1:length(sampleID)){
     #FLDmap <- matrix(nrow=7, ncol=0)
-    samfol = file.path(datadir, "CITE-seq/", sampleID[i], "/umi_count/",sep="")
+    samfol = file.path(datadir, "CITE-seq", sampleID[i], count_type,sep="")
     FLD.data <- Read10X(data.dir = samfol, gene.column=1)
     iName = substr(sampleID[i], 1, 10)
     romin <- whitelist.umi_tools.encode(colnames(FLD.data),barcode$V1)
