@@ -57,7 +57,7 @@ indexdir <- "/home/samba/storage0/Shiomi/hunterindex"
 channel <- c("Events","FSC","SSC","Venus","mCherry")
 #c("Events","FSC","SSC","Venus","APC","mCherry")
 
-source(file.path(rdir,'/io/hunter_Seurat_load_adt_data.R'))
+source(file.path(rdir,'io/hunter_Seurat_load_adt_data.R'))
 #
 # load cite-seq-count=FLD data
 #
