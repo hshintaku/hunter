@@ -57,8 +57,8 @@ CellScatter(object = pbmc, cell1 = pca_topcells[1], cell2 = pca_topcells[2])
 
 
 pbmc <- JackStraw(pbmc, num.replicate = 100)
-pbmc <- ScoreJackStraw(pbmc, dims = 1:20)
-JackStrawPlot(pbmc, dims = 1:20)
+pbmc <- ScoreJackStraw(pbmc, dims = 1:10)
+JackStrawPlot(pbmc, dims = 1:10)
 ElbowPlot(pbmc)
 
 pbmc <- FindNeighbors(pbmc, dims = 1:10)
