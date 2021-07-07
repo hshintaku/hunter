@@ -1,8 +1,8 @@
-fucci_cellcycle_genes <- function(all_ref){
+fucci_cellcycle_genes <- function(hs_ref){
 cc_file <- getURL("https://raw.githubusercontent.com/hbc/tinyatlas/master/cell_cycle/Homo_sapiens.csv") 
 cell_cycle_genes <- read.csv(text = cc_file)
 
-cell_cycle_markers <- dplyr::left_join(cell_cycle_genes,all_ref,by=c("geneID"="ensembl_gene_id"))
+cell_cycle_markers <- dplyr::left_join(cell_cycle_genes,hs_ref,by=c("geneID"="ensembl_gene_id"))
 cell_cycle_markers <- cell_cycle_markers[!is.na(cell_cycle_markers$gene_short_name),]
 
 # cell_cycle_markers_macosko_a <- read.csv("/home/samba/storage0/shintaku/macosco_cellcycle_genes.csv")
