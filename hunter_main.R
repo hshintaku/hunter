@@ -13,7 +13,7 @@ library(Seurat)
 library(SingleCellSignalR)
 library(seqinr)
 library(stringr)
-library(VennDiagram)
+#library(VennDiagram)
 
 # decode the single cell data from whitelist of UMI-tools output
 datadir <- "/home/samba/sanger/shintaku/20210708HiSeqX003Piezo/"
