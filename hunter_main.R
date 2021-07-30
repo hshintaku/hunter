@@ -13,12 +13,12 @@ library(Seurat)
 library(SingleCellSignalR)
 library(seqinr)
 library(stringr)
-library(VennDiagram)
+#library(VennDiagram)
 
 # decode the single cell data from whitelist of UMI-tools output
-datadir <- "/home/samba/sanger/Shiomi/20210427MiSeq017Ana"
+datadir <- "/home/samba/sanger/Shiomi/20210601_HiSeq/"
 #wdir <- "/home/samba/sanger/shintaku/20210323MiSeq015Ana10X/"
-wdir <- "/home/samba/sanger/shintaku/20210427MiSeq017/"
+wdir <- "/home/samba/public/shintaku/20210601_HiSeqX004/"
 rdir <- "/home/samba/public/shintaku/hunter"
 
 barcode <- read.table(file.path(rdir,"cell_id_list.txt"))
@@ -34,18 +34,19 @@ pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor 
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 200)
 #
 # create reference table with gene_short_name
-# source(file.path(rdir,'hunter_biomart_ref.R'))
-# gene_list <- data.frame(rownames(pbmc))
-# colnames(gene_list) <- "gene"
+ source(file.path(rdir,'/util/hunter_biomart_ref.R'))
+ gene_list <- data.frame(rownames(pbmc))
+ colnames(gene_list) <- "gene"
 # #hs_ref <- func.biomart.ref(hs_mart,gene_list,"hgnc_symbol")
-# filter="mgi_symbol"
-# symbol="mgi_symbol"
-# ms_ref <- unique(func.biomart.ref(ms_mart,gene_list,filter,symbol))
-# missing_ref <- subset(gene_list,!(gene %in% ms_ref$gene_short_name))
-# adding_ref <- data.frame(cbind(missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene))
-# colnames(adding_ref) <- colnames(ms_ref)
-# rownames(adding_ref) <- adding_ref$ensembl_gene_id
-# ms_ref <- rbind(adding_ref,ms_ref)
+ filter="hgnc_symbol"
+ hs_mart <- useMart(biomart="ensembl", host="useast.ensembl.org",dataset="hsapiens_gene_ensembl")
+ symbol="hgnc_symbol"
+ ms_ref <- unique(func.biomart.ref(hs_mart,gene_list,filter,symbol))
+ missing_ref <- subset(gene_list,!(gene %in% ms_ref$gene_short_name))
+ adding_ref <- data.frame(cbind(missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene))
+ colnames(adding_ref) <- colnames(ms_ref)
+ rownames(adding_ref) <- adding_ref$ensembl_gene_id
+ ms_ref <- rbind(adding_ref,ms_ref)
 
 
 # technical check, pca and umap clustering for cell typing
@@ -53,7 +54,7 @@ source(file.path(rdir,'shiomi_Seurat_technicalcheck.R'))
 
 # load FCS data
 #indexdir =paste0(wdir,"index/")
-indexdir <- "/home/samba/storage0/Shiomi/hunterindex"
+indexdir <- "/home/samba/sanger/Shiomi/ELASTomicsindex"
 channel <- c("Events","FSC","SSC","Venus","mCherry")
 #c("Events","FSC","SSC","Venus","APC","mCherry")
 

@@ -14,7 +14,7 @@ source(file.path(rdir,'util/hunter_biomart_ref.R'))
 filter="ensembl_gene_id"
 #symbol="mgi_symbol"
 symbol="hgnc_symbol"
-hs_mart <- useMart(biomart="ensembl", dataset="hsapiens_gene_ensembl")
+hs_mart <- useMart(biomart="ensembl", host="useast.ensembl.org",dataset="hsapiens_gene_ensembl")
 #ms_mart <- useMart(biomart="ensembl", dataset="mmusculus_gene_ensembl")
 #pig_mart <- useMart(biomart="ensembl", dataset="sscrofa_gene_ensembl")
 ms_ref <- unique(func.biomart.ref(hs_mart,gene_list,filter,symbol))

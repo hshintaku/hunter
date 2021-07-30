@@ -1,8 +1,8 @@
 load.fld <- function(datadir,count_type,barcode){
   sampleID <- list.dirs(path=file.path(datadir,"CITE-seq"), full.names = FALSE, recursive = FALSE)
-  FLDmapALL <- matrix(nrow=8, ncol=0)
   for (i in 1:length(sampleID)){
     #FLDmap <- matrix(nrow=7, ncol=0)
+    count_type <- "read_count"
     samfol = file.path(datadir, "CITE-seq", sampleID[i], count_type,sep="")
     FLD.data <- Read10X(data.dir = samfol, gene.column=1)
     iName = substr(sampleID[i], 1, 10)
@@ -17,7 +17,11 @@ load.fld <- function(datadir,count_type,barcode){
     FLDmap <- as.data.frame(FLData)
     FLDmap$GC <- barcode[FLDmap$romin1,]$GC
     rownames(FLDmap) <- paste0(iName,"-",FLDmap$romin1 )
-    FLDmapALL <-rbind(FLDmapALL, FLDmap)
+    if (i==1){
+      FLDmapALL<-FLDmap
+    }else{
+      FLDmapALL <-rbind(FLDmapALL, FLDmap)
+    }
   }
   
   FLDmapALL <- as.data.frame(FLDmapALL)
