@@ -16,12 +16,16 @@ library(stringr)
 #library(VennDiagram)
 
 # decode the single cell data from whitelist of UMI-tools output
-datadir <- "/home/samba/sanger/Shiomi/20210601_HiSeq/"
+datadir <- "/home/samba/sanger/shintaku/20210728HiSeqX004_10x_TIG/"
 #wdir <- "/home/samba/sanger/shintaku/20210323MiSeq015Ana10X/"
-wdir <- "/home/samba/public/shintaku/20210601_HiSeqX004/"
-rdir <- "/home/samba/public/shintaku/hunter"
+wdir <- "/home/samba/public/shintaku/20210728HiSeqX004_10x_TIG/"
+rdir <- "/home/samba/public/shintaku/hunter/"
 
-barcode <- read.table(file.path(rdir,"cell_id_list.txt"))
+#
+# cell_id_list2.txt contains all barcodes
+# cell_id_list.txt contains selected barcodes by GC percent.
+#barcode <- read.table(file.path(rdir,"cell_id_list2.txt"))
+barcode <- read.table(file.path("/home/samba/public/shintaku/cellranger-6.1.0/lib/python/cellranger/barcodes/3M-february-2018.txt.gz"))
 barcode$GC <- as.numeric(lapply(lapply(as.character(barcode$V1),s2c),GC))
 
 source(file.path(rdir,"hunter_first_data_process.R"))
