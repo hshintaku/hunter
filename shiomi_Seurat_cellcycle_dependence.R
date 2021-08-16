@@ -5,16 +5,23 @@ genes <- fucci_cellcycle_genes(sub_ref)
 cell_cycle_markers<-genes[[1]]
 s_genes <- genes[[2]]
 g2m_genes <- genes[[3]]
-
+tig <-pbmc
 tig <- CellCycleScoring(tig,g2m.features = g2m_genes,s.features = s_genes,set.ident = TRUE)
-tig<- ScaleData(tig, vars.to.regress = c("S.Score", "G2M.Score"), features = c(s_genes, g2m_genes))
-features=c("S.Score","G2M.Score")
+tig$CC.Difference <- tig$S.Score - tig$G2M.Score
+#tig<- ScaleData(tig, vars.to.regress = c("S.Score", "G2M.Score"), features = c(s_genes, g2m_genes))
+
+tig<- ScaleData(tig, vars.to.regress = "CC.Difference", features = c(s_genes, g2m_genes))
+#features=c("S.Score","G2M.Score")
 #FeaturePlot(pbmc, features = features,reduction = "pca")
-p1 <- FeatureScatter(tig,feature1 = "G2M.Score",feature2 = "FLD004",group.by = "cell")+scale_y_log10()
-p2 <- FeatureScatter(tig,feature1 = "S.Score",feature2 = "FLD004",group.by = "cell")+scale_y_log10()
+p1 <- FeatureScatter(tig,feature1 = "G2M.Score",feature2 = "fld_FLD004")+scale_y_log10()
+p2 <- FeatureScatter(tig,feature1 = "S.Score",feature2 = "fld_FLD004")+scale_y_log10()
 p1+p2
 
-FeatureScatter(tig,feature1 = "S.Score",feature2 = "G2M.Score",group.by = "gate")
+FeatureScatter(tig,feature1 = "S.Score",feature2 = "G2M.Score")
 
-rm(p1,p2,sub_ref,genes,cell_cycle_markers)
+tig <- RunPCA(tig, npcs=50, features = VariableFeatures(object = tig))
+DimPlot(tig,reduction="pca")
+FeaturePlot(tig,features="fld_FLD500",reduction="pca")
+#pbmc<-tig
 
+VlnPlot(tig,features='fld_FLDtotal',group.by = 'Phase')+scale_y_log10(limits=c(10,1e5))

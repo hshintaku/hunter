@@ -10,11 +10,11 @@ median(tenx$nFeature_RNA)
 # Identify the 10 most highly variable genes
 top10 <- head(VariableFeatures(pbmc), 40)
 # plot variable features with labels
-plot1 <- VariableFeaturePlot(pbmc)
-plot1 <- LabelPoints(plot = plot1, points = top10)
-plot1
-plot2 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA" )
-plot2
+p1 <- VariableFeaturePlot(pbmc)
+p1 <- LabelPoints(plot = plot1, points = top10)
+p1
+p2 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA" )
+p2
 
 # running PCA npcs in the RunPCA function must be less than the number of samples
 # default is 50
@@ -30,18 +30,18 @@ pca_topcells <- TopCells(object = pbmc[['pca']], balanced = FALSE)
 CellScatter(object = pbmc, cell1 = pca_topcells[1], cell2 = pca_topcells[2])
 
 
-pbmc <- JackStraw(pbmc, num.replicate = 4)
-pbmc <- ScoreJackStraw(pbmc, dims = 1:5)
-JackStrawPlot(pbmc, dims = 1:5)
+pbmc <- JackStraw(pbmc, num.replicate = 100,dim=40)
+pbmc <- ScoreJackStraw(pbmc, dims = 1:40)
+JackStrawPlot(pbmc, dims = 1:40)
 ElbowPlot(pbmc)
 
-pbmc <- FindNeighbors(pbmc, dims = 1:10)
+pbmc <- FindNeighbors(pbmc, dims = 1:20)
 pbmc <- FindClusters(pbmc, resolution = 0.3)
 
 
 # Retreiving the results of the preprocessing from the Seurat object
 cluster = as.numeric(Idents(pbmc))
-pbmc <- RunUMAP(pbmc, dims = 1:3)
+pbmc <- RunUMAP(pbmc, dims = 1:20)
 p1 <- DimPlot(pbmc, reduction = "pca")
 p2 <- DimPlot(pbmc, reduction = "umap")
 p1+p2
@@ -51,6 +51,6 @@ pbmc.markers <- FindAllMarkers(pbmc, only.pos = TRUE, min.pct = 0, logfc.thresho
 pbmc.markers %>% group_by(cluster) %>% top_n(n = 5)
 
 
-rm(plot1,plot2,pca_topcells,top10,all.genes,tenx)
+rm(p1,p2,pca_topcells,top10,all.genes,tenx)
 
 
