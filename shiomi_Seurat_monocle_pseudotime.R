@@ -15,6 +15,7 @@ print(tig[["pca"]], dims = 1:2, nfeatures = 50)
 p1 <- DimPlot(tig, reduction = "pca")
 p2 <- DimPlot(tig, reduction = "pca",group.by = "treat")
 p3 <- DimPlot(tig, reduction = "pca",group.by = "cell")
+p3 <- FeaturePlot(tig, reduction = "pca", features = "FLD004")
 p1+p2+p3
 
 pbmc_monocle <- as.CellDataSet(tig)
