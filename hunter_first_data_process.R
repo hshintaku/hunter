@@ -14,8 +14,6 @@ source(file.path(rdir,'util/hunter_biomart_ref.R'))
 #hs_ref <- func.biomart.ref(hs_mart,gene_list,"hgnc_symbol")
 
 filter="ensembl_gene_id"
-#symbol="mgi_symbol"
-symbol="hgnc_symbol"
 if (symbol=="mgi_symbol"){
   ms_mart <- useMart(biomart="ensembl", dataset="mmusculus_gene_ensembl")
   ms_ref <- unique(func.biomart.ref(ms_mart,gene_list,filter,symbol))
@@ -33,7 +31,8 @@ adding_ref <- data.frame(cbind(missing_ref$gene,missing_ref$gene,missing_ref$gen
 colnames(adding_ref) <- colnames(ms_ref)
 rownames(adding_ref) <- adding_ref$ensembl_gene_id
 ms_ref <- rbind(adding_ref,ms_ref)
-# save count data with 10x format
 rm(missing_ref,adding_ref)
+
+# save count data with 10x format
 source(file.path(rdir, 'preprocess/preprocess_save_10x_format.R'))
 

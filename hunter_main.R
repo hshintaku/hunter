@@ -25,6 +25,8 @@ rdir <- "/home/samba/public/shintaku/github/hunter"
 barcode <- read.table(file.path(rdir,"cell_id_list.txt"))
 barcode$GC <- as.numeric(lapply(lapply(as.character(barcode$V1),s2c),GC))
 
+#symbol="mgi_symbol"
+symbol="hgnc_symbol"
 source(file.path(rdir,"hunter_first_data_process.R"))
 
 #
