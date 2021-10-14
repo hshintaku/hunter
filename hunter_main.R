@@ -16,15 +16,15 @@ library(stringr)
 library(VennDiagram)
 
 # decode the single cell data from whitelist of UMI-tools output
-datadir <- "/home/samba/public/Shiomi/20210427MiSeq017Ana"
-#wdir <- "/home/samba/public/shintaku/20210323MiSeq015Ana10X/"
-wdir <- "/home/samba/public/shintaku/20210427MiSeq017/"
+datadir <- "/home/samba/public/shintaku/20210728HiSeqX004_Ida"
+wdir <- "/home/samba/public/shintaku/20210728HiSeqX004_Ida/"
 rdir <- "/home/samba/public/shintaku/github/hunter"
 
 barcode <- read.table(file.path(rdir,"cell_id_list.txt"))
 barcode$GC <- as.numeric(lapply(lapply(as.character(barcode$V1),s2c),GC))
 
 source(file.path(rdir,"hunter_first_data_process.R"))
+
 #
 #
 # you can restart from here
