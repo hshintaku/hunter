@@ -15,3 +15,4 @@ dds <- DESeqDataSetFromMatrix(countData = pbmc.mtx, colData = group, design = ~ 
 dds <- DESeq(dds)
 res <- results(dds)
 head(res)
+plotMA(res, alpha = 0.01)

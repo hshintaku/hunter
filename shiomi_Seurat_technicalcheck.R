@@ -1,11 +1,11 @@
 
 # show number of counts
 VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"),
-        ncol = 2,group.by = "cell")
-VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"),
-        ncol = 2,group.by = "gate")
-FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "gate" )
-FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "cell" )
+        ncol = 2,group.by = "batch")
+#VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"),
+#        ncol = 2,group.by = "gate")
+FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "batch" )
+#FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "cell" )
 
 
 count_summary <- pbmc[[c("nCount_RNA","nFeature_RNA","gate","cell")]]
@@ -27,7 +27,7 @@ median(tenx$nFeature_RNA)
 
 
 # Identify the 10 most highly variable genes
-top10 <- head(VariableFeatures(pbmc), 40)
+top10 <- head(VariableFeatures(pbmc), 10)
 # plot variable features with labels
 plot1 <- VariableFeaturePlot(pbmc)
 plot1 <- LabelPoints(plot = plot1, points = top10)
@@ -50,7 +50,7 @@ p2 <- DimPlot(pbmc, reduction = "pca",group.by = "cell")
 p3 <- DimPlot(pbmc, reduction = "pca",group.by = "gate")
 p1+p2+p3
 
-DimPlot(pbmc, reduction = "pca",group.by = "pool")
+DimPlot(pbmc, reduction = "pca",group.by = "batch")
 DimPlot(pbmc, reduction = "pca",group.by = "rtid")
 
 # gene expression scatter
@@ -59,11 +59,11 @@ CellScatter(object = pbmc, cell1 = pca_topcells[1], cell2 = pca_topcells[2])
 
 
 pbmc <- JackStraw(pbmc, num.replicate = 100)
-pbmc <- ScoreJackStraw(pbmc, dims = 1:20)
-JackStrawPlot(pbmc, dims = 1:20)
+pbmc <- ScoreJackStraw(pbmc, dims = 1:10)
+JackStrawPlot(pbmc, dims = 1:10)
 ElbowPlot(pbmc)
 
-pbmc <- FindNeighbors(pbmc, dims = 1:10)
+pbmc <- FindNeighbors(pbmc, dims = 1:2)
 pbmc <- FindClusters(pbmc, resolution = 0.3)
 
 

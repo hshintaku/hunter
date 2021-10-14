@@ -14,6 +14,8 @@ library(SingleCellSignalR)
 library(seqinr)
 library(stringr)
 library(VennDiagram)
+library(stringdist)
+library(biomaRt)
 
 # decode the single cell data from whitelist of UMI-tools output
 datadir <- "/home/samba/public/shintaku/20210728HiSeqX004_Ida"
@@ -29,7 +31,7 @@ source(file.path(rdir,"hunter_first_data_process.R"))
 #
 # you can restart from here
 # load data from 10x formatted files
-source(file.path(rdir,"/io/hunter_Seurat_load_dataset.R"))
+source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
 pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 200)
 #
