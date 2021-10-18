@@ -47,9 +47,10 @@ p2 <- DimPlot(pbmc, reduction = "umap")
 p1+p2
 
 #find marker genes in each cluster
-pbmc.markers <- FindAllMarkers(pbmc, only.pos = TRUE, min.pct = 0, logfc.threshold = 0.1)
-pbmc.markers %>% group_by(cluster) %>% top_n(n = 5)
+pbmc.markers <- FindAllMarkers(pbmc, only.pos = TRUE, min.pct = 0, logfc.threshold = 0.5)
+pbmc.markers %>% group_by(cluster) %>% top_n(n = 30)
 
+FeaturePlot(pbmc,features="fld_FLDtotal")
 
 rm(p1,p2,pca_topcells,top10,all.genes,tenx)
 
