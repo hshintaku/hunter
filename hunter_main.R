@@ -19,7 +19,7 @@ library(VennDiagram)
 datadir <- "/home/samba/public/Shiomi/20210427MiSeq017Ana"
 #wdir <- "/home/samba/storage0/shintaku/20210323MiSeq015Ana10X/"
 wdir <- "/home/samba/public/shintaku/20210427MiSeq017/"
-rdir <- "/home/samba/public/shintaku/github/hunter"
+rdir <- "/home/samba/public/shintaku/github/hunter2"
 
 barcode <- read.table(file.path(rdir,"cell_id_list.txt"))
 barcode$GC <- as.numeric(lapply(lapply(as.character(barcode$V1),s2c),GC))
