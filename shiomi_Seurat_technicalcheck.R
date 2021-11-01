@@ -1,11 +1,11 @@
 
 # show number of counts
 VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"),
-        ncol = 2,group.by = "batch")
+        ncol = 2,group.by = "plate")
 #VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"),
 #        ncol = 2,group.by = "gate")
-FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "batch" )
-#FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "cell" )
+#FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "batch" )
+FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "gate" )
 
 
 count_summary <- pbmc[[c("nCount_RNA","nFeature_RNA","gate","cell")]]
@@ -45,12 +45,12 @@ pbmc <- RunPCA(pbmc, npcs=10, features = VariableFeatures(object = pbmc))
 print(pbmc[["pca"]], dims = 1:2, nfeatures = 50)
 
 # plot plates/dishes/gates/pools/rtid
-p1 <- DimPlot(pbmc, reduction = "pca",group.by = "plates")
+p1 <- DimPlot(pbmc, reduction = "pca",group.by = "plate")
 p2 <- DimPlot(pbmc, reduction = "pca",group.by = "cell")
 p3 <- DimPlot(pbmc, reduction = "pca",group.by = "gate")
 p1+p2+p3
 
-DimPlot(pbmc, reduction = "pca",group.by = "batch")
+DimPlot(pbmc, reduction = "pca",group.by = "pool")
 DimPlot(pbmc, reduction = "pca",group.by = "rtid")
 
 # gene expression scatter
