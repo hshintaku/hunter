@@ -20,6 +20,11 @@ library(biomaRt)
 # decode the single cell data from whitelist of UMI-tools output
 datadir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/"
 wdir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/"
+
+# decode the single cell data from whitelist of UMI-tools output
+datadir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/"
+wdir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/"
+
 rdir <- "/home/samba/public/shintaku/github/hunter2/"
 
 barcode <- read.table(file.path(rdir,"cell_id_list.txt"))
@@ -29,12 +34,14 @@ barcode$GC <- as.numeric(lapply(lapply(as.character(barcode$V1),s2c),GC))
 symbol="mgi_symbol"
 #symbol="hgnc_symbol"
 source(file.path(rdir,"hunter_first_data_process.R"))
-
 #
 #
 # you can restart from here
 # load data from 10x formatted files
 source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
+cellids <- colnames(pbmc)
+pbmc <- merge(hepa1, y = hepa2, add.cell.ids = c("1run", "2run"), project = "hunter")
+
 pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 200)
 #

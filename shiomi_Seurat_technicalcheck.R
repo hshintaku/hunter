@@ -5,7 +5,7 @@ VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"),
 #VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"),
 #        ncol = 2,group.by = "gate")
 #FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "batch" )
-FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "gate" )
+FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "plate" )
 
 
 count_summary <- pbmc[[c("nCount_RNA","nFeature_RNA","gate","cell")]]
@@ -27,7 +27,7 @@ median(tenx$nFeature_RNA)
 
 
 # Identify the 10 most highly variable genes
-top10 <- head(VariableFeatures(pbmc), 10)
+top10 <- head(VariableFeatures(pbmc), 200)
 # plot variable features with labels
 plot1 <- VariableFeaturePlot(pbmc)
 plot1 <- LabelPoints(plot = plot1, points = top10)
@@ -71,7 +71,7 @@ pbmc <- FindClusters(pbmc, resolution = 0.3)
 cluster = as.numeric(Idents(pbmc))
 pbmc <- RunUMAP(pbmc, dims = 1:7)
 p1 <- DimPlot(pbmc, reduction = "pca")
-p2 <- DimPlot(pbmc, reduction = "umap")
+p2 <- DimPlot(pbmc, reduction = "umap",group.by = "plate")
 p1+p2
 
 #find marker genes in each cluster
