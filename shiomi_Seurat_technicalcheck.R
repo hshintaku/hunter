@@ -5,7 +5,7 @@ VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"),
 #VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"),
 #        ncol = 2,group.by = "gate")
 #FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "batch" )
-FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "plate" )
+FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "gate" )
 
 
 count_summary <- pbmc[[c("nCount_RNA","nFeature_RNA","gate","cell")]]
@@ -40,7 +40,7 @@ plot1
 
 all.genes <- rownames(pbmc)
 pbmc <- ScaleData(pbmc, features = all.genes)
-pbmc <- RunPCA(pbmc, npcs=10, features = VariableFeatures(object = pbmc))
+pbmc <- RunPCA(pbmc, npcs=20, features = VariableFeatures(object = pbmc))
 
 print(pbmc[["pca"]], dims = 1:2, nfeatures = 50)
 
@@ -59,18 +59,18 @@ CellScatter(object = pbmc, cell1 = pca_topcells[1], cell2 = pca_topcells[2])
 
 
 pbmc <- JackStraw(pbmc, num.replicate = 100)
-pbmc <- ScoreJackStraw(pbmc, dims = 1:10)
-JackStrawPlot(pbmc, dims = 1:10)
+pbmc <- ScoreJackStraw(pbmc, dims = 1:20)
+JackStrawPlot(pbmc, dims = 1:20)
 ElbowPlot(pbmc)
 
-pbmc <- FindNeighbors(pbmc, dims = 1:2)
-pbmc <- FindClusters(pbmc, resolution = 0.3)
+pbmc <- FindNeighbors(pbmc, dims = 1:14)
+pbmc <- FindClusters(pbmc, resolution = 0.5)
 
 
 # Retreiving the results of the preprocessing from the Seurat object
 cluster = as.numeric(Idents(pbmc))
-pbmc <- RunUMAP(pbmc, dims = 1:7)
-p1 <- DimPlot(pbmc, reduction = "pca")
+pbmc <- RunUMAP(pbmc, dims = 1:14)
+p1 <- DimPlot(pbmc, reduction = "pca",group.by = "plate")
 p2 <- DimPlot(pbmc, reduction = "umap",group.by = "plate")
 p1+p2
 
