@@ -58,8 +58,8 @@ source(file.path(rdir,'shiomi_Seurat_technicalcheck.R'))
 
 # load FCS data
 #indexdir =paste0(wdir,"index/")
-indexdir <- "/home/samba/storage0/Shiomi/hunterindex"
-channel <- c("Events","FSC","SSC","Venus","mCherry")
+indexdir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/index/"
+channel <- c("Events","FSC","SSC","Venus","Azrite","mCherry")
 #c("Events","FSC","SSC","Venus","APC","mCherry")
 
 source(file.path(rdir,'io/hunter_Seurat_load_adt_data.R'))

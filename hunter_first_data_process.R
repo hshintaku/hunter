@@ -2,6 +2,7 @@
 source(file.path(rdir,"util/whitelist_encode.R"))
 # laod whitelist and check the batch effect
 source(file.path(rdir,'preprocess/preprocess_whitelist.R'))
+active_barcode <- barcode[sort(unique(allencoded$first_index)),]
 
 # preprocess the count data and load reference
 source(file.path(rdir,'preprocess/preprocess_RNAseq_data.R'))
