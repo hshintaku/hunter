@@ -1,10 +1,10 @@
 
 #
 # GOenrichmentAnalysis (experimental)
-#BiocManager::install("org.Mm.eg.db")
-#library("org.Mm.eg.db")
+BiocManager::install("org.Mm.eg.db")
+library("org.Mm.eg.db")
 #BiocManager::install("org.Hs.eg.db")
-library("org.Hs.eg.db")
+#library("org.Hs.eg.db")
 library(clusterProfiler)
 #
 ensmusg <- data.frame(unlist(as.list(org.Hs.egENSEMBL2EG)))

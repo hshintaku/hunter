@@ -22,8 +22,8 @@ datadir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/"
 wdir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/"
 
 # decode the single cell data from whitelist of UMI-tools output
-datadir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/"
-wdir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/"
+datadir <- "/home/samba/public/shintaku/20210216HiSeqX002/"
+wdir <- "/home/samba/public/shintaku/20210216HiSeqX002/"
 
 rdir <- "/home/samba/public/shintaku/github/hunter2/"
 
@@ -39,11 +39,13 @@ source(file.path(rdir,"hunter_first_data_process.R"))
 # you can restart from here
 # load data from 10x formatted files
 source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
-cellids <- colnames(pbmc)
+hepa1<-pbmc
 pbmc <- merge(hepa1, y = hepa2, add.cell.ids = c("1run", "2run"), project = "hunter")
-
+cellids <- colnames(pbmc)
+pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^mt-")
 pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
-pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 200)
+pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 1000)
+
 #
 # create reference table with gene_short_name
 # source(file.path(rdir,'hunter_biomart_ref.R'))

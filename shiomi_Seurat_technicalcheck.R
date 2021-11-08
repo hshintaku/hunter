@@ -2,9 +2,6 @@
 # show number of counts
 VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"),
         ncol = 2,group.by = "plate")
-#VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"),
-#        ncol = 2,group.by = "gate")
-#FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "batch" )
 FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "gate" )
 
 
@@ -63,21 +60,26 @@ pbmc <- ScoreJackStraw(pbmc, dims = 1:20)
 JackStrawPlot(pbmc, dims = 1:20)
 ElbowPlot(pbmc)
 
-pbmc <- FindNeighbors(pbmc, dims = 1:14)
+pbmc <- FindNeighbors(pbmc, dims = 1:9)
 pbmc <- FindClusters(pbmc, resolution = 0.5)
 
 
 # Retreiving the results of the preprocessing from the Seurat object
 cluster = as.numeric(Idents(pbmc))
 pbmc <- RunUMAP(pbmc, dims = 1:14)
-p1 <- DimPlot(pbmc, reduction = "pca",group.by = "plate")
-p2 <- DimPlot(pbmc, reduction = "umap",group.by = "plate")
+p1 <- DimPlot(pbmc, reduction = "pca",group.by = "gate")
+p2 <- DimPlot(pbmc, reduction = "umap",group.by = "gate")
 p1+p2
 
 #find marker genes in each cluster
-pbmc.markers <- FindAllMarkers(pbmc, only.pos = TRUE, min.pct = 0, logfc.threshold = 0.1)
-pbmc.markers %>% group_by(cluster) %>% top_n(n = 5)
+DimPlot(pbmc, reduction = "umap")
+pbmc.markers <- FindAllMarkers(pbmc, only.pos = TRUE, min.pct = 0, logfc.threshold = 0.15)
+pbmc.markers %>% group_by(cluster) %>% top_n(n = 2)
 
+FeaturePlot(pbmc,features="Cyp1a2")
+p1 <- DimPlot(pbmc, reduction = "umap",group.by = "plate")
+p2<-FeaturePlot(pbmc,features="Alb")
+p1+p2
 #pbmc.markers <- FindMarkers(pbmc,logfc.threshold = 0.2,ident.1=colnames(subset(pbmc,subset=gate=="RG")))
 #pbmc.markers <- FindMarkers(pbmc,logfc.threshold = 0.2,ident.1=colnames(subset(pbmc,subset=cell=="HEA")))
 
