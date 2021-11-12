@@ -1,41 +1,83 @@
 $`E0771-E0771vivo`
-      E0771 E0771vivo interaction type   LRscore
-2537   Rbp4     Stra6        paracrine 0.7311488
-3182 Lgals1     Ptprc        paracrine 0.6806360
+       E0771 E0771vivo interaction type   LRscore
+2537    Rbp4     Stra6        paracrine 0.7311488
+3182  Lgals1     Ptprc        paracrine 0.6806360
+1590 Hsp90b1      Tlr1        paracrine 0.5953084
+111  Angptl2      Tie1        paracrine 0.5906986
+1438   Gnai2     Ednrb        paracrine 0.5644838
+1593 Hsp90b1      Tlr7        paracrine 0.5524704
+740   Col4a1      Cd93        paracrine 0.5490189
+2826   Tgfb3    Acvrl1        paracrine 0.5466494
+3029   Vegfa     Sirpa        paracrine 0.5302095
+121    Anxa1      Fpr1        paracrine 0.5271252
+1885    Kng1    Bdkrb1        paracrine 0.5145260
+1441   Gnai2      Fpr1        paracrine 0.5025762
 
 $`E0771-GFP+`
       E0771  GFP+ interaction type   LRscore
 3182 Lgals1 Ptprc        paracrine 0.6427053
+1438  Gnai2 Ednrb        paracrine 0.5781849
 
 $`E0771-GFP-`
-     E0771     GFP- interaction type   LRscore
-125  Anxa1   Mtnr1a        paracrine 0.6313822
-453   Calr   Mtnr1a        paracrine 0.6242526
-1445 Gnai2   Mtnr1a        paracrine 0.6082229
-2624  Rtn4 Tnfrsf19        paracrine 0.6052646
+      E0771     GFP- interaction type   LRscore
+125   Anxa1   Mtnr1a        paracrine 0.6313822
+453    Calr   Mtnr1a        paracrine 0.6242526
+1445  Gnai2   Mtnr1a        paracrine 0.6082229
+2624   Rtn4 Tnfrsf19        paracrine 0.6052646
+1438  Gnai2    Ednrb        paracrine 0.5435765
+1420  Gnai2    Adcy1        paracrine 0.5340407
+1454  Gnai2    S1pr5        paracrine 0.5262523
+3025  Vegfa      Kdr        paracrine 0.5221953
+740  Col4a1     Cd93        paracrine 0.5153268
+65      Adm    Adrb3        paracrine 0.5029988
+
+$`E0771-mCherry+semihelth`
+     E0771 mCherry+semihelth interaction type   LRscore
+2624  Rtn4          Tnfrsf19        paracrine 0.5268649
+
+$`E0771-healthy`
+     E0771  healthy interaction type   LRscore
+2624  Rtn4 Tnfrsf19        paracrine 0.5202066
+
+$`E0771vivo-GFP-`
+     E0771vivo  GFP- interaction type   LRscore
+1420     Gnai2 Adcy1        paracrine 0.5472547
+65         Adm Adrb3        paracrine 0.5031198
+
+$`E0771vivo-mCherry+semihelth`
+    E0771vivo mCherry+semihelth interaction type  LRscore
+165      Apoe            Chrna4        paracrine 0.560509
 
 $`GFP+-E0771`
-         GFP+  E0771 interaction type   LRscore
-2698 Serpinc1   Gpc1        paracrine 0.8316508
-168      Apoe   Lrp2        paracrine 0.8146830
-95        Alb   Lrp2        paracrine 0.8125394
-135     Apoa2   Lrp2        paracrine 0.8116539
-2798      Trf   Lrp2        paracrine 0.8085580
-1345       Gc   Lrp2        paracrine 0.7999056
-132     Apoa1   Lrp2        paracrine 0.7970871
-2974      Ubb   Lrp2        paracrine 0.7735028
-693   Col18a1   Gpc1        paracrine 0.7692580
-2984      Ubc   Lrp2        paracrine 0.7672927
-1599    Hspa8   Lrp2        paracrine 0.7648030
-91        Agt   Lrp2        paracrine 0.7628066
-1990     Lcn2   Lrp2        paracrine 0.7617082
-2594   Rps27a   Lrp2        paracrine 0.7526309
-145      Apob   Lrp2        paracrine 0.7144213
-193     Arpc5   Lrp2        paracrine 0.7047585
-2783     Tcn2   Lrp2        paracrine 0.6504211
-1886     Kng1 Bdkrb2        paracrine 0.6462501
-169      Apoe   Lrp5        paracrine 0.6353916
-2035   Lrpap1   Lrp2        paracrine 0.6039465
+         GFP+   E0771 interaction type   LRscore
+2698 Serpinc1    Gpc1        paracrine 0.8316508
+168      Apoe    Lrp2        paracrine 0.8146830
+95        Alb    Lrp2        paracrine 0.8125394
+135     Apoa2    Lrp2        paracrine 0.8116539
+2798      Trf    Lrp2        paracrine 0.8085580
+1345       Gc    Lrp2        paracrine 0.7999056
+132     Apoa1    Lrp2        paracrine 0.7970871
+2974      Ubb    Lrp2        paracrine 0.7735028
+693   Col18a1    Gpc1        paracrine 0.7692580
+2984      Ubc    Lrp2        paracrine 0.7672927
+1599    Hspa8    Lrp2        paracrine 0.7648030
+91        Agt    Lrp2        paracrine 0.7628066
+1990     Lcn2    Lrp2        paracrine 0.7617082
+2594   Rps27a    Lrp2        paracrine 0.7526309
+145      Apob    Lrp2        paracrine 0.7144213
+193     Arpc5    Lrp2        paracrine 0.7047585
+2783     Tcn2    Lrp2        paracrine 0.6504211
+1886     Kng1  Bdkrb2        paracrine 0.6462501
+169      Apoe    Lrp5        paracrine 0.6353916
+2035   Lrpap1    Lrp2        paracrine 0.6039465
+368     Calm1 Cacna1c        paracrine 0.5951101
+408     Calm2 Cacna1c        paracrine 0.5892520
+1591  Hsp90b1    Tlr2        paracrine 0.5819876
+387     Calm1   Kcnq5        paracrine 0.5797437
+416     Calm2   Kcnq5        paracrine 0.5738226
+3020    Vegfa    Gpc1        paracrine 0.5174857
+2529     Qdpr    Dysf        paracrine 0.5088790
+2029      Lpl    Lrp2        paracrine 0.5050419
 
 $`GFP+-E0771vivo`
          GFP+ E0771vivo interaction type   LRscore
@@ -61,6 +103,16 @@ $`GFP+-E0771vivo`
 1886     Kng1    Bdkrb2        paracrine 0.6255860
 408     Calm2   Cacna1c        paracrine 0.6250420
 1148      Fga     Itgax        paracrine 0.6237951
+693   Col18a1      Gpc1        paracrine 0.5976220
+145      Apob      Lrp2        paracrine 0.5918382
+193     Arpc5      Lrp2        paracrine 0.5804634
+1117       F2       Gp9        paracrine 0.5552934
+1891     Kng1     Itgam        paracrine 0.5313282
+1156      Fgb     Itgam        paracrine 0.5253814
+319        C3     Itgam        paracrine 0.5219012
+2783     Tcn2      Lrp2        paracrine 0.5188673
+119     Anxa1      Dysf        paracrine 0.5180241
+1146      Fga     Itgam        paracrine 0.5129703
 
 $`GFP+-GFP-`
        GFP+   GFP- interaction type   LRscore
@@ -73,6 +125,8 @@ $`GFP+-GFP-`
 453    Calr Mtnr1a        paracrine 0.6052400
 1142    Fga   Cdh5        paracrine 0.6050342
 454    Calr Scarf1        paracrine 0.6012797
+336      Hc Mtnr1a        paracrine 0.5580554
+1445  Gnai2 Mtnr1a        paracrine 0.5348932
 
 $`GFP+-mCherry+semihelth`
        GFP+ mCherry+semihelth interaction type   LRscore
@@ -80,16 +134,30 @@ $`GFP+-mCherry+semihelth`
 454    Calr            Scarf1        paracrine 0.6489721
 2458   Psap             Sort1        paracrine 0.6246505
 165    Apoe            Chrna4        paracrine 0.6234874
+148    Apob               Lsr        paracrine 0.5457554
+2038 Lrpap1             Sort1        paracrine 0.5430304
 
 $`GFP+-healthy`
-       GFP+ healthy interaction type   LRscore
-1693 Igfbp4    Fzd8        paracrine 0.7013768
+         GFP+ healthy interaction type   LRscore
+1693   Igfbp4    Fzd8        paracrine 0.7013768
+454      Calr  Scarf1        paracrine 0.5774143
+148      Apob     Lsr        paracrine 0.5706338
+2709 Serping1    Selp        paracrine 0.5644047
+165      Apoe  Chrna4        paracrine 0.5286898
 
 $`GFP--E0771`
-         GFP- E0771 interaction type   LRscore
-2698 Serpinc1  Gpc1        paracrine 0.8344197
-693   Col18a1  Gpc1        paracrine 0.7958373
-3020    Vegfa  Gpc1        paracrine 0.6759482
+         GFP-   E0771 interaction type   LRscore
+2698 Serpinc1    Gpc1        paracrine 0.8344197
+693   Col18a1    Gpc1        paracrine 0.7958373
+3020    Vegfa    Gpc1        paracrine 0.6759482
+368     Calm1 Cacna1c        paracrine 0.5853546
+408     Calm2 Cacna1c        paracrine 0.5820013
+387     Calm1   Kcnq5        paracrine 0.5698856
+1015    Efna1   Epha8        paracrine 0.5676397
+416     Calm2   Kcnq5        paracrine 0.5664998
+2146  Nectin3   Tigit        paracrine 0.5645596
+2311    Pdgfa  Pdgfra        paracrine 0.5511529
+178       App    Gpc1        paracrine 0.5374815
 
 $`GFP--E0771vivo`
          GFP- E0771vivo interaction type   LRscore
@@ -98,58 +166,85 @@ $`GFP--E0771vivo`
 693   Col18a1      Gpc1        paracrine 0.6345804
 368     Calm1   Cacna1c        paracrine 0.6212659
 408     Calm2   Cacna1c        paracrine 0.6180135
+2620     Rtn4    Lingo1        paracrine 0.5980528
+1590  Hsp90b1      Tlr1        paracrine 0.5823275
+1593  Hsp90b1      Tlr7        paracrine 0.5391791
+
+$`GFP--mCherry+semihelth`
+     GFP- mCherry+semihelth interaction type  LRscore
+1113   F2             F2rl2        paracrine 0.556098
+
+$`GFP--healthy`
+     GFP- healthy interaction type   LRscore
+1113   F2   F2rl2        paracrine 0.5199733
 
 $`mCherry+semihelth-E0771`
-     mCherry+semihelth  E0771 interaction type   LRscore
-2698          Serpinc1   Gpc1        paracrine 0.8340287
-135              Apoa2   Lrp2        paracrine 0.8115446
-168               Apoe   Lrp2        paracrine 0.8110588
-95                 Alb   Lrp2        paracrine 0.8083970
-2798               Trf   Lrp2        paracrine 0.8016248
-132              Apoa1   Lrp2        paracrine 0.8010995
-1293               Fn1  Itgb7        paracrine 0.7966441
-1345                Gc   Lrp2        paracrine 0.7962670
-693            Col18a1   Gpc1        paracrine 0.7923132
-2974               Ubb   Lrp2        paracrine 0.7725894
-2984               Ubc   Lrp2        paracrine 0.7623101
-91                 Agt   Lrp2        paracrine 0.7607651
-1599             Hspa8   Lrp2        paracrine 0.7548534
-145               Apob   Lrp2        paracrine 0.7504538
-1112                F2  F2rl1        paracrine 0.7503967
-2594            Rps27a   Lrp2        paracrine 0.7446420
-3020             Vegfa   Gpc1        paracrine 0.7393258
-2971               Ubb  Erbb2        paracrine 0.7348910
-2981               Ubc  Erbb2        paracrine 0.7235175
-1161               Fgb   Tlr4        paracrine 0.7229571
-1272               Fgg   Tlr4        paracrine 0.7214091
-1457             Gnai2  Unc5b        paracrine 0.7206603
-1588           Hsp90b1  Erbb2        paracrine 0.7174322
-1153               Fga   Tlr4        paracrine 0.7139753
-193              Arpc5   Lrp2        paracrine 0.7063614
-2979               Ubb   Tlr4        paracrine 0.7043709
-1275               Fn1  C5ar1        paracrine 0.7041296
-2591            Rps27a  Erbb2        paracrine 0.7040851
-30               Adam2  Itgb7        paracrine 0.7030100
-2783              Tcn2   Lrp2        paracrine 0.6979060
-333                 Hc  C5ar1        paracrine 0.6945876
-2989               Ubc   Tlr4        paracrine 0.6922365
-2379               Plg  F2rl1        paracrine 0.6909155
-1584          Hsp90aa1  Erbb2        paracrine 0.6861329
-1592           Hsp90b1   Tlr4        paracrine 0.6857616
-874             Cxcl12  Ackr3        paracrine 0.6828903
-151               Apob   Tlr4        paracrine 0.6783595
-2625            S100a1   Tlr4        paracrine 0.6773821
-2599            Rps27a   Tlr4        paracrine 0.6716034
-2035            Lrpap1   Lrp2        paracrine 0.6622244
-8                Actr2   Lrp2        paracrine 0.6578549
-1886              Kng1 Bdkrb2        paracrine 0.6402052
-169               Apoe   Lrp5        paracrine 0.6298542
-1428             Gnai2  C5ar1        paracrine 0.6284911
-1159               Fgb  Itgb2        paracrine 0.6117770
-1892              Kng1  Itgb2        paracrine 0.6111319
-1270               Fgg  Itgb2        paracrine 0.6099429
-321                 C3  Itgb2        paracrine 0.6018078
-1150               Fga  Itgb2        paracrine 0.6011791
+     mCherry+semihelth   E0771 interaction type   LRscore
+2698          Serpinc1    Gpc1        paracrine 0.8340287
+135              Apoa2    Lrp2        paracrine 0.8115446
+168               Apoe    Lrp2        paracrine 0.8110588
+95                 Alb    Lrp2        paracrine 0.8083970
+2798               Trf    Lrp2        paracrine 0.8016248
+132              Apoa1    Lrp2        paracrine 0.8010995
+1293               Fn1   Itgb7        paracrine 0.7966441
+1345                Gc    Lrp2        paracrine 0.7962670
+693            Col18a1    Gpc1        paracrine 0.7923132
+2974               Ubb    Lrp2        paracrine 0.7725894
+2984               Ubc    Lrp2        paracrine 0.7623101
+91                 Agt    Lrp2        paracrine 0.7607651
+1599             Hspa8    Lrp2        paracrine 0.7548534
+145               Apob    Lrp2        paracrine 0.7504538
+1112                F2   F2rl1        paracrine 0.7503967
+2594            Rps27a    Lrp2        paracrine 0.7446420
+3020             Vegfa    Gpc1        paracrine 0.7393258
+2971               Ubb   Erbb2        paracrine 0.7348910
+2981               Ubc   Erbb2        paracrine 0.7235175
+1161               Fgb    Tlr4        paracrine 0.7229571
+1272               Fgg    Tlr4        paracrine 0.7214091
+1457             Gnai2   Unc5b        paracrine 0.7206603
+1588           Hsp90b1   Erbb2        paracrine 0.7174322
+1153               Fga    Tlr4        paracrine 0.7139753
+193              Arpc5    Lrp2        paracrine 0.7063614
+2979               Ubb    Tlr4        paracrine 0.7043709
+1275               Fn1   C5ar1        paracrine 0.7041296
+2591            Rps27a   Erbb2        paracrine 0.7040851
+30               Adam2   Itgb7        paracrine 0.7030100
+2783              Tcn2    Lrp2        paracrine 0.6979060
+333                 Hc   C5ar1        paracrine 0.6945876
+2989               Ubc    Tlr4        paracrine 0.6922365
+2379               Plg   F2rl1        paracrine 0.6909155
+1584          Hsp90aa1   Erbb2        paracrine 0.6861329
+1592           Hsp90b1    Tlr4        paracrine 0.6857616
+874             Cxcl12   Ackr3        paracrine 0.6828903
+151               Apob    Tlr4        paracrine 0.6783595
+2625            S100a1    Tlr4        paracrine 0.6773821
+2599            Rps27a    Tlr4        paracrine 0.6716034
+2035            Lrpap1    Lrp2        paracrine 0.6622244
+8                Actr2    Lrp2        paracrine 0.6578549
+1886              Kng1  Bdkrb2        paracrine 0.6402052
+169               Apoe    Lrp5        paracrine 0.6298542
+1428             Gnai2   C5ar1        paracrine 0.6284911
+1159               Fgb   Itgb2        paracrine 0.6117770
+1892              Kng1   Itgb2        paracrine 0.6111319
+1270               Fgg   Itgb2        paracrine 0.6099429
+321                 C3   Itgb2        paracrine 0.6018078
+1150               Fga   Itgb2        paracrine 0.6011791
+1782               Il2   Il2rg        paracrine 0.5955384
+1421             Gnai2   Adcy7        paracrine 0.5949383
+138              Apoa4    Lrp2        paracrine 0.5920627
+2392            Sema4a  Plxnd1        paracrine 0.5907449
+2675            Sema4a  Plxnd1        paracrine 0.5907449
+368              Calm1 Cacna1c        paracrine 0.5790077
+1104               F10   Itgb2        paracrine 0.5775938
+387              Calm1   Kcnq5        paracrine 0.5634785
+408              Calm2 Cacna1c        paracrine 0.5632500
+1990              Lcn2    Lrp2        paracrine 0.5614469
+142               Apob   Itgb2        paracrine 0.5601703
+416              Calm2   Kcnq5        paracrine 0.5475937
+2146           Nectin3   Tigit        paracrine 0.5389904
+1015             Efna1   Epha8        paracrine 0.5271188
+617               Cd36    Tlr4        paracrine 0.5234817
+2385               Plg   Itgb2        paracrine 0.5205819
 
 $`mCherry+semihelth-E0771vivo`
      mCherry+semihelth E0771vivo interaction type   LRscore
@@ -216,6 +311,31 @@ $`mCherry+semihelth-E0771vivo`
 2979               Ubb      Tlr4        paracrine 0.6047213
 2620              Rtn4    Lingo1        paracrine 0.6031902
 414              Calm2     Kcnq1        paracrine 0.6020540
+408              Calm2   Cacna1c        paracrine 0.5997667
+2989               Ubc      Tlr4        paracrine 0.5908724
+1592           Hsp90b1      Tlr4        paracrine 0.5835479
+193              Arpc5      Lrp2        paracrine 0.5823412
+1590           Hsp90b1      Tlr1        paracrine 0.5774333
+151               Apob      Tlr4        paracrine 0.5752295
+2625            S100a1      Tlr4        paracrine 0.5741354
+2783              Tcn2      Lrp2        paracrine 0.5724761
+2599            Rps27a      Tlr4        paracrine 0.5676877
+115            Angptl4      Tie1        paracrine 0.5607964
+3020             Vegfa      Gpc1        paracrine 0.5582117
+1117                F2       Gp9        paracrine 0.5559536
+3182            Lgals1     Ptprc        paracrine 0.5498385
+1593           Hsp90b1      Tlr7        paracrine 0.5341837
+2035            Lrpap1      Lrp2        paracrine 0.5319158
+8                Actr2      Lrp2        paracrine 0.5270645
+1288               Fn1     Itga9        paracrine 0.5264524
+1156               Fgb     Itgam        paracrine 0.5254407
+1891              Kng1     Itgam        paracrine 0.5247636
+3029             Vegfa     Sirpa        paracrine 0.5212611
+1720              Il15     Il2rg        paracrine 0.5210013
+2381               Plg      Flt1        paracrine 0.5151149
+319                 C3     Itgam        paracrine 0.5150120
+1146               Fga     Itgam        paracrine 0.5143569
+435              Calm3     Kcnq1        paracrine 0.5071391
 
 $`mCherry+semihelth-GFP+`
      mCherry+semihelth  GFP+ interaction type   LRscore
@@ -231,6 +351,17 @@ $`mCherry+semihelth-GFP+`
 142               Apob Itgb2        paracrine 0.6428607
 1782               Il2 Il2rg        paracrine 0.6059551
 2385               Plg Itgb2        paracrine 0.6054731
+2971               Ubb Erbb2        paracrine 0.5866882
+2981               Ubc Erbb2        paracrine 0.5726540
+1588           Hsp90b1 Erbb2        paracrine 0.5652434
+2591            Rps27a Erbb2        paracrine 0.5492245
+1887              Kng1  Cd93        paracrine 0.5330954
+1584          Hsp90aa1 Erbb2        paracrine 0.5281732
+1275               Fn1 C5ar1        paracrine 0.5244311
+2069              Mbl2  Cd93        paracrine 0.5214364
+333                 Hc C5ar1        paracrine 0.5131012
+3182            Lgals1 Ptprc        paracrine 0.5076112
+152               Apob  Tlr6        paracrine 0.5025302
 
 $`mCherry+semihelth-GFP-`
      mCherry+semihelth   GFP- interaction type   LRscore
@@ -244,46 +375,72 @@ $`mCherry+semihelth-GFP-`
 2069              Mbl2   Cd93        paracrine 0.6150029
 1142               Fga   Cdh5        paracrine 0.6063597
 336                 Hc Mtnr1a        paracrine 0.6034613
+874             Cxcl12  Ackr3        paracrine 0.5938651
+1106               F12   Cd93        paracrine 0.5793414
+1159               Fgb  Itgb2        paracrine 0.5594967
+1892              Kng1  Itgb2        paracrine 0.5588274
+1270               Fgg  Itgb2        paracrine 0.5575942
+321                 C3  Itgb2        paracrine 0.5491743
+1150               Fga  Itgb2        paracrine 0.5485249
+882             Cxcl12 Mtnr1a        paracrine 0.5472351
+1516             Hebp1 Mtnr1a        paracrine 0.5464273
+1445             Gnai2 Mtnr1a        paracrine 0.5309608
+1104               F10  Itgb2        paracrine 0.5242897
+2971               Ubb  Erbb2        paracrine 0.5232501
+1782               Il2  Il2rg        paracrine 0.5126877
+30               Adam2  Itgb7        paracrine 0.5094496
+2981               Ubc  Erbb2        paracrine 0.5088650
+142               Apob  Itgb2        paracrine 0.5065459
+1588           Hsp90b1  Erbb2        paracrine 0.5013115
 
 $`healthy-E0771`
-      healthy  E0771 interaction type   LRscore
-2698 Serpinc1   Gpc1        paracrine 0.8348707
-168      Apoe   Lrp2        paracrine 0.8053103
-135     Apoa2   Lrp2        paracrine 0.8046910
-95        Alb   Lrp2        paracrine 0.8033170
-1687     Igf1  Igf1r        paracrine 0.7999358
-2798      Trf   Lrp2        paracrine 0.7997064
-693   Col18a1   Gpc1        paracrine 0.7983925
-1345       Gc   Lrp2        paracrine 0.7957005
-132     Apoa1   Lrp2        paracrine 0.7893559
-2974      Ubb   Lrp2        paracrine 0.7783562
-91        Agt   Lrp2        paracrine 0.7712913
-2984      Ubc   Lrp2        paracrine 0.7593727
-1599    Hspa8   Lrp2        paracrine 0.7569001
-145      Apob   Lrp2        paracrine 0.7492074
-1442    Gnai2  Igf1r        paracrine 0.7474450
-2594   Rps27a   Lrp2        paracrine 0.7411204
-1990     Lcn2   Lrp2        paracrine 0.7341228
-1272      Fgg   Tlr4        paracrine 0.7205306
-1161      Fgb   Tlr4        paracrine 0.7186831
-193     Arpc5   Lrp2        paracrine 0.7167676
-2783     Tcn2   Lrp2        paracrine 0.7150774
-1153      Fga   Tlr4        paracrine 0.7127684
-2979      Ubb   Tlr4        paracrine 0.7112211
-1592  Hsp90b1   Tlr4        paracrine 0.6891628
-2989      Ubc   Tlr4        paracrine 0.6887866
-2035   Lrpap1   Lrp2        paracrine 0.6839399
-2309    Pdap1 Pdgfrb        paracrine 0.6770908
-151      Apob   Tlr4        paracrine 0.6769081
-2625   S100a1   Tlr4        paracrine 0.6748236
-3020    Vegfa   Gpc1        paracrine 0.6714825
-2599   Rps27a   Tlr4        paracrine 0.6675243
-8       Actr2   Lrp2        paracrine 0.6619219
-617      Cd36   Tlr4        paracrine 0.6489481
-1886     Kng1 Bdkrb2        paracrine 0.6438365
-1421    Gnai2  Adcy7        paracrine 0.6186885
-2392   Sema4a Plxnd1        paracrine 0.6047605
-2675   Sema4a Plxnd1        paracrine 0.6047605
+      healthy   E0771 interaction type   LRscore
+2698 Serpinc1    Gpc1        paracrine 0.8348707
+168      Apoe    Lrp2        paracrine 0.8053103
+135     Apoa2    Lrp2        paracrine 0.8046910
+95        Alb    Lrp2        paracrine 0.8033170
+1687     Igf1   Igf1r        paracrine 0.7999358
+2798      Trf    Lrp2        paracrine 0.7997064
+693   Col18a1    Gpc1        paracrine 0.7983925
+1345       Gc    Lrp2        paracrine 0.7957005
+132     Apoa1    Lrp2        paracrine 0.7893559
+2974      Ubb    Lrp2        paracrine 0.7783562
+91        Agt    Lrp2        paracrine 0.7712913
+2984      Ubc    Lrp2        paracrine 0.7593727
+1599    Hspa8    Lrp2        paracrine 0.7569001
+145      Apob    Lrp2        paracrine 0.7492074
+1442    Gnai2   Igf1r        paracrine 0.7474450
+2594   Rps27a    Lrp2        paracrine 0.7411204
+1990     Lcn2    Lrp2        paracrine 0.7341228
+1272      Fgg    Tlr4        paracrine 0.7205306
+1161      Fgb    Tlr4        paracrine 0.7186831
+193     Arpc5    Lrp2        paracrine 0.7167676
+2783     Tcn2    Lrp2        paracrine 0.7150774
+1153      Fga    Tlr4        paracrine 0.7127684
+2979      Ubb    Tlr4        paracrine 0.7112211
+1592  Hsp90b1    Tlr4        paracrine 0.6891628
+2989      Ubc    Tlr4        paracrine 0.6887866
+2035   Lrpap1    Lrp2        paracrine 0.6839399
+2309    Pdap1  Pdgfrb        paracrine 0.6770908
+151      Apob    Tlr4        paracrine 0.6769081
+2625   S100a1    Tlr4        paracrine 0.6748236
+3020    Vegfa    Gpc1        paracrine 0.6714825
+2599   Rps27a    Tlr4        paracrine 0.6675243
+8       Actr2    Lrp2        paracrine 0.6619219
+617      Cd36    Tlr4        paracrine 0.6489481
+1886     Kng1  Bdkrb2        paracrine 0.6438365
+1421    Gnai2   Adcy7        paracrine 0.6186885
+2392   Sema4a  Plxnd1        paracrine 0.6047605
+2675   Sema4a  Plxnd1        paracrine 0.6047605
+408     Calm2 Cacna1c        paracrine 0.5897249
+368     Calm1 Cacna1c        paracrine 0.5863953
+416     Calm2   Kcnq5        paracrine 0.5743004
+387     Calm1   Kcnq5        paracrine 0.5709367
+2146  Nectin3   Tigit        paracrine 0.5516429
+2238     Nrg1    Gpc1        paracrine 0.5381940
+2087    Mfge8  Pdgfrb        paracrine 0.5287011
+2029      Lpl    Lrp2        paracrine 0.5113181
+1015    Efna1   Epha8        paracrine 0.5039894
 
 $`healthy-E0771vivo`
       healthy E0771vivo interaction type   LRscore
@@ -323,3 +480,23 @@ $`healthy-E0771vivo`
 1990     Lcn2      Lrp2        paracrine 0.6154445
 1153      Fga      Tlr4        paracrine 0.6143997
 2979      Ubb      Tlr4        paracrine 0.6126105
+193     Arpc5      Lrp2        paracrine 0.5946201
+2783     Tcn2      Lrp2        paracrine 0.5926154
+1592  Hsp90b1      Tlr4        paracrine 0.5873898
+2989      Ubc      Tlr4        paracrine 0.5869642
+151      Apob      Tlr4        paracrine 0.5736052
+2625   S100a1      Tlr4        paracrine 0.5712764
+2599   Rps27a      Tlr4        paracrine 0.5631574
+1117       F2       Gp9        paracrine 0.5605673
+2035   Lrpap1      Lrp2        paracrine 0.5563971
+617      Cd36      Tlr4        paracrine 0.5427443
+1593  Hsp90b1      Tlr7        paracrine 0.5381205
+435     Calm3     Kcnq1        paracrine 0.5343730
+8       Actr2      Lrp2        paracrine 0.5315792
+2087    Mfge8    Pdgfrb        paracrine 0.5168811
+1438    Gnai2     Ednrb        paracrine 0.5107734
+
+$`healthy-GFP+`
+     healthy  GFP+ interaction type   LRscore
+3182  Lgals1 Ptprc        paracrine 0.5822692
+1438   Gnai2 Ednrb        paracrine 0.5247416
