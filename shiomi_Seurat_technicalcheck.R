@@ -3,8 +3,14 @@
 VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"),
         ncol = 2,group.by = "plate")
 FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "gate" )
+p1<-VlnPlot(pbmc, features = c("percent.mt"),group.by = "plate" )
+p2<-FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "percent.mt",group.by = "plate" )
+p1+p2
+pbmc <- subset(pbmc, subset= percent.mt<7)
 
-
+p1<-VlnPlot(pbmc, features = c("percent.mt"),group.by = "plate" )
+p2<-FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "percent.mt",group.by = "plate" )
+p1+p2
 count_summary <- pbmc[[c("nCount_RNA","nFeature_RNA","gate","cell")]]
 count_summary_mean <- count_summary %>%
   dplyr::group_by(gate,cell) %>%
@@ -24,7 +30,7 @@ median(tenx$nFeature_RNA)
 
 
 # Identify the 10 most highly variable genes
-top10 <- head(VariableFeatures(pbmc), 200)
+top10 <- head(VariableFeatures(pbmc), 20)
 # plot variable features with labels
 plot1 <- VariableFeaturePlot(pbmc)
 plot1 <- LabelPoints(plot = plot1, points = top10)
@@ -60,26 +66,29 @@ pbmc <- ScoreJackStraw(pbmc, dims = 1:20)
 JackStrawPlot(pbmc, dims = 1:20)
 ElbowPlot(pbmc)
 
-pbmc <- FindNeighbors(pbmc, dims = 1:9)
-pbmc <- FindClusters(pbmc, resolution = 0.5)
+pbmc <- FindNeighbors(pbmc, dims = 1:16)
+pbmc <- FindClusters(pbmc, resolution = 0.6)
 
 
 # Retreiving the results of the preprocessing from the Seurat object
 cluster = as.numeric(Idents(pbmc))
-pbmc <- RunUMAP(pbmc, dims = 1:14)
-p1 <- DimPlot(pbmc, reduction = "pca",group.by = "gate")
-p2 <- DimPlot(pbmc, reduction = "umap",group.by = "gate")
-p1+p2
+pbmc <- RunUMAP(pbmc, dims = 1:3)
+p1 <- DimPlot(pbmc, reduction = "pca",group.by = "plate")
+p2 <- DimPlot(pbmc, reduction = "umap",group.by = "plate")
+p3<-DimPlot(pbmc)
+p1+p2+p3
 
 #find marker genes in each cluster
-DimPlot(pbmc, reduction = "umap")
+#DimPlot(pbmc, reduction = "umap")
 pbmc.markers <- FindAllMarkers(pbmc, only.pos = TRUE, min.pct = 0, logfc.threshold = 0.15)
 pbmc.markers %>% group_by(cluster) %>% top_n(n = 2)
 
-FeaturePlot(pbmc,features="Cyp1a2")
+#FeaturePlot(pbmc,features="Serpinala")
+
 p1 <- DimPlot(pbmc, reduction = "umap",group.by = "plate")
-p2<-FeaturePlot(pbmc,features="Alb")
-p1+p2
+p2<-FeaturePlot(pbmc,features="Saa1")
+p3<-DimPlot(pbmc)
+p1+p2+p3
 #pbmc.markers <- FindMarkers(pbmc,logfc.threshold = 0.2,ident.1=colnames(subset(pbmc,subset=gate=="RG")))
 #pbmc.markers <- FindMarkers(pbmc,logfc.threshold = 0.2,ident.1=colnames(subset(pbmc,subset=cell=="HEA")))
 
@@ -96,5 +105,4 @@ p1+p2
 #VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"), ncol = 2,group.by = "cell")
 
 rm(p1,p2,p3,plot1,plot2,count_summary,count_summary_mean,pca_topcells,top10,all.genes,tenx)
-
 

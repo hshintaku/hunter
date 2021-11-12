@@ -22,8 +22,8 @@ datadir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/"
 wdir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/"
 
 # decode the single cell data from whitelist of UMI-tools output
-datadir <- "/home/samba/public/shintaku/20210216HiSeqX002/"
-wdir <- "/home/samba/public/shintaku/20210216HiSeqX002/"
+datadir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/"
+wdir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/"
 
 rdir <- "/home/samba/public/shintaku/github/hunter2/"
 
@@ -38,10 +38,31 @@ source(file.path(rdir,"hunter_first_data_process.R"))
 #
 # you can restart from here
 # load data from 10x formatted files
+
+# decode the single cell data from whitelist of UMI-tools output
+datadir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/"
+wdir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/"
 source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
-hepa1<-pbmc
-pbmc <- merge(hepa1, y = hepa2, add.cell.ids = c("1run", "2run"), project = "hunter")
+hepa2<- pbmc
+# decode the single cell data from whitelist of UMI-tools output
+datadir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/"
+wdir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/"
+hepa1 <- pbmc
+allcell<- merge(hepa1, y = hepa2,  project = "hunter")
+
+allcell <- subset(allcell,subset = gate ==c("g1"),invert=TRUE)
+allcell <- subset(allcell,subset = gate ==c("g4"),invert=TRUE)
+allcell <- subset(allcell,subset = plate ==c("p04"),invert=TRUE)
+allcell <- subset(allcell,subset = plate ==c("p05"),invert=TRUE)
+
+
+hepa <- subset(allcell,subset = gate ==c("g3"),invert=TRUE)
+hepa <- subset(hepa,subset = gate ==c("G"),invert=TRUE)
+
+pbmc<-allcell
 cellids <- colnames(pbmc)
+
+pbmc <- allcell
 pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^mt-")
 pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 1000)

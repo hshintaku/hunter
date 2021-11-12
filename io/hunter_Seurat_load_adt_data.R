@@ -1,6 +1,6 @@
 load.adt <- function (indexfiles,batch,channel) {
-  rowend <- length(channel)+1
-  adt.xlsx <- read.xlsx(indexfiles,sheet=1, rows=16:111,cols=1:rowend,colNames = FALSE,rowNames = TRUE)
+  colend <- length(channel)+1
+  adt.xlsx <- read.xlsx(indexfiles,sheet=1, rows=16:111,cols=1:colend,colNames = FALSE,rowNames = TRUE)
   colnames(adt.xlsx)<- channel#c("Events","FSC","SSC","Venus","APC","mCherry")
   
   # create normalized GFP

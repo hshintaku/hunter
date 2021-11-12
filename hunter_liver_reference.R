@@ -43,7 +43,7 @@ p1 <- DimPlot(liver, reduction = "pca")
 p1
 
 liver.markers <- FindAllMarkers(liver, only.pos = TRUE, min.pct = 0, logfc.threshold = 0.4)
-liver.markers <- liver.markers[liver.markers$p_val_adj <0.001 & liver.markers$cluster==2,] %>% group_by(cluster)
+liver.markers <- liver.markers[liver.markers$p_val_adj <0.001 & liver.markers$cluster==2 & liver.markers$avg_log2FC>5,] %>% group_by(cluster)
 
 cellannotation <-read.csv2("/home/samba/public/tabula_muris/annotations_droplets.csv")
 p0<-DimPlot(liver,reduction="pca")
