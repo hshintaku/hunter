@@ -47,13 +47,15 @@ cluster3 <- cluster_marer_entrez(pbmc.markers,ms_ref,3,0.01,2)
 cluster4 <- cluster_marer_entrez(pbmc.markers,ms_ref,4,0.01,2)
 cluster5 <- cluster_marer_entrez(pbmc.markers,ms_ref,5,0.01,2)
 #https://www.rdocumentation.org/packages/clusterProfiler/versions/3.0.4/topics/compareCluster
-perturbed_gene_list <- list(Cluster0=cluster0$entrez_annotation,
-                            Cluster1=cluster1$entrez_annotation,
-                            Cluster2=cluster2$entrez_annotation,
-                            Cluster3=cluster3$entrez_annotation,
-                            Cluster4=cluster4$entrez_annotation,
-                            Cluster5=cluster5$entrez_annotation)
-xx <- compareCluster(perturbed_gene_list, fun="enrichGO",
+perturbed_gene_cancer <- list(Cluster0=cluster0$entrez_annotation,
+                            Cluster1=cluster1$entrez_annotation)
+perturbed_gene_hepa <- list(Cluster2=cluster2$entrez_annotation,
+                              Cluster3=cluster3$entrez_annotation,
+                              Cluster4=cluster4$entrez_annotation,
+                              Cluster5=cluster5$entrez_annotation)
+cancer_go <- compareCluster(perturbed_gene_cancer, fun="enrichGO",
+                     OrgDb         = org.Mm.eg.db)
+hepa_go <- compareCluster(perturbed_gene_hepa, fun="enrichGO",
                      OrgDb         = org.Mm.eg.db)
 summary(xx)
 
@@ -64,9 +66,10 @@ p4<-ggplot(cluster_density,aes(y=cluster,x=plate$plate,fill=count))+
   geom_tile()+ theme_classic()+
   scale_fill_gradientn(colours = c("white", "red"))+geom_text(aes(label = count)) 
 
-p5<- dotplot(xx)
-p1+p3+p4
+p5<- dotplot(hepa_go)
+p6 <- dotplot(cancer_go)
+gridExtra::grid.arrange(p5,p6,nrow=1)
 #clusterProfiler::dotplot(ego_result)
 #clusterProfiler::emapplot(ego_result.simple)
 #clusterProfiler::cnetplot(ego_result, categoryS ize="pvalue")
-
+write.xlsx(summary(xx),"/home/samba/public/shintaku/github/hunter2/minegishi/go_compare_summary.xlsx")
