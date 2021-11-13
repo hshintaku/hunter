@@ -66,13 +66,13 @@ pbmc <- ScoreJackStraw(pbmc, dims = 1:20)
 JackStrawPlot(pbmc, dims = 1:20)
 ElbowPlot(pbmc)
 
-pbmc <- FindNeighbors(pbmc, dims = 1:16)
-pbmc <- FindClusters(pbmc, resolution = 0.6)
+pbmc <- FindNeighbors(pbmc, dims = 1:15)
+pbmc <- FindClusters(pbmc, resolution = 0.8)
 
 
 # Retreiving the results of the preprocessing from the Seurat object
 cluster = as.numeric(Idents(pbmc))
-pbmc <- RunUMAP(pbmc, dims = 1:3)
+pbmc <- RunUMAP(pbmc, dims = 1:5)
 p1 <- DimPlot(pbmc, reduction = "pca",group.by = "plate")
 p2 <- DimPlot(pbmc, reduction = "umap",group.by = "plate")
 p3<-DimPlot(pbmc)
@@ -80,29 +80,31 @@ p1+p2+p3
 
 #find marker genes in each cluster
 #DimPlot(pbmc, reduction = "umap")
-pbmc.markers <- FindAllMarkers(pbmc, only.pos = TRUE, min.pct = 0, logfc.threshold = 0.15)
-pbmc.markers %>% group_by(cluster) %>% top_n(n = 2)
+pbmc.markers <- FindAllMarkers(pbmc, only.pos = FALSE, min.pct = 0.1, logfc.threshold =0.25 )
+#pbmc.markers %>% group_by(cluster) %>% top_n(n = 2)
 
 #FeaturePlot(pbmc,features="Serpinala")
 
 p1 <- DimPlot(pbmc, reduction = "umap",group.by = "plate")
 p2<-FeaturePlot(pbmc,features="Saa1")
 p3<-DimPlot(pbmc)
-p1+p2+p3
-#pbmc.markers <- FindMarkers(pbmc,logfc.threshold = 0.2,ident.1=colnames(subset(pbmc,subset=gate=="RG")))
-#pbmc.markers <- FindMarkers(pbmc,logfc.threshold = 0.2,ident.1=colnames(subset(pbmc,subset=cell=="HEA")))
 
-#features <-"Venus"
-#p1 <- DimPlot(pbmc, reduction = "pca",group.by = "dish")
-#p2 <- DimPlot(pbmc, reduction = "pca",group.by = "gate")
-#p3 <- FeaturePlot(pbmc, features = features,reduction = "pca")
-#p1+p2+p3
+cluster <-as.numeric(Idents(pbmc))
+cluster <- data.frame(cluster)
+rownames(cluster) <- colnames(pbmc)
+cluster$gate <- pbmc[['gate']]
+cluster$plate <- pbmc[['plate']]
 
-#p1 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA" ,group.by = "gate")
-#p2 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA" ,group.by = "cell")
-#p1+p2
-#VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"), ncol = 2,group.by = "gate")
-#VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"), ncol = 2,group.by = "cell")
+
+cluster_density <- cluster %>%
+  dplyr::group_by(cluster) %>%
+  dplyr::count(plate, name = 'count')
+
+p4<-ggplot(cluster_density,aes(y=cluster,x=plate$plate,fill=count))+ 
+  geom_tile()+ theme_classic()+
+  scale_fill_gradientn(colours = c("white", "red"))+geom_text(aes(label = count)) 
+
+p1+p2+p3+p4
 
 rm(p1,p2,p3,plot1,plot2,count_summary,count_summary_mean,pca_topcells,top10,all.genes,tenx)
 

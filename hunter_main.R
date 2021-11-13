@@ -65,7 +65,7 @@ cellids <- colnames(pbmc)
 pbmc <- allcell
 pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^mt-")
 pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
-pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 1000)
+pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 500)
 
 #
 # create reference table with gene_short_name

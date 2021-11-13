@@ -25,7 +25,8 @@ all.genes <- row.names(scdata)
 
 #clust <-cluster
 signal = cell_signaling(data=scdata,genes=all.genes,cluster=cluster,species ="mus musculus",
-                        logFC=log2(1.5),s.score=0.6,int.type = "paracrine",write=TRUE,c.names=c("E0771","E0771vivo","GFP+","GFP-","mCherry+semihelth","healthy"))
+                        logFC=log2(4),s.score=0.5,int.type = "paracrine",write=TRUE,
+                        c.names=c("E0771","E0771vivo","GFP+","GFP-","mCherry+semihelth","healthy"))
 
 inter.net <- inter_network(data = scdata, signal = signal, genes = all.genes, cluster = cluster, write = FALSE)
 visualize_interactions(signal = signal)
