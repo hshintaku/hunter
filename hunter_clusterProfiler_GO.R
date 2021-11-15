@@ -1,4 +1,4 @@
-cluster_marer_entrez <- function(pbmc.markers,ms_ref,cluster.num,p.thres,log2FC.thres){
+cluster_marker_entrez <- function(pbmc.markers,ms_ref,cluster.num,p.thres,log2FC.thres){
   cluster.marker.n <- pbmc.markers[pbmc.markers$cluster==cluster.num &
                                      pbmc.markers$p_val_adj<p.thres &
                                      pbmc.markers$avg_log2FC>log2FC.thres,]
@@ -40,12 +40,12 @@ ego_result.simple<-simplify(ego_result)
 goplot(ego_result.simple)
 #head(as.data.frame(ego_result.simple))
 
-cluster0 <- cluster_marer_entrez(pbmc.markers,ms_ref,0,0.01,2)
-cluster1 <- cluster_marer_entrez(pbmc.markers,ms_ref,1,0.01,2)
-cluster2 <- cluster_marer_entrez(pbmc.markers,ms_ref,2,0.01,1)
-cluster3 <- cluster_marer_entrez(pbmc.markers,ms_ref,3,0.01,2)
-cluster4 <- cluster_marer_entrez(pbmc.markers,ms_ref,4,0.01,2)
-cluster5 <- cluster_marer_entrez(pbmc.markers,ms_ref,5,0.01,2)
+cluster0 <- cluster_marker_entrez(pbmc.markers,ms_ref,0,0.001,1.5)
+cluster1 <- cluster_marker_entrez(pbmc.markers,ms_ref,1,0.001,1.5)
+cluster2 <- cluster_marker_entrez(pbmc.markers,ms_ref,2,0.01,1)
+cluster3 <- cluster_marker_entrez(pbmc.markers,ms_ref,3,0.001,2)
+cluster4 <- cluster_marker_entrez(pbmc.markers,ms_ref,4,0.001,1.5)
+cluster5 <- cluster_marker_entrez(pbmc.markers,ms_ref,5,0.001,1.5)
 #https://www.rdocumentation.org/packages/clusterProfiler/versions/3.0.4/topics/compareCluster
 perturbed_gene_cancer <- list(Cluster0=cluster0$entrez_annotation,
                             Cluster1=cluster1$entrez_annotation)
@@ -57,7 +57,7 @@ cancer_go <- compareCluster(perturbed_gene_cancer, fun="enrichGO",
                      OrgDb         = org.Mm.eg.db)
 hepa_go <- compareCluster(perturbed_gene_hepa, fun="enrichGO",
                      OrgDb         = org.Mm.eg.db)
-summary(xx)
+#summary(xx)
 
 p1 <- DimPlot(pbmc, reduction = "umap",group.by = "plate")
 p2<-FeaturePlot(pbmc,features="Saa1")
