@@ -12,10 +12,9 @@ print(pbmc[["pca"]], dims = 1:2, nfeatures = 50)
 p1 <- DimPlot(pbmc, reduction = "pca",group.by = "plate")
 p2 <- DimPlot(pbmc, reduction = "pca",group.by = "cell")
 p3 <- DimPlot(pbmc, reduction = "pca",group.by = "gate")
-p1+p2+p3
-
-DimPlot(pbmc, reduction = "pca",group.by = "pool")
-DimPlot(pbmc, reduction = "pca",group.by = "rtid")
+p4<-DimPlot(pbmc, reduction = "pca",group.by = "pool")
+p5<-DimPlot(pbmc, reduction = "pca",group.by = "rtid")
+p1+p2+p3+p4+p5
 
 # gene expression scatter
 pca_topcells <- TopCells(object = pbmc[['pca']], balanced = FALSE)
@@ -40,11 +39,7 @@ p3<-DimPlot(pbmc)
 p1+p2+p3
 
 #find marker genes in each cluster
-#DimPlot(pbmc, reduction = "umap")
 pbmc.markers <- FindAllMarkers(pbmc, only.pos = FALSE, min.pct = 0.1, logfc.threshold =0.25 )
-#pbmc.markers %>% group_by(cluster) %>% top_n(n = 2)
-
-#FeaturePlot(pbmc,features="Serpinala")
 
 p1 <- DimPlot(pbmc, reduction = "umap",group.by = "plate")
 p2<-FeaturePlot(pbmc,features="Saa1")
