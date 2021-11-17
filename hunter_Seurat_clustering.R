@@ -3,6 +3,8 @@
 # default is 50
 
 all.genes <- rownames(pbmc)
+#all.genes <- ordering_genes_disp$gene_id
+#pbmc<-hepa
 pbmc <- ScaleData(pbmc, features = all.genes)
 pbmc <- RunPCA(pbmc, npcs=20, features = VariableFeatures(object = pbmc))
 
@@ -26,7 +28,7 @@ pbmc <- ScoreJackStraw(pbmc, dims = 1:20)
 JackStrawPlot(pbmc, dims = 1:20)
 ElbowPlot(pbmc)
 
-pbmc <- FindNeighbors(pbmc, dims = 1:15)
+pbmc <- FindNeighbors(pbmc, dims = 1:6)
 pbmc <- FindClusters(pbmc, resolution = 0.8)
 
 

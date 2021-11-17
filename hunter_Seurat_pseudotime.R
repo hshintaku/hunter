@@ -5,7 +5,7 @@ library(tools)
 hepa <- subset(pbmc,subset=plate=="p02",invert=TRUE)
 hepa <- subset(hepa,subset=plate=="P15",invert=TRUE)
 
-pbmc_monocle <- as.CellDataSet(hepa)
+pbmc_monocle <- as.CellDataSet(liver)
 pbmc_monocle <- estimateSizeFactors(pbmc_monocle)
 pbmc_monocle <- estimateDispersions(pbmc_monocle)
 disp_table <- dispersionTable(pbmc_monocle)
@@ -28,9 +28,9 @@ pbmc_monocle <- setOrderingFilter(pbmc_monocle, ordering_genes_disp)
 pbmc_monocle <- reduceDimension(pbmc_monocle)
 
 pbmc_monocle <- orderCells(pbmc_monocle)
-p1<-plot_cell_trajectory(pbmc_monocle, color_by = "plate")
-p2<-plot_cell_trajectory(pbmc_monocle, color_by = "gate")
-p1+p2
+plot_cell_trajectory(pbmc_monocle, markers = c("Cyp2e1","Cyp2f2"), use_color_gradient = TRUE)
+#p2<-plot_cell_trajectory(pbmc_monocle, color_by = )
+#p1+p2
 
 plot_genes_in_pseudotime(pbmc_monocle, color_by = "cell")
 
@@ -51,9 +51,11 @@ FeatureScatter(hepa,feature1 = "Pseudotime",feature2 = "Arg1",group.by = "plate"
 #p$data$cell <- factor(p$data$Cell, levels=cellnames)
 #p
 
-hepa.data <- hepa[["RNA"]]@data
-hepa.data.zone <- hepa.data[ordering_genes,cellnames]
+
+
+hepa.data <- pbmc[["RNA"]]@data
+hepa.data.zone <- hepa.data[ordering_genes[1:30],]
 library(pheatmap)
 pheatmap(hepa.data.zone,
-         cluster_rows = FALSE,cluster_cols = FALSE,
+         cluster_rows = FALSE,cluster_cols = TRUE,
          scale = "row")

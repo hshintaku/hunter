@@ -1,7 +1,8 @@
 #https://tabula-muris.ds.czbiohub.org/
 library(Seurat)
-liver.data <- Read10X(data.dir = "/home/samba/public/tabula_muris/droplet/")
+liver.data <- Read10X(data.dir = "/home/samba/public/tabula_muris/droplet/Liver-10X_P7_0/")
 liver <- CreateSeuratObject(counts = liver.data, project = "liver", min.cells = 10, min.features = 1000)
+
 lung.data <- Read10X(data.dir = "/home/samba/public/tabula_muris/droplet/Lung-10X_P7_8/")
 lung <- CreateSeuratObject(counts = lung.data, project = "liver", min.cells = 10, min.features = 1000)
 liver <- merge(liver, y = lung, add.cell.ids = c("liver", "lung"), project = "hunter")

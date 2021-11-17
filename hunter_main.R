@@ -39,10 +39,12 @@ allcell <- subset(allcell,subset = plate ==c("p05"),invert=TRUE)
 hepa <- subset(allcell,subset = gate ==c("g3"),invert=TRUE)
 hepa <- subset(hepa,subset = gate ==c("G"),invert=TRUE)
 
+
+
 pbmc<-hepa
 cellids <- colnames(pbmc)
 
-pbmc <- allcell
+pbmc <- liver#allcell
 pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^mt-")
 pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 500)
@@ -56,9 +58,6 @@ indexdir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/index/"
 channel <- c("Events","FSC","SSC","Venus","Azrite","mCherry")
 #c("Events","FSC","SSC","Venus","APC","mCherry")
 source(file.path(rdir,'io/hunter_Seurat_load_adt_data.R'))
-#
-# load cite-seq-count=FLD data
-#
 # check cell cycle dependence 
 source(file.path(rdir,"shiomi_Seurat_cellcycle_dependence.R"))
 # compute pseudotime and order cells along the gene expression
