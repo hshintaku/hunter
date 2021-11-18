@@ -2,10 +2,10 @@ library(monocle)
 library(R.matlab)
 library(tools)
 
-hepa <- subset(pbmc,subset=plate=="p02",invert=TRUE)
-hepa <- subset(hepa,subset=plate=="P15",invert=TRUE)
+#hepa <- subset(pbmc,subset=plate=="p02",invert=TRUE)
+#hepa <- subset(hepa,subset=plate=="P15",invert=TRUE)
 
-pbmc_monocle <- as.CellDataSet(liver)
+pbmc_monocle <- as.CellDataSet(pbmc)
 pbmc_monocle <- estimateSizeFactors(pbmc_monocle)
 pbmc_monocle <- estimateDispersions(pbmc_monocle)
 disp_table <- dispersionTable(pbmc_monocle)

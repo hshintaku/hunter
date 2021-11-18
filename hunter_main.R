@@ -27,6 +27,7 @@ hepa2<- pbmc
 # decode the single cell data from whitelist of UMI-tools output
 datadir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/"
 wdir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/"
+source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
 hepa1 <- pbmc
 allcell<- merge(hepa1, y = hepa2,  project = "hunter")
 
@@ -36,15 +37,18 @@ allcell <- subset(allcell,subset = plate ==c("p04"),invert=TRUE)
 allcell <- subset(allcell,subset = plate ==c("p05"),invert=TRUE)
 
 
-hepa <- subset(allcell,subset = gate ==c("g3"),invert=TRUE)
-hepa <- subset(hepa,subset = gate ==c("G"),invert=TRUE)
+hepa <- subset(allcell,subset = plate ==c("p02"),invert=TRUE)
+hepa <- subset(hepa,subset = plate ==c("P15"),invert=TRUE)
 
 
 
 pbmc<-hepa
+pbmc <- liver#allcell
+
 cellids <- colnames(pbmc)
 
-pbmc <- liver#allcell
+
+
 pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^mt-")
 pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 500)
