@@ -64,8 +64,12 @@ channel <- c("Events","FSC","SSC","Venus","Azrite","mCherry")
 source(file.path(rdir,'io/hunter_Seurat_load_adt_data.R'))
 # check cell cycle dependence 
 source(file.path(rdir,"shiomi_Seurat_cellcycle_dependence.R"))
+
+
+source(file.path(rdir,"hunter_load_landmark_genes.R"))
 # compute pseudotime and order cells along the gene expression
-source(file.path(rdir,"shiomi_Seurat_monocle_pseudotime.R"))
+source(file.path(rdir,"hunter_Seurat_pseudotime.R"))
+source(file.path(rdir,"hunter_Seurat_diffusionmap.R"))
 
 #
 # http://yulab-smu.top/clusterProfiler-book/index.html
