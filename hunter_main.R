@@ -42,7 +42,7 @@ hepa <- subset(hepa,subset = plate ==c("P15"),invert=TRUE)
 
 
 
-pbmc<-hepa
+pbmc<-allcell
 pbmc <- liver#allcell
 
 cellids <- colnames(pbmc)
@@ -64,13 +64,14 @@ channel <- c("Events","FSC","SSC","Venus","Azrite","mCherry")
 source(file.path(rdir,'io/hunter_Seurat_load_adt_data.R'))
 # check cell cycle dependence 
 source(file.path(rdir,"shiomi_Seurat_cellcycle_dependence.R"))
-
-
+#
+# zonation
+#
 source(file.path(rdir,"hunter_load_landmark_genes.R"))
 # compute pseudotime and order cells along the gene expression
 source(file.path(rdir,"hunter_Seurat_pseudotime.R"))
+# compute zonation via diffusion map 
 source(file.path(rdir,"hunter_Seurat_diffusionmap.R"))
-
 #
 # http://yulab-smu.top/clusterProfiler-book/index.html
 #
