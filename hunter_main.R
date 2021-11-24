@@ -49,7 +49,7 @@ cellids <- colnames(pbmc)
 
 
 
-pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^mt-")
+pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^MT-")
 pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 500)
 
