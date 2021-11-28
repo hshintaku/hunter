@@ -1,4 +1,4 @@
-
+library(tidyr)
 # running PCA npcs in the RunPCA function must be less than the number of samples
 # default is 50
 
@@ -44,11 +44,12 @@ p1+p2+p3
 pbmc.markers <- FindAllMarkers(pbmc, only.pos = FALSE, min.pct = 0.1, logfc.threshold =0.25 )
 
 p1 <- DimPlot(pbmc, reduction = "umap",group.by = "plate")
-p2<-FeaturePlot(pbmc,features="Saa1")
+
+p2<-FeaturePlot(pbmc,features="Venus",slot="count")
 p3<-DimPlot(pbmc)
 
-cluster <-as.numeric(Idents(pbmc))
-cluster <- data.frame(cluster)
+cluster <-data.frame(as.numeric(Idents(pbmc)))
+colnames(cluster) <- "cluster"
 rownames(cluster) <- colnames(pbmc)
 cluster$gate <- pbmc[['gate']]
 cluster$plate <- pbmc[['plate']]
@@ -56,7 +57,10 @@ cluster$plate <- pbmc[['plate']]
 
 cluster_density <- cluster %>%
   dplyr::group_by(cluster) %>%
-  dplyr::count(plate, name = 'count')
+  dplyr::count(plate, name = 'count') %>%
+  dplyr::group_by(plate) %>%
+  mutate(freq=count/sum(count))
+
 
 p4<-ggplot(cluster_density,aes(y=cluster,x=plate$plate,fill=count))+ 
   geom_tile()+ theme_classic()+

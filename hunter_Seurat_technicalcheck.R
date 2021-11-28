@@ -6,7 +6,7 @@ FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by
 p1<-VlnPlot(pbmc, features = c("percent.mt"),group.by = "plate" )
 p2<-FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "percent.mt",group.by = "plate" )
 p1+p2
-pbmc <- subset(pbmc, subset= percent.mt<7)
+pbmc <- subset(pbmc, subset= percent.mt<5)
 
 p1<-VlnPlot(pbmc, features = c("percent.mt"),group.by = "plate" )
 p2<-FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "percent.mt",group.by = "plate" )

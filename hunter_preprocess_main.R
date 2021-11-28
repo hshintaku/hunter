@@ -34,8 +34,11 @@ barcode <- read.table(file.path(rdir,"cell_id_list.txt"))
 barcode$GC <- as.numeric(lapply(lapply(as.character(barcode$V1),s2c),GC))
 
 #
-#symbol="mgi_symbol"
-symbol="hgnc_symbol"
+symbol="mgi_symbol"
+#symbol="hgnc_symbol"
+filter="ensembl_gene_id"
+filter="mgi_symbol"
+
 # load functions for barcode decoding
 source(file.path(rdir,"util/whitelist_encode.R"))
 # laod whitelist and check the batch effect
@@ -52,7 +55,6 @@ colnames(gene_list) <- "gene"
 source(file.path(rdir,'util/hunter_biomart_ref.R'))
 #hs_ref <- func.biomart.ref(hs_mart,gene_list,"hgnc_symbol")
 
-filter="ensembl_gene_id"
 if (symbol=="mgi_symbol"){
   ms_mart <- useMart(biomart="ensembl", dataset="mmusculus_gene_ensembl")
   ms_ref <- unique(func.biomart.ref(ms_mart,gene_list,filter,symbol))

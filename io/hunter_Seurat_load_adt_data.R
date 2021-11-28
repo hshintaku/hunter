@@ -44,7 +44,7 @@ for (icnt in 1:length(indexfiles)){
 seladt.csv <- adt.csv[cellids,] # extract cells detected in RNA-seq
 
 seladt.csv[is.na(seladt.csv)] <- 0
-pbmc.adt <-as.sparse(seladt.csv) # convert the format to sparse matrix
+pbmc.adt <-as.sparse(t(seladt.csv)) # convert the format to sparse matrix
 pbmc[["ADT"]] <- CreateAssayObject(counts=pbmc.adt)
 
 #pbmc <- NormalizeData(pbmc,assay="ADT",normalization.method = "LogNormalize",scale.factor = 1e5)
