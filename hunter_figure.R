@@ -4,6 +4,14 @@ DefaultAssay(allcell) <- "ADT"
 allcell<-NormalizeData(allcell, normalization.method = "CLR", margin = 2)
 DefaultAssay(allcell) <- "RNA"
 FeaturePlot(allcell,features=c("mCherry","Azrite","Cyp27a1","Trp53","Pck1","Erbb2","Apoe","Alb"))
+hepa_genes <-c("Cyp27a1","Pck1","Alb","Ppara","Mug1","Ces3a","Cyp3a25","Abcc2","Abcb11","Apoc4",
+               "mt-Nd1","Sspn","Gm44805","Gm19951","Ftl1-ps1","Syt1","Tjp1","Wtap","Gm23240","Dmpk",
+               "Clec4f","Cd5l","Ctsb","Tcf7l2","Scp2-ps2","Gm40841","Hnrnpr","Clpb","AC123870.1","Rein",
+               "Prkg1","Ecm1","Rbms3","Raph1","Trp53","Pck1","Erbb2","Apoe","Twist2")
+pheatmap(allcell[["RNA"]]@data[rownames(pbmc) %in% hepa_genes,],
+         annotation_col = allcell[["gate"]],
+         labels_col = NULL,
+         cluster_cols = F)
 #
 #
 # hepatocyte specific analysis
@@ -71,6 +79,9 @@ hepa.data.zone$plate <- substr(cellids,1,3)
 dm <- DiffusionMap(hepa.data.zone)
 hepa[["pseudospace"]]<-dm$DC1
 #FeatureScatter(pbmc,feature1="pseudospace",feature2="Acot1")
+variable_genes <- hepa.markers[hepa.markers$p_val_adj<0.0001 &
+                                 hepa.markers$avg_log2FC>1.5 | hepa.markers$avg_log2FC< -1.5 &
+                                 hepa.markers$cluster==1,]
 pheatmap(hepa[["RNA"]]@data[variable_genes$gene,order(hepa[["pseudospace"]],decreasing=FALSE)],
          annotation_col = hepa[["pseudospace"]],
          cluster_cols = F,
@@ -83,13 +94,7 @@ FeatureScatter(pbmc,feature1="Venus",feature2="pseudospace",group.by = "plate")
 #
 # hepatocyte marker/transcription factor heatmap
 hepa_genes<- pbmc.markers[pbmc.markers$p_val_adj<0.01 & pbmc.markers$avg_log2FC>1.5,]
-hepa_genes <-c("Cyp27a1","Pck1","Alb","Ppara","Mug1","Ces3a","Cyp3a25","Abcc2","Abcb11","Apoc4",
-               "mt-Nd1","Sspn","Gm44805","Gm19951","Ftl1-ps1","Syt1","Tjp1","Wtap","Gm23240","Dmpk",
-               "Clec4f","Cd5l","Ctsb","Tcf7l2","Scp2-ps2","Gm40841","Hnrnpr","Clpb","AC123870.1","Rein",
-               "Prkg1","Ecm1","Rbms3","Raph1")
-pheatmap(pbmc[["RNA"]]@data[rownames(pbmc) %in% hepa_genes,order(pbmc[["pseudospace"]],decreasing=FALSE)],
-         annotation_col = pbmc[["pseudospace"]],
-         labels_col = NULL)
+
 pheatmap(hepa[["RNA"]]@data[rownames(hepa) %in% hepa_genes,],
          annotation_col = allcell[["gate"]],
          cluster_rows = T,
