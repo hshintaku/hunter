@@ -23,7 +23,10 @@ gene_list <- function(perturbed_gene_HEA,ms_ref){
 #pbmc.markers[variable_genes_entrez$gene_short_name,]$entrez <-
 #  variable_genes_entrez[variable_genes_entrez$gene_short_name,]$entrez_annotation
 
-gene_list_log2fc <- gene_list(pbmc.markers[pbmc.markers$cluster==1,],ms_ref)
+gene_list_log2fc <- gene_list(hepa.markers[hepa.markers$cluster==1 
+#                                             &hepa.markers$avg_log2FC > 1 |
+#                                             hepa.markers$avg_log2FC < -1
+                                           ,],ms_ref)
 #
 # try BP: biological process, CC: cellular component, or MF: molecular function
 gse_result<- gseGO(geneList     = gene_list_log2fc,
@@ -57,19 +60,25 @@ ridgeplot(kk)
 library("enrichplot")
 gseaplot2(kk, geneSetID =1, title = kk$Description[1])
 gseaplot2(kk, geneSetID =1, title = kk$Description[6])
-kk$Description[5]
 #
-upregulated_entrez <- strsplit(kk$core_enrichment[5], split = "/")
+#
+#
+path_index <- 1
+View(kk@result)
+kk$Description[path_index]
+#
+upregulated_entrez <- strsplit(kk$core_enrichment[path_index], split = "/")
 ms_ref[ms_ref$entrez_annotation %in% upregulated_entrez[[1]],]$gene_short_name
-browseKEGG(kk, kk$ID[5])
+#browseKEGG(kk, kk$ID[path_index])
 library("pathview")
-hsa04110 <- pathview(gene.data  = geneList,
-                     pathway.id = kk$ID[5],
+mah <- pathview(gene.data  = unlist(upregulated_entrez),
+                     pathway.id = kk$ID[path_index],
                      species    = kegg_organism,
-                     limit      = list(gene=max(abs(geneList)), cpd=1))
-
-
-
+                     limit      = list(gene=max(abs(as.numeric(unlist(upregulated_entrez)))), cpd=1))
+#
+#
+#
+#
 kk <- gseMKEGG(gene_list_log2fc,
                organism     = kegg_organism, nPerm=10000)
 ridgeplot(kk)

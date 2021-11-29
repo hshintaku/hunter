@@ -146,3 +146,4 @@ ego_result <- enrichGO(gene          = ms_ref[ms_ref$gene_short_name %in% mah_ge
                        readable      = TRUE)
 barplot(ego_result, drop=TRUE, showCategory=20)
 View(ego_result@result)
+ego_result_spread <- ego_result@result
