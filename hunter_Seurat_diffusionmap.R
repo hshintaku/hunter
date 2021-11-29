@@ -8,9 +8,9 @@ suppressPackageStartupMessages(library(scran))
 library(purrr)
 library(wordspace)
 
-hepa.data <- liver[["RNA"]]@data
+#hepa.data <- liver[["RNA"]]@data
 hepa.data <- hepa[["RNA"]]@data
-hepa.data <- pbmc[["RNA"]]@data
+#hepa.data <- pbmc[["RNA"]]@data
 
 hepa.data.zone <- data.frame(t(hepa.data[ordering_genes_disp$gene_id,]))
 cellids<- rownames(hepa.data.zone)
