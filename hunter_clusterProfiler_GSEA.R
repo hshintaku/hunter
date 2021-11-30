@@ -19,11 +19,6 @@ gene_list <- function(perturbed_gene_HEA,ms_ref){
   gene_list_log2fc <- gene_list_log2fc[order(gene_list_log2fc,decreasing = T)]
   return(gene_list_log2fc)
 }
-#pbmc.markers$entrez <- ms_ref[ms_ref$gene_short_name %in% pbmc.markers$gene,]$entrez_annotation
-
-#variable_genes_entrez <- ms_ref[ms_ref$gene_short_name %in% pbmc.markers$gene,]
-#pbmc.markers[variable_genes_entrez$gene_short_name,]$entrez <-
-#  variable_genes_entrez[variable_genes_entrez$gene_short_name,]$entrez_annotation
 
 gene_list_log2fc <- gene_list(hepa.markers[hepa.markers$cluster==0 
                                            ,],ms_ref)
@@ -40,14 +35,13 @@ gse_result<- gseGO(geneList     = gene_list_log2fc,
 ridgeplot(gse_result,showCategory = 30)
 #View(gse_result@result)
 gse_result@result$Description
-path_index <- 38
+path_index <- 1
 gse_result@result$Description[path_index]
 gseaplot2(gse_result, geneSetID =path_index,
           title = gse_result$Description[path_index])
 upregulated_entrez <- strsplit(gse_result@result$core_enrichment[path_index],
                                split = "/")
 ms_ref[ms_ref$entrez_annotation %in% upregulated_entrez[[1]],]$gene_short_name
-#browseKEGG(kk, kk$ID[path_index])
 
 #d <- GOSemSim::godata("org.Hs.eg.db", ont = "BP")    
 #compare_cluster_GO_emap <- enrichplot::pairwise_termsim(gse_result, semData = d,  method="Wang")
@@ -78,6 +72,7 @@ gseaplot(kk, geneSetID = path_index, by = "runningScore", title = kk$Description
 upregulated_entrez <- strsplit(kk@result$core_enrichment[path_index],
                                split = "/")
 ms_ref[ms_ref$entrez_annotation %in% upregulated_entrez[[1]],]$gene_short_name
+browseKEGG(kk, kk$ID[path_index])
 
 mah <- pathview(gene.data  = unlist(upregulated_entrez),
                      pathway.id = kk$ID[path_index],
