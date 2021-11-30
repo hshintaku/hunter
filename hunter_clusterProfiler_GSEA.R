@@ -8,6 +8,8 @@
 #
 # gse
 # 
+library("enrichplot")
+library("pathview")
 gene_list <- function(perturbed_gene_HEA,ms_ref){
   perturbed_gene_HEA_ref <-match(rownames(perturbed_gene_HEA),ms_ref$gene_short_name)
   perturbed_gene_HEA$entrez <- ms_ref[perturbed_gene_HEA_ref,]$entrez_annotation
@@ -24,8 +26,6 @@ gene_list <- function(perturbed_gene_HEA,ms_ref){
 #  variable_genes_entrez[variable_genes_entrez$gene_short_name,]$entrez_annotation
 
 gene_list_log2fc <- gene_list(hepa.markers[hepa.markers$cluster==0 
-#                                             &hepa.markers$avg_log2FC > 1 |
-#                                             hepa.markers$avg_log2FC < -1
                                            ,],ms_ref)
 #
 # try BP: biological process, CC: cellular component, or MF: molecular function
@@ -38,12 +38,12 @@ gse_result<- gseGO(geneList     = gene_list_log2fc,
                    verbose      = FALSE)
 
 ridgeplot(gse_result,showCategory = 30)
-View(gse_result@result)
+#View(gse_result@result)
 gse_result@result$Description
-path_index <- 27
+path_index <- 38
 gse_result@result$Description[path_index]
 gseaplot2(gse_result, geneSetID =path_index,
-          title = gse_result$Description[path_index])#
+          title = gse_result$Description[path_index])
 upregulated_entrez <- strsplit(gse_result@result$core_enrichment[path_index],
                                split = "/")
 ms_ref[ms_ref$entrez_annotation %in% upregulated_entrez[[1]],]$gene_short_name
@@ -66,29 +66,31 @@ kk <- gseKEGG(geneList     = gene_list_log2fc,
               pAdjustMethod = "none",
               keyType       = "ncbi-geneid")
 ridgeplot(kk)
-library("enrichplot")
 #gseaplot2(kk, geneSetID =1, title = kk$Description[6])
 #
 #
 #
-path_index <- 1
-View(kk@result)
+kk$Description
+path_index <- 41
+#View(kk@result)
 kk$Description[path_index]
+gseaplot(kk, geneSetID = path_index, by = "runningScore", title = kk$Description[path_index])
+upregulated_entrez <- strsplit(kk@result$core_enrichment[path_index],
+                               split = "/")
+ms_ref[ms_ref$entrez_annotation %in% upregulated_entrez[[1]],]$gene_short_name
 
-library("pathview")
 mah <- pathview(gene.data  = unlist(upregulated_entrez),
                      pathway.id = kk$ID[path_index],
                      species    = kegg_organism,
                      limit      = list(gene=max(abs(as.numeric(unlist(upregulated_entrez)))), cpd=1))
+
 #
 #
 #
 #
 #kk <- gseMKEGG(gene_list_log2fc,
 #               organism     = kegg_organism, nPerm=10000)
-#ridgeplot(kk)
-#gseaplot(kk, geneSetID = 1, by = "runningScore", title = kk$Description[1])
-#gseaplot2(kk, geneSetID =1, title = kk$Description[1])
+#ridgeplot(kk)#gseaplot2(kk, geneSetID =1, title = kk$Description[1])
 #
 #
 #
