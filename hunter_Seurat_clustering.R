@@ -1,6 +1,7 @@
 library(tidyr)
 # running PCA npcs in the RunPCA function must be less than the number of samples
 # default is 50
+cellids <- colnames(pbmc)
 all.genes <- rownames(pbmc)
 #all.genes <- ordering_genes_disp$gene_id
 #pbmc<-hepa
@@ -40,7 +41,7 @@ p3<-DimPlot(pbmc)
 p1+p2+p3
 
 #find marker genes in each cluster
-pbmc.markers <- FindAllMarkers(pbmc, only.pos = FALSE, min.pct = 0.1, logfc.threshold =0.25 )
+pbmc.markers <- FindAllMarkers(pbmc, only.pos = FALSE, min.pct = 0.1, logfc.threshold =0.0 )
 
 p1 <- DimPlot(pbmc, reduction = "umap",group.by = "plate")
 

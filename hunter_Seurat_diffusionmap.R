@@ -7,6 +7,7 @@ library(conflicted)
 suppressPackageStartupMessages(library(scran))
 library(purrr)
 library(wordspace)
+library(pheatmap)
 
 #hepa.data <- liver[["RNA"]]@data
 hepa.data <- hepa[["RNA"]]@data
@@ -50,14 +51,13 @@ ggplot(hepa.data.zone,aes(x=norm,y=Cyp2e1,colour=plate))+geom_point()+
   ggplot(hepa.data.zone,aes(x=norm,y=Ass1,colour=plate))+geom_point()
 ggplot(hepa.data.zone,aes(x=plate,y=norm,fill=plate))+geom_violin()+
   geom_jitter(shape = 16, position = position_jitter(0.07))
-library(pheatmap)
 hepa.heat <- hepa.data.zone[order(hepa.data.zone$norm,decreasing = FALSE),colnames(hepa.data.zone)!=c("plate","norm")]
 hepa.pn <-data.frame(hepa.heat[,colnames(hepa.heat) %in% toTitleCase(genes_pn$gene_id)])
 hepa.cv <-hepa.heat[,colnames(hepa.heat) %in% toTitleCase(genes_cv$gene_id)]
 cbind(hepa.pn,hepa.cv)
+
 pheatmap(hepa.cv,
                 cluster_cols = TRUE,cluster_rows = FALSE,scale="column",clustering_distance_cols = "canberra")
-  pheatmap(hepa.pn,
+pheatmap(hepa.pn,
              cluster_cols = TRUE,cluster_rows = FALSE,scale="column",clustering_distance_cols = "canberra")
 
-ggplot(hepa.pn,aes())

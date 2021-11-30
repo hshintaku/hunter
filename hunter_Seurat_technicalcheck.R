@@ -1,4 +1,7 @@
 
+#pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^mt-")
+#pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
+#pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 1000)
 # show number of counts
 VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"),
         ncol = 2,group.by = "plate")

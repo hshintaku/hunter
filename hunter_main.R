@@ -35,6 +35,7 @@ channel <- c("Events","FSC","SSC","Venus","Azrite","mCherry")
 source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
 source(file.path(rdir,'io/hunter_Seurat_load_adt_data.R'))
 hepa1 <- pbmc
+
 allcell<- merge(hepa1, y = hepa2,  project = "hunter")
 
 
@@ -63,7 +64,6 @@ hepa.list <-list(hepa1,hepa2)
 anchors <- FindIntegrationAnchors(object.list = hepa.list)
 integrated <- IntegrateData(anchorset = anchors)
 
-allcell <- integrated
 #allcell <- subset(allcell,subset = gate ==c("g1"),invert=TRUE)
 #allcell <- subset(allcell,subset = gate ==c("g4"),invert=TRUE)
 #allcell <- subset(allcell,subset = plate ==c("p04"),invert=TRUE)
@@ -77,10 +77,6 @@ pbmc<-allcell
 pbmc <- hepa
 pbmc <- integrated
 
-cellids <- colnames(pbmc)
-#pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^mt-")
-#pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
-#pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 1000)
 
 # technical check, pca and umap clustering for cell typing
 source(file.path(rdir,'hunter_Seurat_technicalcheck.R'))
@@ -93,9 +89,9 @@ source(file.path(rdir,"shiomi_Seurat_cellcycle_dependence.R"))
 #
 # zonation
 #
-source(file.path(rdir,"hunter_load_landmark_genes.R"))
+#source(file.path(rdir,"hunter_load_landmark_genes.R"))
 # compute pseudotime and order cells along the gene expression
-source(file.path(rdir,"hunter_Seurat_pseudotime.R"))
+#source(file.path(rdir,"hunter_Seurat_pseudotime.R"))
 # compute zonation via diffusion map 
 source(file.path(rdir,"hunter_Seurat_diffusionmap.R"))
 #

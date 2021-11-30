@@ -39,7 +39,15 @@ gse_result<- gseGO(geneList     = gene_list_log2fc,
 
 ridgeplot(gse_result,showCategory = 30)
 View(gse_result@result)
-
+path_index <- 30
+gse_result@result$Description[path_index]
+#
+upregulated_entrez <- strsplit(gse_result@result$core_enrichment[path_index],
+                               split = "/")
+ms_ref[ms_ref$entrez_annotation %in% upregulated_entrez[[1]],]$gene_short_name
+#browseKEGG(kk, kk$ID[path_index])
+gseaplot2(gse_result, geneSetID =path_index,
+          title = gse_result$Description[path_index])
 #d <- GOSemSim::godata("org.Hs.eg.db", ont = "BP")    
 #compare_cluster_GO_emap <- enrichplot::pairwise_termsim(gse_result, semData = d,  method="Wang")
 #emapplot(compare_cluster_GO_emap, showCategory = 8)
@@ -58,18 +66,14 @@ kk <- gseKEGG(geneList     = gene_list_log2fc,
               keyType       = "ncbi-geneid")
 ridgeplot(kk)
 library("enrichplot")
-gseaplot2(kk, geneSetID =1, title = kk$Description[1])
-gseaplot2(kk, geneSetID =1, title = kk$Description[6])
+#gseaplot2(kk, geneSetID =1, title = kk$Description[6])
 #
 #
 #
 path_index <- 1
 View(kk@result)
 kk$Description[path_index]
-#
-upregulated_entrez <- strsplit(kk$core_enrichment[path_index], split = "/")
-ms_ref[ms_ref$entrez_annotation %in% upregulated_entrez[[1]],]$gene_short_name
-#browseKEGG(kk, kk$ID[path_index])
+
 library("pathview")
 mah <- pathview(gene.data  = unlist(upregulated_entrez),
                      pathway.id = kk$ID[path_index],
@@ -79,11 +83,11 @@ mah <- pathview(gene.data  = unlist(upregulated_entrez),
 #
 #
 #
-kk <- gseMKEGG(gene_list_log2fc,
-               organism     = kegg_organism, nPerm=10000)
-ridgeplot(kk)
+#kk <- gseMKEGG(gene_list_log2fc,
+#               organism     = kegg_organism, nPerm=10000)
+#ridgeplot(kk)
 #gseaplot(kk, geneSetID = 1, by = "runningScore", title = kk$Description[1])
-gseaplot2(kk, geneSetID =1, title = kk$Description[1])
+#gseaplot2(kk, geneSetID =1, title = kk$Description[1])
 #
 #
 #
