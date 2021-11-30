@@ -128,14 +128,6 @@ pheatmap(hepa[["RNA"]]@data[hepa_genes$gene,order(hepa[["pseudospace"]],decreasi
 #
 # pathway analysis
 source(file.path(ridir,"hunter_clusterProfiler_GSEA.R"))
-#upregulated <- gse_result@result[gse_result@result$ID=="GO:0048029",]
-#upregulated_entrez <- strsplit(upregulated$core_enrichment, split = "/")
-#upregulated_list <-ms_ref[ms_ref$entrez_annotation %in% upregulated_entrez[[1]],]
-#pheatmap(hepa[["RNA"]]@data[rownames(hepa) %in% upregulated_list$gene_short_name,
-#                            order(hepa[["pseudospace"]],decreasing=FALSE)],
-#         annotation_col = hepa[["pseudospace"]],
-#         cluster_cols = F,
-#         labels_col = NULL)
 #
 #
 # zonation vs pseudospace
