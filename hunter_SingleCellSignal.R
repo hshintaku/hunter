@@ -19,15 +19,20 @@ library(SingleCellSignalR)
 #scdata <- data.frame(GetAssayData(object=pbmc[["RNA"]]))
 #scdata <- scdata-min(min(scdata))
 # Data clustering
-scdata = data.frame(pbmc[["RNA"]]@data)
+
+p1<- DimPlot(pbmc)
+p2<- DimPlot(pbmc,group.by = "plate")
+p1+p2
+
+scdata = data.frame(pbmc[["integrated"]]@data)
 
 all.genes <- row.names(scdata)
 #clust <- clustering(data=scdata, n.cluster=4, n=10,method="simlr",write=TRUE,pdf=FALSE)
 
 #clust <-cluster
 signal = cell_signaling(data=scdata,genes=all.genes,cluster=cluster$cluster,species ="mus musculus",
-                        logFC=log2(4),s.score=0.5,int.type = "paracrine",write=TRUE,
-                        c.names=c("E0771","mCherry+","E0771vivo","GFP+","mCherry+0"))
+                        logFC=log2(2),s.score=0.4,int.type = "paracrine",write=TRUE,
+                        c.names=c("mCherry+","E0771","GFP+","E0771vivo","mCherry+sub"))
 
 inter.net <- inter_network(data = scdata, signal = signal, genes = all.genes, cluster = cluster$cluster, write = FALSE)
 visualize_interactions(signal = signal)

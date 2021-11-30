@@ -23,7 +23,7 @@ gene_list <- function(perturbed_gene_HEA,ms_ref){
 #pbmc.markers[variable_genes_entrez$gene_short_name,]$entrez <-
 #  variable_genes_entrez[variable_genes_entrez$gene_short_name,]$entrez_annotation
 
-gene_list_log2fc <- gene_list(hepa.markers[hepa.markers$cluster==1 
+gene_list_log2fc <- gene_list(hepa.markers[hepa.markers$cluster==0 
 #                                             &hepa.markers$avg_log2FC > 1 |
 #                                             hepa.markers$avg_log2FC < -1
                                            ,],ms_ref)
@@ -37,8 +37,8 @@ gse_result<- gseGO(geneList     = gene_list_log2fc,
                    pAdjustMethod = "BH",
                    verbose      = FALSE)
 
-ridgeplot(gse_result,showCategory = 20)
-
+ridgeplot(gse_result,showCategory = 30)
+View(gse_result@result)
 
 #d <- GOSemSim::godata("org.Hs.eg.db", ont = "BP")    
 #compare_cluster_GO_emap <- enrichplot::pairwise_termsim(gse_result, semData = d,  method="Wang")

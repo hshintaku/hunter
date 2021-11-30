@@ -1,12 +1,11 @@
 library(tidyr)
 # running PCA npcs in the RunPCA function must be less than the number of samples
 # default is 50
-
 all.genes <- rownames(pbmc)
 #all.genes <- ordering_genes_disp$gene_id
 #pbmc<-hepa
 pbmc <- ScaleData(pbmc, features = all.genes)
-pbmc <- RunPCA(pbmc, npcs=20, features = VariableFeatures(object = pbmc))
+pbmc <- RunPCA(pbmc, npcs=25, features = VariableFeatures(object = pbmc))
 
 print(pbmc[["pca"]], dims = 1:2, nfeatures = 50)
 
@@ -28,13 +27,13 @@ pbmc <- ScoreJackStraw(pbmc, dims = 1:20)
 JackStrawPlot(pbmc, dims = 1:20)
 ElbowPlot(pbmc)
 
-pbmc <- FindNeighbors(pbmc, dims = 1:6)
-pbmc <- FindClusters(pbmc, resolution = 0.8)
+pbmc <- FindNeighbors(pbmc, dims = 1:17)
+pbmc <- FindClusters(pbmc, resolution = 0.5)
 
 
 # Retreiving the results of the preprocessing from the Seurat object
 cluster = as.numeric(Idents(pbmc))
-pbmc <- RunUMAP(pbmc, dims = 1:5)
+pbmc <- RunUMAP(pbmc, dims = 1:17)
 p1 <- DimPlot(pbmc, reduction = "pca",group.by = "plate")
 p2 <- DimPlot(pbmc, reduction = "umap",group.by = "plate")
 p3<-DimPlot(pbmc)
