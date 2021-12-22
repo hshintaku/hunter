@@ -35,9 +35,17 @@ channel <- c("Events","FSC","SSC","Venus","Azrite","mCherry")
 source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
 source(file.path(rdir,'io/hunter_Seurat_load_adt_data.R'))
 hepa1 <- pbmc
+# decode the single cell data from whitelist of UMI-tools output
+datadir <- "/home/samba/public/shintaku/20211124HiSeqX006_hunter/"
+wdir <- "/home/samba/public/shintaku/20211124HiSeqX006_hunter/"
+indexdir <- "/home/samba/public/shintaku/20211124HiSeqX006_hunter/index/"
+channel <- c("Events","FSC","SSC","Venus","Azrite","mCherry")
+source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
+source(file.path(rdir,'io/hunter_Seurat_load_adt_data.R'))
+hepa3 <- pbmc
 
 allcell<- merge(hepa1, y = hepa2,  project = "hunter")
-
+allcell <- merge(allcell,y=hepa3,project="hunter")
 
 hepa1 <- subset(hepa1,subset = gate ==c("g1"),invert=TRUE)
 hepa1 <- subset(hepa1,subset = gate ==c("g4"),invert=TRUE)

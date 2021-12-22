@@ -1,3 +1,5 @@
+source(file.path(rdir,"hunter_entrez.R"))
+library(pheatmap)
 hepa1 <- subset(hepa1,subset = gate ==c("g1"),invert=TRUE)
 hepa1 <- subset(hepa1,subset = gate ==c("g4"),invert=TRUE)
 hepa1 <- subset(hepa1,subset = plate ==c("p04"),invert=TRUE)
@@ -11,17 +13,26 @@ hepa2 <- subset(hepa2,subset = gate ==c("g1"),invert=TRUE)
 hepa2 <- subset(hepa2,subset = gate ==c("g4"),invert=TRUE)
 hepa2 <- subset(hepa2,subset = plate ==c("p04"),invert=TRUE)
 hepa2 <- subset(hepa2,subset = plate ==c("p05"),invert=TRUE)
+hepa2[["percent.mt"]] <- PercentageFeatureSet(hepa2, pattern = "^mt-")
 hepa2 <- subset(hepa2, subset= percent.mt<5)
 hepa2 <- NormalizeData(hepa2, normalization.method = "LogNormalize", scale.factor = 1e5)
 hepa2 <- FindVariableFeatures(hepa2, selection.method = "vst", nfeatures = 1000)
+
+hepa3[["percent.mt"]] <- PercentageFeatureSet(hepa3, pattern = "^mt-")
+hepa3 <- subset(hepa3, subset= percent.mt<5)
+hepa3 <- NormalizeData(hepa3, normalization.method = "LogNormalize", scale.factor = 1e5)
+hepa3 <- FindVariableFeatures(hepa3, selection.method = "vst", nfeatures = 1000)
 #
 # integrate data with batch correction
 # 
-hepa.list <-list(hepa1,hepa2)
+hepa.list <-list(hepa1,hepa2,hepa3)
 anchors <- FindIntegrationAnchors(object.list = hepa.list)
 integrated <- IntegrateData(anchorset = anchors)
 
 pbmc <- integrated
+
+
+
 source(file.path(rdir,'hunter_Seurat_clustering.R'))
 allcell <- pbmc
 allcell.markers <- pbmc.markers
@@ -38,14 +49,15 @@ pheatmap(allcell[["RNA"]]@data[rownames(allcell) %in% hepa_genes,],
          annotation_col = allcell[["gate"]],
          labels_col = NULL,
          cluster_cols = F)
-source(file.path(ridir,"hunter_SingleCellSignal.R"))
+source(file.path(rdir,"hunter_SingleCellSignal.R"))
 source(file.path(rdir,"hunter_clusterProfiler_GO.R"))
 #
 #
 # hepatocyte specific analysis
 #
-hepa <- subset(integrated,subset = plate ==c("p02"),invert=TRUE)
+hepa <- subset(allcell,subset = plate ==c("p02"),invert=TRUE)
 hepa <- subset(hepa,subset = plate ==c("P15"),invert=TRUE)
+hepa <- subset(hepa,subset = plate ==c("p20"),invert=TRUE)
 pbmc <- hepa
 cellids <- colnames(pbmc)
 source(file.path(rdir,'hunter_Seurat_clustering.R'))
@@ -56,36 +68,38 @@ DefaultAssay(hepa) <- "ADT"
 hepa<-NormalizeData(hepa, normalization.method = "CLR", margin = 2)
 DefaultAssay(hepa) <- "RNA"
 DimPlot(hepa)+DimPlot(hepa,group.by = "plate")
-Idents(hepa)<-factor(x=Idents(hepa),levels=c(2,1,3,0))
+#Idents(hepa)<-factor(x=Idents(hepa),levels=c(2,1,0))
 #
 # entrez ids of marker genes
 #
-cluster0 <- cluster_marker_entrez(hepa.markers,ms_ref,0,0.05,0.25)
-cluster1 <- cluster_marker_entrez(hepa.markers,ms_ref,1,0.05,0.25)
-cluster2 <- cluster_marker_entrez(hepa.markers,ms_ref,2,0.05,0.25)
-cluster3 <- cluster_marker_entrez(hepa.markers,ms_ref,3,0.05,0.25)
+cluster0 <- cluster_marker_entrez(hepa.markers,ms_ref,0,0.01,0.3)
+cluster1 <- cluster_marker_entrez(hepa.markers,ms_ref,1,0.01,0.3)
+cluster2 <- cluster_marker_entrez(hepa.markers,ms_ref,2,0.01,0.3)
+#cluster3 <- cluster_marker_entrez(hepa.markers,ms_ref,3,0.01,0.3)
 #cluster4 <- cluster_marker_entrez(hepa.markers,ms_ref,4,0.05,0.25)
 # go analysis
 perturbed_gene_hepa <- list(Cluster2=cluster2$entrez_annotation,
                             Cluster1=cluster1$entrez_annotation,
-                            Cluster3=cluster3$entrez_annotation,
+                            #Cluster3=cluster3$entrez_annotation,
                             Cluster0=cluster0$entrez_annotation)
 hepa_go <- compareCluster(perturbed_gene_hepa, fun="enrichGO",
                           OrgDb         = org.Mm.eg.db)
 dotplot(hepa_go)
 # MAH vs distal 
-perturbed_gene_hepa <- list(Cluster3=cluster3$entrez_annotation,
+perturbed_gene_hepa <- list(Cluster2=cluster2$entrez_annotation,
                             Cluster0=cluster0$entrez_annotation)
 hepa_go <- compareCluster(perturbed_gene_hepa, fun="enrichGO",
                           OrgDb         = org.Mm.eg.db)
 dotplot(hepa_go)
+hepa_go@compareClusterResult[hepa_go@compareClusterResult$Cluster=="Cluster0",]$Description
+hepa_go@compareClusterResult[hepa_go@compareClusterResult$Cluster=="Cluster0",]$geneID
 #
 #
 #
 # visualize marker genes in a specific cluster
 #cluster1 <- cluster_marker_entrez(hepa.markers,ms_ref,1,0.001,0.9)
-variable_genes <- hepa.markers[hepa.markers$p_val_adj<0.01 &
-                                 hepa.markers$avg_log2FC>1 &
+variable_genes <- hepa.markers[hepa.markers$p_val_adj<0.001 &
+                                 hepa.markers$avg_log2FC>2 &
                                  hepa.markers$cluster==0,]
 # show go enrichment
 ego_result <- enrichGO(gene          = ms_ref[ms_ref$gene_short_name %in% variable_genes$gene,]$entrez_annotation, 
@@ -102,7 +116,7 @@ View(ego_result@result)
 # MAH gene diffusion map
 # 
 hepa.data <- hepa[["RNA"]]@data
-hepa.data.zone <- data.frame(t(hepa.data[variable_genes$gene,]))
+hepa.data.zone <- data.frame(t(hepa.data[c(variable_genes$gene),]))
 cellids<- rownames(hepa.data.zone)
 hepa.data.zone$plate <- substr(cellids,1,3)
 #
@@ -117,8 +131,8 @@ FeatureScatter(hepa,feature1="Venus",feature2="pseudospace",group.by = "plate")
 #FeatureScatter(pbmc,feature1="pseudospace",feature2="Acot1")
 #
 # visualize result with all other marker genes
-hepa_genes <- hepa.markers[hepa.markers$p_val_adj<0.01 &
-                                 hepa.markers$avg_log2FC>0.5,]
+hepa_genes <- hepa.markers[hepa.markers$p_val_adj<0.0001 &
+                                 hepa.markers$avg_log2FC>0.8,]
 pheatmap(hepa[["RNA"]]@data[hepa_genes$gene,order(hepa[["pseudospace"]],decreasing=FALSE)],
          annotation_col = hepa[["pseudospace"]],
          cluster_cols = F,
@@ -134,8 +148,8 @@ source(file.path(ridir,"hunter_clusterProfiler_GSEA.R"))
 #Idents(hepa) <- cluster$cluster
 #VlnPlot(hepa,features = g2m_genes, group.by = "cluster")
 source(file.path(rdir,"hunter_Seurat_diffusionmap.R"))
-hepa[["zone"]] <-hepa.data.zone$norm
-FeatureScatter(hepa,feature1="zone",feature2="pseudospace",group.by = "plate")
+pbmc[["zone"]] <-hepa.data.zone$norm
+FeatureScatter(pbmc,feature1="zone",feature2="pseudospace",group.by = "plate")
 FeaturePlot(hepa,features = c("zone","pseudospace"))
 
 # correlated genes

@@ -1,19 +1,22 @@
 #https://tabula-muris.ds.czbiohub.org/
 library(Seurat)
-liver.data <- Read10X(data.dir = "/home/samba/public/tabula_muris/droplet/Liver-10X_P7_0/")
+liver.data <- Read10X(data.dir = "/home/samba/public/tabula_muris/droplet/Liver-10X_P4_2/")
 liver <- CreateSeuratObject(counts = liver.data, project = "liver", min.cells = 10, min.features = 1000)
 
-lung.data <- Read10X(data.dir = "/home/samba/public/tabula_muris/droplet/Lung-10X_P7_8/")
-lung <- CreateSeuratObject(counts = lung.data, project = "liver", min.cells = 10, min.features = 1000)
-liver <- merge(liver, y = lung, add.cell.ids = c("liver", "lung"), project = "hunter")
-kidney.data <- Read10X(data.dir = "/home/samba/public/tabula_muris/droplet/Kidney-10X_P4_5/")
-kidney <- CreateSeuratObject(counts = kidney.data, project = "kideny", min.cells = 10, min.features = 1000)
-liver<-merge(liver, y = kidney, add.cell.ids = c("liver", "kideny"), project = "hunter")
+#lung.data <- Read10X(data.dir = "/home/samba/public/tabula_muris/droplet/Lung-10X_P7_8/")
+#lung <- CreateSeuratObject(counts = lung.data, project = "liver", min.cells = 10, min.features = 1000)
+#liver <- merge(liver, y = lung, add.cell.ids = c("liver", "lung"), project = "hunter")
+#kidney.data <- Read10X(data.dir = "/home/samba/public/tabula_muris/droplet/Kidney-10X_P4_5/")
+#kidney <- CreateSeuratObject(counts = kidney.data, project = "kideny", min.cells = 10, min.features = 1000)
+#liver<-merge(liver, y = kidney, add.cell.ids = c("liver", "kideny"), project = "hunter")
 
 liver <- NormalizeData(liver, normalization.method = "LogNormalize", scale.factor = 1e5)
+liver[["percent.mt"]] <- PercentageFeatureSet(liver, pattern = "^mt-")
+VlnPlot(liver, features = c("nCount_RNA","nFeature_RNA","percent.mt"))
+FeatureScatter(liver, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
 liver <- FindVariableFeatures(liver, selection.method = "vst", nfeatures = 100)
 VlnPlot(liver, features = c("nCount_RNA","nFeature_RNA"))
-FeatureScatter(liver, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+
 top10 <- head(VariableFeatures(liver), 20)
 # plot variable features with labels
 plot1 <- VariableFeaturePlot(liver)
@@ -51,3 +54,6 @@ p0<-DimPlot(liver,reduction="pca")
 p1<-FeaturePlot(liver,features="Cyp2c29",reduction="pca")
 p2<-FeaturePlot(liver,features="Azgp1",reduction="pca")
 p0+p1+p2
+
+pbmc <- liver
+source(file.path(rdir,"hunter_Seurat_cellcycle.R"))

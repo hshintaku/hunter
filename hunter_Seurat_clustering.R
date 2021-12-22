@@ -28,20 +28,20 @@ pbmc <- ScoreJackStraw(pbmc, dims = 1:20)
 JackStrawPlot(pbmc, dims = 1:20)
 ElbowPlot(pbmc)
 
-pbmc <- FindNeighbors(pbmc, dims = 1:17)
-pbmc <- FindClusters(pbmc, resolution = 0.5)
+pbmc <- FindNeighbors(pbmc, dims = 1:19)
+pbmc <- FindClusters(pbmc, resolution = 0.3)
 
 
 # Retreiving the results of the preprocessing from the Seurat object
 cluster = as.numeric(Idents(pbmc))
-pbmc <- RunUMAP(pbmc, dims = 1:17)
+pbmc <- RunUMAP(pbmc, dims = 1:19)
 p1 <- DimPlot(pbmc, reduction = "pca",group.by = "plate")
 p2 <- DimPlot(pbmc, reduction = "umap",group.by = "plate")
 p3<-DimPlot(pbmc)
 p1+p2+p3
 
 #find marker genes in each cluster
-pbmc.markers <- FindAllMarkers(pbmc, only.pos = FALSE, min.pct = 0.1, logfc.threshold =0.0 )
+pbmc.markers <- FindAllMarkers(pbmc, only.pos = FALSE )
 
 p1 <- DimPlot(pbmc, reduction = "umap",group.by = "plate")
 
