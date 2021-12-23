@@ -1,7 +1,7 @@
 
 # show number of counts
-VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"),
-        ncol = 2,group.by = "cell")
+VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA","percent.mt"),
+        ncol = 3)
 VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"),
         ncol = 2,group.by = "gate")
 FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "gate" )
@@ -38,18 +38,9 @@ plot2
 
 all.genes <- rownames(pbmc)
 pbmc <- ScaleData(pbmc, features = all.genes)
-pbmc <- RunPCA(pbmc, npcs=10, features = VariableFeatures(object = pbmc))
+pbmc <- RunPCA(pbmc, npcs=30, features = VariableFeatures(object = pbmc))
 
-print(pbmc[["pca"]], dims = 1:2, nfeatures = 50)
-
-# plot plates/dishes/gates/pools/rtid
-p1 <- DimPlot(pbmc, reduction = "pca",group.by = "plates")
-p2 <- DimPlot(pbmc, reduction = "pca",group.by = "cell")
-p3 <- DimPlot(pbmc, reduction = "pca",group.by = "gate")
-p1+p2+p3
-
-DimPlot(pbmc, reduction = "pca",group.by = "pool")
-DimPlot(pbmc, reduction = "pca",group.by = "rtid")
+#print(pbmc[["pca"]], dims = 1:2, nfeatures = 50)
 
 # gene expression scatter
 pca_topcells <- TopCells(object = pbmc[['pca']], balanced = FALSE)
@@ -57,8 +48,8 @@ CellScatter(object = pbmc, cell1 = pca_topcells[1], cell2 = pca_topcells[2])
 
 
 pbmc <- JackStraw(pbmc, num.replicate = 100)
-pbmc <- ScoreJackStraw(pbmc, dims = 1:10)
-JackStrawPlot(pbmc, dims = 1:10)
+pbmc <- ScoreJackStraw(pbmc, dims = 1:30)
+JackStrawPlot(pbmc, dims = 1:30)
 ElbowPlot(pbmc)
 
 pbmc <- FindNeighbors(pbmc, dims = 1:10)
@@ -70,6 +61,7 @@ cluster = as.numeric(Idents(pbmc))
 pbmc <- RunUMAP(pbmc, dims = 1:7)
 p1 <- DimPlot(pbmc, reduction = "pca")
 p2 <- DimPlot(pbmc, reduction = "umap")
+
 p1+p2
 
 #find marker genes in each cluster

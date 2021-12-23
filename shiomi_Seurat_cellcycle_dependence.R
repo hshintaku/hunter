@@ -1,6 +1,6 @@
 source(file.path(rdir,"util/fucci_cellcycle_genes.R"))
 
-tig <-seurat_object
+tig <-pbmc#seurat_object
 
 sub_ref <- ms_ref %>%
   dplyr::filter(gene_short_name %in% rownames(tig))
@@ -15,16 +15,29 @@ tig$CC.Difference <- tig$S.Score - tig$G2M.Score
 tig<- ScaleData(tig, vars.to.regress = "CC.Difference", features = c(s_genes, g2m_genes))
 #features=c("S.Score","G2M.Score")
 #FeaturePlot(pbmc, features = features,reduction = "pca")
-p1 <- FeatureScatter(tig,feature1 = "G2M.Score",feature2 = "protein_FLD004")+scale_y_log10()
-p2 <- FeatureScatter(tig,feature1 = "S.Score",feature2 = "protein_FLD004")+scale_y_log10()
+p1 <- FeatureScatter(tig,feature1 = "G2M.Score",feature2 = "FLD004")+scale_y_log10()
+p2 <- FeatureScatter(tig,feature1 = "S.Score",feature2 = "FLD004")+scale_y_log10()
 p1+p2
 
 FeatureScatter(tig,feature1 = "S.Score",feature2 = "G2M.Score")
 
+tig <- FindVariableFeatures(tig, selection.method = "vst", nfeatures = 1000)
 tig <- RunPCA(tig, npcs=50, features = VariableFeatures(object = tig))
-DimPlot(tig,reduction="pca")
-FeaturePlot(tig,features="fld_FLD500",reduction="pca")
+plot1 <- VariableFeaturePlot(tig)
+plot1 <- LabelPoints(plot = plot1, points = top10)
+plot1
+p1<-DimPlot(tig,reduction="umap")
+p2<-FeaturePlot(tig,features="fld_FLD500",reduction="umap")
+p1+p2
 #pbmc<-tig
 
-VlnPlot(tig,features='fld_FLDtotal',group.by = 'Phase')+scale_y_log10(limits=c(10,1e5))
+VlnPlot(tig,features='fld_FLDtotal',group.by = 'Phase')
 
+t20ctl <- subset(tig,subset = condition=="T20CTL")
+t50ctl <- subset(tig,subset = condition=="T50CTL")
+tazctl <- subset(tig,subset=condition=="TAZCTL")
+
+p1<-DimPlot(t20ctl,group.by = "Phase")
+p2<-DimPlot(t50ctl,group.by = "Phase")
+p3<-DimPlot(tazctl,group.by = "Phase")
+p1+p2+p3

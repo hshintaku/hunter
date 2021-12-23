@@ -16,15 +16,15 @@ library(stringr)
 #library(VennDiagram)
 
 # decode the single cell data from whitelist of UMI-tools output
-datadir <- "/home/samba/sanger/shintaku/20210728HiSeqX004_10x_TIG/"
-#wdir <- "/home/samba/sanger/shintaku/20210323MiSeq015Ana10X/"
-wdir <- "/home/samba/public/shintaku/20210728HiSeqX004_10x_TIG/"
+datadir <- "/home/samba/sanger/shintaku/20211124HiSeqX006_TIG/"
+#wdir <- "/home/samba/sanger/shintaku/20210728HiSeqX004_10x_cellranger/C01TIG-H12/outs/raw_feature_bc_matrix/"
+wdir <- "/home/samba/public/shintaku/20211124HiSeqX006_TIG/"
 rdir <- "/home/samba/public/shintaku/hunter/"
 
 #
 # cell_id_list2.txt contains all barcodes
 # cell_id_list.txt contains selected barcodes by GC percent.
-#barcode <- read.table(file.path(rdir,"cell_id_list2.txt"))
+barcode <- read.table(file.path(rdir,"cell_id_list2.txt"))
 barcode <- read.table(file.path("/home/samba/public/shintaku/cellranger-6.1.0/lib/python/cellranger/barcodes/3M-february-2018.txt.gz"))
 rownames(barcode)<-barcode$V1
 barcode$GC <- as.numeric(lapply(lapply(as.character(barcode$V1),s2c),GC))
@@ -39,13 +39,19 @@ source(file.path(rdir,"preprocess/preprocess_FLD_data.R"))
 # you can restart from here
 # load data from 10x formatted files
 source(file.path(rdir,"/io/hunter_Seurat_load_dataset.R"))
+
+
 pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
-pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 500)
+pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 1000)
+
+pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^MT-")
 # annotate cells
 source(file.path(rdir,"shiomi_Seurat_annotate_cells.R"))
 
 # technical check, pca and umap clustering for cell typing
 source(file.path(rdir,'shiomi_Seurat_10x_technical.R'))
+# clustering
+source(file.path(rdir,"shiomi_Seurat_clustering.R"))
 
 # load FCS data
 #indexdir =paste0(wdir,"index/")
