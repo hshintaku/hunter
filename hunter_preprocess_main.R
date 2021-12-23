@@ -28,14 +28,20 @@ wdir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/"
 datadir <- "/home/samba/public/shintaku/20211124HiSeqX006_hunter/"
 wdir <- "/home/samba/public/shintaku/20211124HiSeqX006_hunter/"
 
+datadir <- "/home/samba/public/shintaku/20211124HiSeqX006_Islet/"
+wdir <- "/home/samba/public/shintaku/20211124HiSeqX006_Islet/"
+
 rdir <- "/home/samba/public/shintaku/github/hunter2/"
 
+barcode <- read.table(file.path("/home/samba/public/Program/cellranger-6.1.2/lib/python/cellranger/barcodes/3M-february-2018.txt"))
 barcode <- read.table(file.path(rdir,"cell_id_list.txt"))
 barcode$GC <- as.numeric(lapply(lapply(as.character(barcode$V1),s2c),GC))
 
 #
 symbol="mgi_symbol"
-#symbol="hgnc_symbol"
+symbol="hgnc_symbol"
+symbol="rgd_symbol"
+
 filter="ensembl_gene_id"
 filter="mgi_symbol"
 
@@ -58,9 +64,12 @@ source(file.path(rdir,'util/hunter_biomart_ref.R'))
 if (symbol=="mgi_symbol"){
   ms_mart <- useMart(biomart="ensembl", dataset="mmusculus_gene_ensembl")
   ms_ref <- unique(func.biomart.ref(ms_mart,gene_list,filter,symbol))
-}else{
+}else if(symbol=="hgnc_symbol"){
   hs_mart <- useMart(biomart="ensembl", dataset="hsapiens_gene_ensembl")
   ms_ref <- unique(func.biomart.ref(hs_mart,gene_list,filter,symbol))
+}else{
+  rgd_mart <- useMart(biomart="ensembl", dataset="rnorvegicus_gene_ensembl")
+  ms_ref <- unique(func.biomart.ref(rgd_mart,gene_list,filter,symbol))
 }
 
 #
