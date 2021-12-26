@@ -6,7 +6,7 @@ all.genes <- rownames(pbmc)
 #all.genes <- ordering_genes_disp$gene_id
 #pbmc<-hepa
 pbmc <- ScaleData(pbmc, features = all.genes)
-pbmc <- RunPCA(pbmc, npcs=25, features = VariableFeatures(object = pbmc))
+pbmc <- RunPCA(pbmc, npcs=20, features = VariableFeatures(object = pbmc))
 
 print(pbmc[["pca"]], dims = 1:2, nfeatures = 50)
 

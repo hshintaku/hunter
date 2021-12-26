@@ -6,12 +6,15 @@ colnames(files)<-"name"
 
 for (icnt in 1:nrow(files)){
   #icnt=1
-  myData <- read.table(file.path(datadir,"count",files[icnt,]), header = TRUE)
-  white<-subset(allencoded,allencoded$batch==str_sub(files[icnt,],1,10))
-  encoded <- whitelist.umi_tools.encode(myData$cell,active_barcode$V1)
-  myData$cell <- paste0(str_sub(files[icnt,],1,10),"-",encoded$index)
-  
-  myData <- myData[encoded$value<1,]
+  if (encode_barcode==TRUE){
+    myData <- read.table(file.path(datadir,"count",files[icnt,]), header = TRUE)
+    white<-subset(allencoded,allencoded$batch==str_sub(files[icnt,],1,10))
+    encoded <- whitelist.umi_tools.encode(myData$cell,active_barcode$V1)
+    myData$cell <- paste0(str_sub(files[icnt,],1,10),"-",encoded$index)
+    myData <- myData[encoded$value<1,]
+  }else{
+    myData$cell <- paste0(str_sub(files[icnt,],1,10),"-",myData$cell)
+  }
   
   if (icnt>1){
     allData <- rbind(allData,myData)

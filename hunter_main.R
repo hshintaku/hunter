@@ -18,7 +18,7 @@ library(stringdist)
 library(biomaRt)
 
 # load data from 10x formatted files
-
+rdir <- "/home/samba/public/shintaku/github/hunter2/"
 # decode the single cell data from whitelist of UMI-tools output
 datadir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/"
 wdir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/"
@@ -44,46 +44,11 @@ source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
 source(file.path(rdir,'io/hunter_Seurat_load_adt_data.R'))
 hepa3 <- pbmc
 
-allcell<- merge(hepa1, y = hepa2,  project = "hunter")
-allcell <- merge(allcell,y=hepa3,project="hunter")
-
-hepa1 <- subset(hepa1,subset = gate ==c("g1"),invert=TRUE)
-hepa1 <- subset(hepa1,subset = gate ==c("g4"),invert=TRUE)
-hepa1 <- subset(hepa1,subset = plate ==c("p04"),invert=TRUE)
-hepa1 <- subset(hepa1,subset = plate ==c("p05"),invert=TRUE)
-#hepa1 <- subset(hepa1,subset = plate ==c("p02"),invert=TRUE)
-#hepa1 <- subset(hepa1,subset = plate ==c("P15"),invert=TRUE)
-hepa1[["percent.mt"]] <- PercentageFeatureSet(hepa1, pattern = "^mt-")
-hepa1 <- subset(hepa1, subset= percent.mt<5)
-hepa1 <- NormalizeData(hepa1, normalization.method = "LogNormalize", scale.factor = 1e5)
-hepa1 <- FindVariableFeatures(hepa1, selection.method = "vst", nfeatures = 1000)
-
-hepa2 <- subset(hepa2,subset = gate ==c("g1"),invert=TRUE)
-hepa2 <- subset(hepa2,subset = gate ==c("g4"),invert=TRUE)
-hepa2 <- subset(hepa2,subset = plate ==c("p04"),invert=TRUE)
-hepa2 <- subset(hepa2,subset = plate ==c("p05"),invert=TRUE)
-#hepa2 <- subset(hepa2,subset = plate ==c("p02"),invert=TRUE)
-#hepa2 <- subset(hepa2,subset = plate ==c("P15"),invert=TRUE)
-hepa2 <- subset(hepa2, subset= percent.mt<5)
-hepa2 <- NormalizeData(hepa2, normalization.method = "LogNormalize", scale.factor = 1e5)
-hepa2 <- FindVariableFeatures(hepa2, selection.method = "vst", nfeatures = 1000)
 
 hepa.list <-list(hepa1,hepa2)
 anchors <- FindIntegrationAnchors(object.list = hepa.list)
 integrated <- IntegrateData(anchorset = anchors)
 
-#allcell <- subset(allcell,subset = gate ==c("g1"),invert=TRUE)
-#allcell <- subset(allcell,subset = gate ==c("g4"),invert=TRUE)
-#allcell <- subset(allcell,subset = plate ==c("p04"),invert=TRUE)
-#allcell <- subset(allcell,subset = plate ==c("p05"),invert=TRUE)
-hepa <- subset(allcell,subset = plate ==c("p02"),invert=TRUE)
-hepa <- subset(hepa,subset = plate ==c("P15"),invert=TRUE)
-
-
-
-pbmc<-allcell
-pbmc <- hepa
-pbmc <- integrated
 
 
 # technical check, pca and umap clustering for cell typing

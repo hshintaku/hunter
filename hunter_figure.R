@@ -1,5 +1,11 @@
-source(file.path(rdir,"hunter_entrez.R"))
+library(destiny)
+library(ggplot2)
+library(conflicted)
+suppressPackageStartupMessages(library(scran))
+library(purrr)
+library(wordspace)
 library(pheatmap)
+conflict_prefer("mutate", "dplyr")
 hepa1 <- subset(hepa1,subset = gate ==c("g1"),invert=TRUE)
 hepa1 <- subset(hepa1,subset = gate ==c("g4"),invert=TRUE)
 hepa1 <- subset(hepa1,subset = plate ==c("p04"),invert=TRUE)
@@ -25,14 +31,17 @@ hepa3 <- FindVariableFeatures(hepa3, selection.method = "vst", nfeatures = 1000)
 #
 # integrate data with batch correction
 # 
-hepa.list <-list(hepa1,hepa2,hepa3)
-anchors <- FindIntegrationAnchors(object.list = hepa.list)
-integrated <- IntegrateData(anchorset = anchors)
+batch2<- merge(hepa2, y = hepa3,  project = "hunter")
+integrated <- merge(hepa1,batch2,project="hunter")
+#hepa.list <-list(hepa1,allcell)
+#anchors <- FindIntegrationAnchors(object.list = hepa.list)
+#integrated <- IntegrateData(anchorset = anchors)
 
 pbmc <- integrated
+pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
+pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 1000)
 
-
-
+source(file.path(rdir,"hunter_Seurat_biomart.R"))
 source(file.path(rdir,'hunter_Seurat_clustering.R'))
 allcell <- pbmc
 allcell.markers <- pbmc.markers
@@ -55,10 +64,13 @@ source(file.path(rdir,"hunter_clusterProfiler_GO.R"))
 #
 # hepatocyte specific analysis
 #
-hepa <- subset(allcell,subset = plate ==c("p02"),invert=TRUE)
+hepa <- subset(pbmc,subset = plate ==c("p02"),invert=TRUE)
 hepa <- subset(hepa,subset = plate ==c("P15"),invert=TRUE)
 hepa <- subset(hepa,subset = plate ==c("p20"),invert=TRUE)
 pbmc <- hepa
+pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
+pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 1000)
+
 cellids <- colnames(pbmc)
 source(file.path(rdir,'hunter_Seurat_clustering.R'))
 
@@ -78,15 +90,15 @@ cluster2 <- cluster_marker_entrez(hepa.markers,ms_ref,2,0.01,0.3)
 #cluster3 <- cluster_marker_entrez(hepa.markers,ms_ref,3,0.01,0.3)
 #cluster4 <- cluster_marker_entrez(hepa.markers,ms_ref,4,0.05,0.25)
 # go analysis
-perturbed_gene_hepa <- list(Cluster2=cluster2$entrez_annotation,
-                            Cluster1=cluster1$entrez_annotation,
-                            #Cluster3=cluster3$entrez_annotation,
+perturbed_gene_hepa <- list(Cluster1=cluster1$entrez_annotation,
                             Cluster0=cluster0$entrez_annotation)
+                            #Cluster3=cluster3$entrez_annotation,
+                            #Cluster0=cluster0$entrez_annotation)
 hepa_go <- compareCluster(perturbed_gene_hepa, fun="enrichGO",
                           OrgDb         = org.Mm.eg.db)
 dotplot(hepa_go)
 # MAH vs distal 
-perturbed_gene_hepa <- list(Cluster2=cluster2$entrez_annotation,
+perturbed_gene_hepa <- list(Cluster1=cluster1$entrez_annotation,
                             Cluster0=cluster0$entrez_annotation)
 hepa_go <- compareCluster(perturbed_gene_hepa, fun="enrichGO",
                           OrgDb         = org.Mm.eg.db)
@@ -99,7 +111,7 @@ hepa_go@compareClusterResult[hepa_go@compareClusterResult$Cluster=="Cluster0",]$
 # visualize marker genes in a specific cluster
 #cluster1 <- cluster_marker_entrez(hepa.markers,ms_ref,1,0.001,0.9)
 variable_genes <- hepa.markers[hepa.markers$p_val_adj<0.001 &
-                                 hepa.markers$avg_log2FC>2 &
+                                 hepa.markers$avg_log2FC>1.5 &
                                  hepa.markers$cluster==0,]
 # show go enrichment
 ego_result <- enrichGO(gene          = ms_ref[ms_ref$gene_short_name %in% variable_genes$gene,]$entrez_annotation, 
