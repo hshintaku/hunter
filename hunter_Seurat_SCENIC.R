@@ -1,5 +1,6 @@
 #dbFiles <- c("https://resources.aertslab.org/cistarget/databases/mus_musculus/mm10/refseq_r80/mc9nr/gene_based/mm10__refseq-r80__10kb_up_and_down_tss.mc9nr.feather",
 #            "https://resources.aertslab.org/cistarget/databases/mus_musculus/mm10/refseq_r80/mc9nr/gene_based/mm10__refseq-r80__500bp_up_and_100bp_down_tss.mc9nr.feather")
+# https://github.com/aertslab/SCENIC
 library(SCopeLoomR)
 library(SCENIC)
 library(loomR)
