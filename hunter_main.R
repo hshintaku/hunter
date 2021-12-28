@@ -51,7 +51,7 @@ source(file.path(rdir,"bulk_DESeq2.R"))
 
 
 # compute pseudotime and order cells along the gene expression
-source(file.path(rdir,"shiomi_Seurat_monocle_pseudotime.R"))
+#source(file.path(rdir,"shiomi_Seurat_monocle_pseudotime.R"))
 #
 # http://yulab-smu.top/clusterProfiler-book/index.html
 #

@@ -15,7 +15,7 @@ pbmc <- RunPCA(pbmc, npcs=10, features = VariableFeatures(object = pbmc))
 
 print(pbmc[["pca"]], dims = 1:2, nfeatures = 50)
 DimPlot(pbmc)
-DimPlot(pbmc,group.by = "species")+DimPlot(pbmc,group.by = "condition")
+DimPlot(pbmc,group.by = "pool")+DimPlot(pbmc,group.by = "condition")
 
 pbmc <- JackStraw(pbmc, num.replicate = 100)
 pbmc <- ScoreJackStraw(pbmc, dims = 1:10)

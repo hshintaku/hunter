@@ -4,17 +4,16 @@
 #BiocManager::install("org.Mm.eg.db")
 #library("org.Mm.eg.db")
 #BiocManager::install("org.Hs.eg.db")
-library("org.Hs.eg.db")
+#library("org.Hs.eg.db")
+library("org.Rn.eg.db")
 library(clusterProfiler)
 #
 ensmusg <- data.frame(unlist(as.list(org.Hs.egENSEMBL2EG)))
+ensrg <- data.frame(unlist(as.list(org.Rn.egENSEMBL2EG)))
 # entrez annotation
 ms_ref$entrez_annotation <- ensmusg[ms_ref$ensembl_gene_id,]
-
-
-perturbed_gene_HEA.entrez_annotation <- ms_ref_subset[ms_ref_subset$gene_short_name %in% rownames(perturbed_gene_HEA),]
-perturbed_gene_RG.entrez_annotation <- ms_ref_subset[ms_ref_subset$gene_short_name %in% rownames(perturbed_gene_RG),]
-perturbed_gene_elp.entrez_annotation <- ms_ref_subset[ms_ref_subset$gene_short_name %in% rownames(perturbed_gene_elp),]
+ms_ref$entrez_annotation <- ensrg[ms_ref$ensembl_gene_id,]
+de_genes_entrez <- ms_ref[ms_ref$gene_short_name %in% rownames(de_genes),]$entrez_annotation
 
 #
 # https://bioc.ism.ac.jp/packages/3.3/bioc/vignettes/clusterProfiler/inst/doc/clusterProfiler.html
@@ -24,7 +23,7 @@ perturbed_gene_elp.entrez_annotation <- ms_ref_subset[ms_ref_subset$gene_short_n
 #gene_module_go <- allLLIDs[moduleColors_subset=="pink"]
 
 ego_result <- enrichGO(gene          = perturbed_gene_elp.entrez_annotation$entrez_annotation, 
-                       OrgDb         = org.Hs.eg.db,
+                       OrgDb         = org.Rn.eg.db, # rattus, human etc
                        ont           = "CC",
                          pAdjustMethod = "BH",
                        pvalueCutoff  = 0.05,
