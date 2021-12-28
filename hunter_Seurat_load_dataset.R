@@ -10,9 +10,9 @@ pbmc.data <- Read10X(data.dir = wdir)
 pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 1, min.features = 100)
 
 cellids <- colnames(pbmc)
-pbmc[['lib']] <- substr(cellids,1,8)
-pbmc[['batch']] <- substr(cellids,9,10)
-pbmc[['rtid']] <- substr(cellids,12,13)
+#pbmc[['lib']] <- substr(cellids,1,8)
+#pbmc[['batch']] <- substr(cellids,9,10)
+#pbmc[['rtid']] <- substr(cellids,12,13)
 #pbmc[['pool']] <- substr(cellids,10,10)
 #pbmc[['rtid']] <- substr(cellids,12,13)
 

@@ -18,15 +18,15 @@ library(stringdist)
 library(biomaRt)
 
 # decode the single cell data from whitelist of UMI-tools output
-datadir <- "/home/samba/public/shintaku/20210728HiSeqX004_Ida"
-wdir <- "/home/samba/public/shintaku/20210728HiSeqX004_Ida/"
-rdir <- "/home/samba/public/shintaku/github/hunter"
+datadir <- "/home/samba/public/shintaku/20211124HiSeqX006_Islet/"
+wdir <- "/home/samba/public/shintaku/20211124HiSeqX006_Islet/"
+rdir <- "/home/samba/public/shintaku/github/hunter2"
 
 barcode <- read.table(file.path(rdir,"cell_id_list.txt"))
 barcode$GC <- as.numeric(lapply(lapply(as.character(barcode$V1),s2c),GC))
 
 #symbol="mgi_symbol"
-symbol="hgnc_symbol"
+#symbol="hgnc_symbol"
 source(file.path(rdir,"hunter_first_data_process.R"))
 
 #

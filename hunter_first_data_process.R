@@ -14,17 +14,15 @@ source(file.path(rdir,'util/hunter_biomart_ref.R'))
 #hs_ref <- func.biomart.ref(hs_mart,gene_list,"hgnc_symbol")
 
 filter="ensembl_gene_id"
-if (symbol=="mgi_symbol"){
-  ms_mart <- useMart(biomart="ensembl", dataset="mmusculus_gene_ensembl")
-  ms_ref <- unique(func.biomart.ref(ms_mart,gene_list,filter,symbol))
-}else{
-  hs_mart <- useMart(biomart="ensembl", dataset="hsapiens_gene_ensembl")
-  ms_ref <- unique(func.biomart.ref(hs_mart,gene_list,filter,symbol))
-}
-  
-#
-#pig_mart <- useMart(biomart="ensembl", dataset="sscrofa_gene_ensembl")
+symbol="rgd_symbol"
+rdg_mart <- useMart(biomart="ensembl", dataset="rnorvegicus_gene_ensembl")
+rdg_ref <- unique(func.biomart.ref(rdg_mart,gene_list,filter,symbol))
+symbol="hgnc_symbol"
+hs_mart <- useMart(biomart="ensembl", dataset="hsapiens_gene_ensembl")
+hs_ref <- unique(func.biomart.ref(hs_mart,gene_list,filter,symbol))
 
+
+ms_ref <- rbind(hs_ref,rdg_ref)
 
 missing_ref <- subset(gene_list,!(gene %in% ms_ref$ensembl_gene_id))
 adding_ref <- data.frame(cbind(missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene))
