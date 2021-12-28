@@ -28,8 +28,6 @@ barcode$GC <- as.numeric(lapply(lapply(as.character(barcode$V1),s2c),GC))
 #symbol="mgi_symbol"
 #symbol="hgnc_symbol"
 source(file.path(rdir,"data_preprocess_main.R"))
-
-#
 #
 # you can restart from here
 # load data from 10x formatted files
@@ -45,9 +43,6 @@ pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 1000)
 source(file.path(rdir,'Seurat_clustering.R'))
 # DESeq2
 source(file.path(rdir,"Seurat_DESeq2.R"))
-
-# compute pseudotime and order cells along the gene expression
-#source(file.path(rdir,"shiomi_Seurat_monocle_pseudotime.R"))
 #
 # http://yulab-smu.top/clusterProfiler-book/index.html
 #
