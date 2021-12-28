@@ -15,6 +15,7 @@ pbmc <- RunPCA(pbmc, npcs=10, features = VariableFeatures(object = pbmc))
 
 print(pbmc[["pca"]], dims = 1:2, nfeatures = 50)
 DimPlot(pbmc)
+DimPlot(pbmc,group.by = "species")+DimPlot(pbmc,group.by = "condition")
 
 pbmc <- JackStraw(pbmc, num.replicate = 100)
 pbmc <- ScoreJackStraw(pbmc, dims = 1:10)
@@ -27,7 +28,7 @@ pbmc <- FindClusters(pbmc, resolution = 0.3)
 
 # Retreiving the results of the preprocessing from the Seurat object
 cluster = as.numeric(Idents(pbmc))
-pbmc <- RunUMAP(pbmc, dims = 1:7)
+pbmc <- RunUMAP(pbmc, dims = 1:2)
 p1 <- DimPlot(pbmc, reduction = "pca")
 p2 <- DimPlot(pbmc, reduction = "umap")
 p1+p2

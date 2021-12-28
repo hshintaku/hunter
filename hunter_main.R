@@ -34,10 +34,22 @@ source(file.path(rdir,"hunter_first_data_process.R"))
 # you can restart from here
 # load data from 10x formatted files
 source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
+huvec <- subset(pbmc, subset=species=="human")
+islet <- subset(pbmc,subset=species=="rattus")
+
+pbmc<-merge(huvec,y=islet)
+pbmc<-islet
 pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 1000)
 # technical check, pca and umap clustering for cell typing
 source(file.path(rdir,'nashi_Seurat_clustering.R'))
+# DESeq2
+source(file.path(rdir,"bulk_DESeq2.R"))
+
+
+
+
+
 # compute pseudotime and order cells along the gene expression
 source(file.path(rdir,"shiomi_Seurat_monocle_pseudotime.R"))
 #

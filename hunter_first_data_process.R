@@ -5,6 +5,8 @@ source(file.path(rdir,'preprocess/preprocess_whitelist.R'))
 
 # preprocess the count data and load reference
 source(file.path(rdir,'preprocess/preprocess_RNAseq_data.R'))
+allData$cell <-paste0(substr(allData$gene,1,4),"_",allData$cell)
+
 #
 # download reference data from ensembl with biomaRt
 gene_list <- unique(data.frame(str_replace(allData$gene,"_intron","")))
