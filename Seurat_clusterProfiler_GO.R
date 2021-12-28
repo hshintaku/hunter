@@ -1,20 +1,26 @@
-
 #
 # GOenrichmentAnalysis (experimental)
 #BiocManager::install("org.Mm.eg.db")
 #library("org.Mm.eg.db")
 #BiocManager::install("org.Hs.eg.db")
-#library("org.Hs.eg.db")
+library("org.Hs.eg.db")
 library("org.Rn.eg.db")
 library(clusterProfiler)
 #
-ensmusg <- data.frame(unlist(as.list(org.Hs.egENSEMBL2EG)))
+ensg <- data.frame(unlist(as.list(org.Hs.egENSEMBL2EG)))
 ensrg <- data.frame(unlist(as.list(org.Rn.egENSEMBL2EG)))
+colnames(ensg)<-"gene"
+colnames(ensrg)<-"gene"
 # entrez annotation
-ms_ref$entrez_annotation <- ensmusg[ms_ref$ensembl_gene_id,]
-ms_ref$entrez_annotation <- ensrg[ms_ref$ensembl_gene_id,]
+#ms_ref$entrez_annotation <- ensg[ms_ref$ensembl_gene_id,]
+#ms_ref[ms_ref$ensembl_gene_id,]$entrez_annotation <- ensrg[ms_ref$ensembl_gene_id,]
+en_ref <- rbind(ensg,ensrg)
+# add entrez_annotation
+ms_ref$entrez_annotation<-en_ref[ms_ref$ensembl_gene_id,]
+# remove genes not found in entrez
+ms_ref<-ms_ref[!is.na(ms_ref$entrez_annotation),]
+# de_genes_enteez
 de_genes_entrez <- ms_ref[ms_ref$gene_short_name %in% rownames(de_genes),]$entrez_annotation
-
 #
 # https://bioc.ism.ac.jp/packages/3.3/bioc/vignettes/clusterProfiler/inst/doc/clusterProfiler.html
 #
