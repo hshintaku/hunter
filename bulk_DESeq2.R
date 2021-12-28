@@ -17,4 +17,8 @@ head(res)
 plotMA(res, alpha = 0.01)
 
 result <- data.frame(res)
-de_genes <- subset(result, subset=padj<0.01)
+de_genes <- subset(result, subset=padj<0.001)
+
+library(pheatmap)
+conflict_prefer("pheatmap", "pheatmap")
+pheatmap(pbmc[["RNA"]]@data[rownames(pbmc) %in% rownames(de_genes),])
