@@ -44,7 +44,6 @@ p1+p2+p3
 pbmc.markers <- FindAllMarkers(pbmc, only.pos = FALSE )
 
 p1 <- DimPlot(pbmc, reduction = "umap",group.by = "plate")
-
 p2<-FeaturePlot(pbmc,features="Venus",slot="count")
 p3<-DimPlot(pbmc)
 
