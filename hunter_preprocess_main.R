@@ -18,18 +18,18 @@ library(stringdist)
 library(biomaRt)
 
 # decode the single cell data from whitelist of UMI-tools output
-datadir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/"
-wdir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/"
+datadir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/downsample/"
+wdir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/downsample/"
 
 # decode the single cell data from whitelist of UMI-tools output
 datadir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/"
 wdir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/"
 
-datadir <- "/home/samba/public/shintaku/20211124HiSeqX006_hunter/"
-wdir <- "/home/samba/public/shintaku/20211124HiSeqX006_hunter/"
+datadir <- "/home/samba/public/shintaku/20211124HiSeqX006_hunter/downsample/"
+wdir <- "/home/samba/public/shintaku/20211124HiSeqX006_hunter/downsample/"
 
-datadir <- "/home/samba/public/shintaku/20211124HiSeqX006_Islet/"
-wdir <- "/home/samba/public/shintaku/20211124HiSeqX006_Islet/"
+#datadir <- "/home/samba/public/shintaku/20211124HiSeqX006_Islet/"
+#wdir <- "/home/samba/public/shintaku/20211124HiSeqX006_Islet/"
 
 rdir <- "/home/samba/public/shintaku/github/hunter2/"
 

@@ -4,11 +4,11 @@
 library(SCopeLoomR)
 library(SCENIC)
 library(loomR)
-conflict_prefer("first", "S4Vectors")
-conflict_prefer("finalize", "SCopeLoomR")
-exprMat <- hepa[["RNA"]]@counts
-cellInfo <- data.frame(seuratCluster=Idents(hepa))
-
+#conflict_prefer("first", "S4Vectors")
+#conflict_prefer("finalize", "SCopeLoomR")
+exprMat <- as.matrix(pbmc[["RNA"]]@counts)
+cellInfo <- data.frame(seuratCluster=Idents(pbmc))
+#exprMat <- Seurat::Read10X(data.dir="/home/samba/public/shintaku/20211124HiSeqX006_hunter/")
 loom <- build_loom("hunter_hepa.loom", dgem=exprMat)
 loom <- add_cell_annotation(loom, cellInfo)
 close_loom(loom)
@@ -25,7 +25,9 @@ scenicOptions <- initializeScenic(org=org, dbDir=dbDir, dbs=dbs, datasetTitle=my
 saveRDS(scenicOptions, file="scenicOptions.Rds") 
 
 ### Co-expression network
-genesKept <- geneFiltering(exprMat, scenicOptions)
+genesKept <- geneFiltering(exprMat, scenicOptions,
+                           minCountsPerGene=3*.01*ncol(exprMat),
+                           minSamples=ncol(exprMat)*.01)
 exprMat_filtered <- exprMat[genesKept, ]
 runCorrelation(exprMat_filtered, scenicOptions)
 exprMat_filtered_log <- log2(exprMat_filtered+1) 
@@ -33,7 +35,7 @@ runGenie3(exprMat_filtered_log, scenicOptions)
 
 ### Build and score the GRN
 exprMat_log <- log2(exprMat+1)
-scenicOptions@settings$dbs <- scenicOptions@settings$dbs["10kb"] # Toy run settings
+scenicOptions@settings$dbs <- scenicOptions@settings$dbs["500bp"] # Toy run settings
 scenicOptions <- runSCENIC_1_coexNetwork2modules(scenicOptions)
 scenicOptions <- runSCENIC_2_createRegulons(scenicOptions, coexMethod=c("top5perTarget")) # Toy run settings
 scenicOptions <- runSCENIC_3_scoreCells(scenicOptions, exprMat_log)
