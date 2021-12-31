@@ -1,4 +1,6 @@
 library(tidyr)
+conflict_prefer("mutate", "dplyr")
+conflict_prefer("pheatmap", "pheatmap")
 # running PCA npcs in the RunPCA function must be less than the number of samples
 # default is 50
 cellids <- colnames(pbmc)

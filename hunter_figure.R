@@ -5,7 +5,7 @@ suppressPackageStartupMessages(library(scran))
 library(purrr)
 library(wordspace)
 library(pheatmap)
-conflict_prefer("mutate", "dplyr")
+
 hepa1 <- subset(hepa1,subset = gate ==c("g1"),invert=TRUE)
 hepa1 <- subset(hepa1,subset = gate ==c("g4"),invert=TRUE)
 hepa1 <- subset(hepa1,subset = plate ==c("p04"),invert=TRUE)
