@@ -5,7 +5,7 @@ suppressPackageStartupMessages(library(scran))
 library(purrr)
 library(wordspace)
 library(pheatmap)
-
+conflict_prefer("pheatmap", "pheatmap")
 hepa1 <- subset(hepa1,subset = gate ==c("g1"),invert=TRUE)
 hepa1 <- subset(hepa1,subset = gate ==c("g4"),invert=TRUE)
 hepa1 <- subset(hepa1,subset = plate ==c("p04"),invert=TRUE)
@@ -91,8 +91,8 @@ cluster2 <- cluster_marker_entrez(hepa.markers,ms_ref,2,0.01,0.3)
 #cluster4 <- cluster_marker_entrez(hepa.markers,ms_ref,4,0.05,0.25)
 # go analysis
 perturbed_gene_hepa <- list(Cluster1=cluster1$entrez_annotation,
-                            Cluster0=cluster0$entrez_annotation)
-                            #Cluster3=cluster3$entrez_annotation,
+                            Cluster0=cluster0$entrez_annotation,
+                            Cluster2=cluster2$entrez_annotation)
                             #Cluster0=cluster0$entrez_annotation)
 hepa_go <- compareCluster(perturbed_gene_hepa, fun="enrichGO",
                           OrgDb         = org.Mm.eg.db)
@@ -112,7 +112,7 @@ hepa_go@compareClusterResult[hepa_go@compareClusterResult$Cluster=="Cluster0",]$
 #cluster1 <- cluster_marker_entrez(hepa.markers,ms_ref,1,0.001,0.9)
 variable_genes <- hepa.markers[hepa.markers$p_val_adj<0.001 &
                                  hepa.markers$avg_log2FC>1.5 &
-                                 hepa.markers$cluster==0,]
+                                 hepa.markers$cluster==1,]
 # show go enrichment
 ego_result <- enrichGO(gene          = ms_ref[ms_ref$gene_short_name %in% variable_genes$gene,]$entrez_annotation, 
                        OrgDb         = org.Mm.eg.db,

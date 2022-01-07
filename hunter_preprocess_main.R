@@ -22,8 +22,8 @@ datadir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/downsample/"
 wdir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/downsample/"
 
 # decode the single cell data from whitelist of UMI-tools output
-datadir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/"
-wdir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/"
+datadir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/downsample/"
+wdir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/downsample/"
 
 datadir <- "/home/samba/public/shintaku/20211124HiSeqX006_hunter/downsample/"
 wdir <- "/home/samba/public/shintaku/20211124HiSeqX006_hunter/downsample/"
@@ -51,8 +51,6 @@ source(file.path(rdir,"util/whitelist_encode.R"))
 source(file.path(rdir,'preprocess/preprocess_whitelist.R'))
 active_barcode <- barcode[sort(unique(allencoded$first_index)),]
 encode_barcode=TRUE
-
-
 # preprocess the count data and load reference
 source(file.path(rdir,'preprocess/preprocess_RNAseq_data.R'))
 #
