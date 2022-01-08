@@ -6,8 +6,8 @@ library(SCENIC)
 library(loomR)
 conflict_prefer("first", "S4Vectors")
 conflict_prefer("finalize", "SCopeLoomR")
-exprMat <- as.matrix(cell_all[["RNA"]]@counts)
-cellInfo <- data.frame(seuratCluster=Idents(cell_all))
+exprMat <- as.matrix(hepa_all[["RNA"]]@counts)
+cellInfo <- data.frame(seuratCluster=Idents(hepa_all))
 #exprMat <- Seurat::Read10X(data.dir="/home/samba/public/shintaku/20211124HiSeqX006_hunter/")
 loom <- build_loom("hunter_hepa.loom", dgem=exprMat)
 loom <- add_cell_annotation(loom, cellInfo)
@@ -16,7 +16,7 @@ close_loom(loom)
 ### Initialize settings
 #library(SCENIC)
 org <- "mgi" # or hgnc, or dmel
-dbDir <- "/home/samba/public/genome/cisTarget_mm10/" # RcisTarget databases location
+dbDir <- "/home/samba/sanger/genome/cisTarget_mm10/" # RcisTarget databases location
 myDatasetTitle <- "SCENIC hunter hepatocytes" # choose a name for your analysis
 dbs <- c("mm10__refseq-r80__500bp_up_and_100bp_down_tss.mc9nr.feather",
          "mm10__refseq-r80__10kb_up_and_down_tss.mc9nr.feather")
@@ -61,12 +61,12 @@ saveRDS(scenicOptions, file="scenicOptions.Rds")
 
 # output/Step2_MotifEnrichment_preview.html in detail/subset:
 motifEnrichment_selfMotifs_wGenes <- loadInt(scenicOptions, "motifEnrichment_selfMotifs_wGenes")
-tableSubset <- motifEnrichment_selfMotifs_wGenes[highlightedTFs=="Myc"]
+tableSubset <- motifEnrichment_selfMotifs_wGenes[highlightedTFs=="Elk3"]
 viewMotifs(tableSubset, options=list(pageLength=1)) 
 
 # output/Step2_regulonTargetsInfo.tsv in detail: 
 regulonTargetsInfo <- loadInt(scenicOptions, "regulonTargetsInfo")
-tableSubset <- regulonTargetsInfo[TF=="Tagln2" & highConfAnnot==TRUE]
+tableSubset <- regulonTargetsInfo[TF=="Elk3" & highConfAnnot==TRUE]
 viewMotifs(tableSubset, options=list(pageLength=1)) 
 
 # Cell-type specific regulators (RSS): 
