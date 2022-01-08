@@ -1,6 +1,7 @@
 require(readr)
 library(plyr)
 library(dplyr)
+library(conflicted)
 conflict_prefer("combine", "dplyr")
 conflict_prefer("arrange", "dplyr")
 library(tidyr)
@@ -47,9 +48,9 @@ source(file.path(rdir,'io/hunter_Seurat_load_adt_data.R'))
 hepa3 <- pbmc
 
 
-hepa.list <-list(hepa1,hepa2)
-anchors <- FindIntegrationAnchors(object.list = hepa.list)
-integrated <- IntegrateData(anchorset = anchors)
+#hepa.list <-list(hepa1,hepa2)
+#anchors <- FindIntegrationAnchors(object.list = hepa.list)
+#integrated <- IntegrateData(anchorset = anchors)
 
 
 
@@ -60,7 +61,7 @@ source(file.path(rdir,'hunter_Seurat_clustering.R'))
 #indexdir =paste0(wdir,"index/")
 #c("Events","FSC","SSC","Venus","APC","mCherry")
 # check cell cycle dependence 
-source(file.path(rdir,"shiomi_Seurat_cellcycle_dependence.R"))
+source(file.path(rdir,"hunter_Seurat_cellcycle.R"))
 #
 # zonation
 #
