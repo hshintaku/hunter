@@ -4,6 +4,7 @@
 library(SCopeLoomR)
 library(SCENIC)
 library(loomR)
+library(conflicted)
 conflict_prefer("first", "S4Vectors")
 conflict_prefer("finalize", "SCopeLoomR")
 exprMat <- as.matrix(hepa_all[["RNA"]]@counts)

@@ -1,13 +1,16 @@
-
+library(tidyr)
 #pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^mt-")
 #pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
 #pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 1000)
 # show number of counts
-VlnPlot(pbmc, features = c("nCount_RNA","nFeature_RNA"),
-        ncol = 2,group.by = "plate")
-FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "gate" )
+p1<-VlnPlot(allcell, features = c("nCount_RNA"),group.by = "plate")
+p2<-VlnPlot(allcell, features = c("nFeature_RNA"),group.by = "plate")
+p1+p2
+
+FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "plate")+
+  scale_x_log10()
 p1<-VlnPlot(pbmc, features = c("percent.mt"),group.by = "plate" )
-p2<-FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "percent.mt",group.by = "plate" )
+p2<-FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA",group.by = "plate" )
 p1+p2
 pbmc <- subset(pbmc, subset= percent.mt<5)
 
@@ -40,5 +43,3 @@ plot1 <- LabelPoints(plot = plot1, points = top10)
 plot1
 #plot2 <- FeatureScatter(pbmc, feature1 = "nCount_RNA", feature2 = "nFeature_RNA" )
 #plot2
-
-
