@@ -17,24 +17,26 @@ library(VennDiagram)
 library(stringdist)
 library(biomaRt)
 
-# decode the single cell data from whitelist of UMI-tools output
-datadir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/downsample/"
-wdir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/downsample/"
 
 # decode the single cell data from whitelist of UMI-tools output
 datadir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/downsample/"
 wdir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/downsample/"
 
+# decode the single cell data from whitelist of UMI-tools output
+datadir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/downsample/"
+wdir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/downsample/"
+
 datadir <- "/home/samba/public/shintaku/20211124HiSeqX006_hunter/downsample/"
 wdir <- "/home/samba/public/shintaku/20211124HiSeqX006_hunter/downsample/"
 
-#datadir <- "/home/samba/public/shintaku/20211124HiSeqX006_Islet/"
-#wdir <- "/home/samba/public/shintaku/20211124HiSeqX006_Islet/"
+datadir <- "/home/samba/public/shintaku/20220109HiSeqX008_hunter/"
+wdir <- "/home/samba/public/shintaku/20220109HiSeqX008_hunter/"
 
 rdir <- "/home/samba/public/shintaku/github/hunter2/"
 
 barcode <- read.table(file.path("/home/samba/public/Program/cellranger-6.1.2/lib/python/cellranger/barcodes/3M-february-2018.txt"))
 barcode <- read.table(file.path(rdir,"cell_id_list.txt"))
+
 barcode$GC <- as.numeric(lapply(lapply(as.character(barcode$V1),s2c),GC))
 
 #
@@ -43,7 +45,7 @@ symbol="hgnc_symbol"
 symbol="rgd_symbol"
 
 filter="ensembl_gene_id"
-filter="mgi_symbol"
+#filter="mgi_symbol"
 
 # load functions for barcode decoding
 source(file.path(rdir,"util/whitelist_encode.R"))
