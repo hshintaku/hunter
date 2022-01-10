@@ -23,25 +23,25 @@ library(biomaRt)
 # load data from 10x formatted files
 rdir <- "/home/samba/public/shintaku/github/hunter2/"
 # decode the single cell data from whitelist of UMI-tools output
-datadir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/downsample/"
-wdir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/downsample/"
-indexdir <- "/home/samba/public/shintaku/20211026HiSeqX005_hunter/index/"
+datadir <- "/home/samba/sanger/shintaku/20211026HiSeqX005_hunter/downsample/"
+wdir <- "/home/samba/sanger/shintaku/20211026HiSeqX005_hunter/downsample/"
+indexdir <- "/home/samba/sanger/shintaku/20211026HiSeqX005_hunter/index/"
 channel <- c("Events","FSC","SSC","Venus","Azrite","mCherry")
 source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
 source(file.path(rdir,'io/hunter_Seurat_load_adt_data.R'))
 hepa2<- pbmc
 # decode the single cell data from whitelist of UMI-tools output
-datadir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/downsample/"
-wdir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/downsample/"
-indexdir <- "/home/samba/public/shintaku/20210216HiSeqX002_HUNTER/index/"
+datadir <- "/home/samba/sanger/shintaku/20210216HiSeqX002_HUNTER/downsample/"
+wdir <- "/home/samba/sanger/shintaku/20210216HiSeqX002_HUNTER/downsample/"
+indexdir <- "/home/samba/sanger/shintaku/20210216HiSeqX002_HUNTER/index/"
 channel <- c("Events","FSC","SSC","Venus","Azrite","mCherry")
 source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
 source(file.path(rdir,'io/hunter_Seurat_load_adt_data.R'))
 hepa1 <- pbmc
 # decode the single cell data from whitelist of UMI-tools output
-datadir <- "/home/samba/public/shintaku/20211124HiSeqX006_hunter/downsample/"
-wdir <- "/home/samba/public/shintaku/20211124HiSeqX006_hunter/downsample/"
-indexdir <- "/home/samba/public/shintaku/20211124HiSeqX006_hunter/index/"
+datadir <- "/home/samba/sanger/shintaku/20211124HiSeqX006_hunter/downsample/"
+wdir <- "/home/samba/sanger/shintaku/20211124HiSeqX006_hunter/downsample/"
+indexdir <- "/home/samba/sanger/shintaku/20211124HiSeqX006_hunter/index/"
 channel <- c("Events","FSC","SSC","Venus","Azrite","mCherry")
 source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
 source(file.path(rdir,'io/hunter_Seurat_load_adt_data.R'))
