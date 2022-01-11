@@ -55,10 +55,26 @@ source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
 source(file.path(rdir,'io/hunter_Seurat_load_adt_data.R'))
 hepa4 <- pbmc
 
+
+datadir <- "/home/samba/sanger/shintaku/20220109HiSeqX008_hunter_10x/TK10x-02-S/"
+wdir <- "/home/samba/sanger/shintaku/20220109HiSeqX008_hunter_10x/TK10x-02-S/"
+#indexdir <- "/home/samba/sanger/shintaku/20211124HiSeqX006_hunter/index/"
+#channel <- c("Events","FSC","SSC","Venus","Azrite","mCherry")
+source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
+hepa10x02S<-pbmc
+datadir <- "/home/samba/sanger/shintaku/20220109HiSeqX008_hunter_10x/TK10x-01-P/"
+wdir <- "/home/samba/sanger/shintaku/20220109HiSeqX008_hunter_10x/TK10x-01-P/"
+#indexdir <- "/home/samba/sanger/shintaku/20211124HiSeqX006_hunter/index/"
+#channel <- c("Events","FSC","SSC","Venus","Azrite","mCherry")
+source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
+hepa10x01P<-pbmc
 #hepa.list <-list(hepa1,hepa2)
 #anchors <- FindIntegrationAnchors(object.list = hepa.list)
 #integrated <- IntegrateData(anchorset = anchors)
-
+hepa10x01P[["batch"]]<-"01P"
+hepa10x02S[["batch"]]<-"02S"
+hepa10x <- merge(hepa10x01P,y=hepa10x02S)
+FeatureScatter(hepa10x01P,feature1 = "nCount_RNA","nFeature_RNA",group.by = "batch")
 
 
 # technical check, pca and umap clustering for cell typing
