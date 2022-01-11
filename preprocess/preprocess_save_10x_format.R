@@ -11,7 +11,7 @@ cell_per_count <- allData %>% group_by(cell) %>% summarise(counts_per_cell = sum
 cell_per_count <- cell_per_count[order(cell_per_count$counts_per_cell),]
 cellids_useful <- cell_per_count[cell_per_count$counts_per_cell>1000,]$cell
 
-allData <- allData[allData$cell %in% cellids_usefull,]
+allData <- allData[allData$cell %in% cellids_useful,]
 # convert allData to gene matrix
 gene_matrix <- tidyr::pivot_wider(allData, id_cols = gene, names_from = cell,values_from = count,values_fill=0)
 
