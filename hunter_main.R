@@ -11,7 +11,6 @@ library(R.utils)
 library(RCurl)
 library(Matrix)
 library(openxlsx)
-library(dplyr)
 library(Seurat)
 library(SingleCellSignalR)
 library(seqinr)
@@ -49,7 +48,7 @@ hepa3 <- pbmc
 # decode the single cell data from whitelist of UMI-tools output
 datadir <- "/home/samba/sanger/shintaku/20220109HiSeqX008_hunter/"
 wdir <- "/home/samba/sanger/shintaku/20220109HiSeqX008_hunter/"
-indexdir <- "/home/samba/sanger/shintaku/20211124HiSeqX006_hunter/index/"
+indexdir <- "/home/samba/sanger/shintaku/20220109HiSeqX008_hunter/index"
 channel <- c("Events","FSC","SSC","Venus","Azrite","mCherry")
 source(file.path(rdir,"hunter_Seurat_load_dataset.R"))
 source(file.path(rdir,'io/hunter_Seurat_load_adt_data.R'))
