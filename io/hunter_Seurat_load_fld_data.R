@@ -2,7 +2,7 @@ library(Seurat)
 library(stringr)
 library(dplyr)
 
-#source(file.path(rdir,"shiomi_preprocess_FLD_data.R"))
+#source(file.path(rdir,"io/preprocess_FLD_data.R"))
 FLDmapALL <- load.fld(datadir,"read_count",barcode)
 colnames(FLDmapALL) <- c("romin","FLD004","FLD010","FLD070","FLD500","FLDcon","Unmapped","GC")
 rownames(FLDmapALL) <- toupper(rownames(FLDmapALL))
