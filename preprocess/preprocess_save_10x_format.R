@@ -1,4 +1,4 @@
-
+conflict_prefer("summarise", "dplyr")
 # load reference data from biomaRt with filtering the gene_ids
 # source('/home/samba/storage0/shintaku/HUNTER/hunter_biomart_ref.R')
 allData$gene <- str_replace(str_replace(allData$gene,"mm10___",""),"GRCh38_","")
@@ -6,7 +6,12 @@ gene_list <- data.frame(str_replace(allData$gene,"_intron",""))
 #ms_ref <- func.biomart.ref(ms_mart,gene_list,"mgi_symbol")
 #ms_ref_intron <- func.ref.intron(ms_ref)
 #all_ref <- rbind(ms_ref,ms_ref_intron)
+cellids<-unique(allData$cell)
+cell_per_count <- allData %>% group_by(cell) %>% summarise(counts_per_cell = sum(count))
+cell_per_count <- cell_per_count[order(cell_per_count$counts_per_cell),]
+cellids_useful <- cell_per_count[cell_per_count$counts_per_cell>1000,]$cell
 
+allData <- allData[allData$cell %in% cellids_useful,]
 # convert allData to gene matrix
 gene_matrix <- tidyr::pivot_wider(allData, id_cols = gene, names_from = cell,values_from = count,values_fill=0)
 

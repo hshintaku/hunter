@@ -1,5 +1,6 @@
-fucci_cellcycle_genes <- function(hs_ref){
-cc_file <- getURL("https://raw.githubusercontent.com/hbc/tinyatlas/master/cell_cycle/Homo_sapiens.csv") 
+
+fucci_cellcycle_genes <- function(all_ref,url){
+cc_file <- getURL(url) 
 cell_cycle_genes <- read.csv(text = cc_file)
 
 cell_cycle_markers <- dplyr::left_join(cell_cycle_genes,hs_ref,by=c("geneID"="ensembl_gene_id"))
