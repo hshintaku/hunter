@@ -28,7 +28,7 @@ de_genes_entrez <- ms_ref[ms_ref$gene_short_name %in% rownames(de_genes),]$entre
 # 
 #gene_module_go <- allLLIDs[moduleColors_subset=="pink"]
 
-ego_result <- enrichGO(gene          = perturbed_gene_elp.entrez_annotation$entrez_annotation, 
+ego_result <- enrichGO(gene          = de_genes_entrez, 
                        OrgDb         = org.Rn.eg.db, # rattus, human etc
                        ont           = "CC",
                          pAdjustMethod = "BH",

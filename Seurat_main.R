@@ -37,6 +37,7 @@ huvec <- subset(pbmc, subset=species=="human")
 islet <- subset(pbmc,subset=species=="rattus")
 
 pbmc<-merge(huvec,y=islet)
+
 pbmc<-islet
 pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 1e5)
 pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 1000)
