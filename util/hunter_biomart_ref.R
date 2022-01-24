@@ -1,10 +1,10 @@
 library(biomaRt)
 
 func.biomart.ref <- function(hs_mart, gene_list,filter,symbol){
-  reference=getBM(attributes=c("ensembl_gene_id","description",symbol,"gene_biotype","chromosome_name"),
+  reference=getBM(attributes=c("ensembl_gene_id","description",symbol,"gene_biotype","chromosome_name","entrezgene_id"),
                filters=filter,values=gene_list,mart=hs_mart)
   
-  colnames(reference) <- c("ensembl_gene_id","description","gene_short_name","gene_biotype","chromosome_name")
+  colnames(reference) <- c("ensembl_gene_id","description","gene_short_name","gene_biotype","chromosome_name","entrezgene_id")
   reference <- reference[!duplicated(reference$ensembl_gene_id),]
   row.names(reference) <- reference$ensembl_gene_id
   empty_logical <- which(reference$gene_short_name=="")
