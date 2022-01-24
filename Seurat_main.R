@@ -32,6 +32,7 @@ source(file.path(rdir,"data_preprocess_main.R"))
 # you can restart from here
 # load data from 10x formatted files
 source(file.path(rdir,"Seurat_load_dataset.R"))
+source(file.path(rdir,"Seurat_create_reference.R"))
 huvec <- subset(pbmc, subset=species=="human")
 islet <- subset(pbmc,subset=species=="rattus")
 
