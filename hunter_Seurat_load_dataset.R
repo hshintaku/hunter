@@ -7,12 +7,12 @@ pbmc.data <- Read10X(data.dir = wdir)
 
 
 # Initialize the Seurat object with the raw (non-normalized data).
-<<<<<<< HEAD:io/hunter_Seurat_load_dataset.R
+#<<<<<<< HEAD:io/hunter_Seurat_load_dataset.R
 pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 1, min.features = 1)
 
 cellids <- colnames(pbmc)
 
-=======
+#=======
 pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 1, min.features = 1000)
 
 cellids <- colnames(pbmc)
@@ -21,7 +21,7 @@ pbmc[['cell']] <- substr(cellids,4,6)
 pbmc[['gate']] <- substr(cellids,7,8)
 pbmc[['pool']] <- substr(cellids,10,10)
 pbmc[['rtid']] <- substr(cellids,12,13)
->>>>>>> minegishi:hunter_Seurat_load_dataset.R
+#>>>>>>> minegishi:hunter_Seurat_load_dataset.R
 
 dim(pbmc)
 #head(x = FetchData(object = pbmc, vars = c('ident')),n=1000)
