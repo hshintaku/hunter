@@ -22,9 +22,9 @@ ordering_genes <- rbind(genes_pn,genes_cv)
 
 #hepa.data <- liver[["RNA"]]@data
 #hepa.data <- hepa[["RNA"]]@data
-tabula <- Read10X(data.dir = "/home/samba/public/shintaku/tabula_muris/droplet/Liver-10X_P7_1/")
+tabula <- Read10X(data.dir = "/home/samba/public/shintaku/tabula_muris/droplet/Liver-10X_P4_2/")
 tabulamuris <- CreateSeuratObject(counts = tabula, project = "pbmc3k", min.cells = 1, min.features = 1000)
-tabula <- hepa10x01P
+#tabula <- hepa10x01P
 tabulamuris <- NormalizeData(tabulamuris, normalization.method = "LogNormalize", scale.factor = 1e5)
 hepa.data <- data.frame(tabulamuris[["RNA"]]@data)
 
@@ -43,17 +43,17 @@ p2<-plot(dm,1:2,
 #          legend_main = 'plate')
 p1+p2#+p3
 
-qplot(y = eigenvalues(dm)) + theme_minimal() +
-  labs(x = 'Diffusion component (DC)', y = 'Eigenvalue')
-
-set.seed(1)
-dms <- c('euclidean', 'cosine', 'rankcor') %>% #, 'l2'
-  set_names() %>%
-  map(~ DiffusionMap(hepa.data.zone, distance = ., knn_params = list(method = 'covertree')))
-options(repr.plot.width = 14, repr.plot.height = 4)
-dms %>%
-  imap(function(dm, dist) plot(dm, 1:2,col_by='Cyp2f2') + ggtitle(dist)) %>%
-  cowplot::plot_grid(plotlist = ., nrow = 1)
+# qplot(y = eigenvalues(dm)) + theme_minimal() +
+#   labs(x = 'Diffusion component (DC)', y = 'Eigenvalue')
+# 
+# set.seed(1)
+# dms <- c('euclidean', 'cosine', 'rankcor') %>% #, 'l2'
+#   set_names() %>%
+#   map(~ DiffusionMap(hepa.data.zone, distance = ., knn_params = list(method = 'covertree')))
+# options(repr.plot.width = 14, repr.plot.height = 4)
+# dms %>%
+#   imap(function(dm, dist) plot(dm, 1:2,col_by='Cyp2f2') + ggtitle(dist)) %>%
+#   cowplot::plot_grid(plotlist = ., nrow = 1)
 
 hepa.data.zone$norm <- dm$DC1#rowNorms(cbind(dm$DC1,dm$DC2), method = "euclidean", p = 2)
 ggplot(hepa.data.zone,aes(x=norm,y=Cyp2e1))+geom_point()+

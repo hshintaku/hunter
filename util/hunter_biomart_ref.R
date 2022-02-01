@@ -19,19 +19,3 @@ hs_ref_intron$ensembl_gene_id <- paste0(hs_ref$ensembl_gene_id,"_intron")
 rownames(hs_ref_intron)<- hs_ref_intron$ensembl_gene_id
 return(hs_ref_intron)
 }
-
-
-
-
-#pig_ref <- func.biomart.ref(pig_mart,gene_list,"hgnc_symbol")
-
-#hs_ref$gene_short_name <- paste0("hs-",hs_ref$gene_short_name)
-#ms_ref$gene_short_name <- paste0("ms-",ms_ref$gene_short_name)
-
-#pig_ref$gene_short_name <- paste0("pg-",pig_ref$gene_short_name)
-
-#hs_ref_intron <- func.ref.intron(hs_ref)
-#ms_ref_intron <- func.ref.intron(ms_ref)
-#pig_ref_intron <- func.ref.intron(pig_ref)
-#all_ref <- rbind(hs_ref,hs_ref_intron,ms_ref,ms_ref_intron,pig_ref,pig_ref_intron)
-#all_ref <- rbind(hs_ref,ms_ref)
