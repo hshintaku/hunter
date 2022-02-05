@@ -8,7 +8,6 @@ library(R.utils)
 library(RCurl)
 library(Matrix)
 library(openxlsx)
-library(dplyr)
 library(Seurat)
 library(SingleCellSignalR)
 library(seqinr)
@@ -32,7 +31,11 @@ wdir <- "/home/samba/public/shintaku/20211124HiSeqX006_hunter/downsample/"
 datadir <- "/home/samba/public/shintaku/20220109HiSeqX008_hunter/"
 wdir <- "/home/samba/public/shintaku/20220109HiSeqX008_hunter/"
 
+datadir<-"/home/samba/public/shintaku/20220109HiSeqX008_tig/"
+wdir<-datadir
+
 rdir <- "/home/samba/public/shintaku/github/hunter2/"
+
 
 barcode <- read.table(file.path("/home/samba/public/Program/cellranger-6.1.2/lib/python/cellranger/barcodes/3M-february-2018.txt"))
 barcode <- read.table(file.path(rdir,"cell_id_list.txt"))
