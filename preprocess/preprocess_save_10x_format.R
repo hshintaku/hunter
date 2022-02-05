@@ -1,3 +1,4 @@
+library(conflicted)
 conflict_prefer("summarise", "dplyr")
 # load reference data from biomaRt with filtering the gene_ids
 # source('/home/samba/storage0/shintaku/HUNTER/hunter_biomart_ref.R')

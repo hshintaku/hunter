@@ -15,6 +15,7 @@ library(stringr)
 library(VennDiagram)
 library(stringdist)
 library(biomaRt)
+library(conflicted)
 
 
 # decode the single cell data from whitelist of UMI-tools output
@@ -82,7 +83,7 @@ if (symbol=="mgi_symbol"){
 
 
 missing_ref <- subset(gene_list,!(gene %in% ms_ref$ensembl_gene_id))
-adding_ref <- data.frame(cbind(missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene))
+adding_ref <- data.frame(cbind(missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene,missing_ref$gene))
 colnames(adding_ref) <- colnames(ms_ref)
 rownames(adding_ref) <- adding_ref$ensembl_gene_id
 ms_ref <- rbind(adding_ref,ms_ref)
